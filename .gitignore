@@ -1,0 +1,9 @@
+node_modules
+.env
+.next
+!**/.eslintrc*
+
+연습용이라 깃 커밋 제외 파일
+_Editor_backup.js
+_Editor_hooks.js
+EditorContainer.js
