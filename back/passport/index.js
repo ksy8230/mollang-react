@@ -1,6 +1,7 @@
 const passport = require('passport');
 const db = require('../models');
 const local = require('./local');
+const kakao = require('./kakao');
 
 module.exports = () => {
     // step 2
@@ -20,4 +21,5 @@ module.exports = () => {
         }
     });
     local();
+    kakao();
 };

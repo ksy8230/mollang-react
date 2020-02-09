@@ -30,6 +30,7 @@ router.post('/', async (req, res, next) => { // POST /api/user
 });
 
 router.get('/', (req, res) => { // GET /api/user 
+    console.log(req.user)
     if (!req.user) {
         return res.status(401).send('로그인이 필요합니다.')
     }

@@ -8,6 +8,7 @@ const Login = () => {
     const [password, setPassword] = useState('');
     const dispatch = useDispatch();
     const me = useSelector(state => state.user.me);
+    const logInErrorReason = useSelector(state => state.user.logInErrorReason);
     const onChangeUserId = useCallback((e) => {
         setUserId(e.target.value);
     });
@@ -31,11 +32,12 @@ const Login = () => {
             type : LOGOUT_REQUEST,
         })
     };
-    
+
+
     return (
         <>  
             {
-                me && me ?
+                me && me.id ?
                 <>
                     <p>{me.nickname}</p>
                     <button onClick={onClickLogOut}>로그아웃</button>
@@ -51,7 +53,9 @@ const Login = () => {
                         </div>
                         <button type='submit'>로그인</button>
                     </form>
+                    {logInErrorReason}
                     <div><Link href='/signup'><a>회원가입</a></Link></div>
+                    <div><a href='http://localhost:8080/auth/kakao'>카카오로 간편 로그인</a></div>
                 </>
             }
             

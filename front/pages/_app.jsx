@@ -16,7 +16,7 @@ const Mollang = ({ Component, store }) => {
             <Head>
                 <title>mollang</title>
                 <meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
-                <meta charset="utf-8" />
+                <meta charSet="utf-8" />
                 {/* 공통으로 사용하는 css */}
                 <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/react-draft-wysiwyg@1.12.3/dist/react-draft-wysiwyg.css' />
 

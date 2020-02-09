@@ -16,7 +16,7 @@ const Home = () => {
     }, [me]);
     return (
         <>
-            {me ? <>{me.nickname} 로그인 완료 </> : <>로그아웃 상태</>}
+            {me && me.id ? <>{me.nickname} 로그인 완료 </> : <>로그아웃 상태</>}
             <h2>배운 것을 기록하자</h2>
             <div className='post-list'>
                 <ul>
