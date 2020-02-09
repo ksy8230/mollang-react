@@ -3,7 +3,8 @@ import { dummy } from '.';
 import PostCard from '../Components/PostCard';
 import { EditorState, convertFromRaw } from 'draft-js';
 import { stateToHTML } from 'draft-js-export-html';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { LOAD_POSTS_REQUEST } from '../reducers/post';
 
 function createMarkup(html) {
     return {__html: html};
@@ -13,25 +14,28 @@ const Blog = () => {
     const [editorState, setEditorState] = useState(EditorState.createEmpty());
     const [editorContentHtml, setEditorContentHtml] = useState('');
     const { mainPosts } = useSelector(state => state.post);
+    const dispatch = useDispatch();
 
     useEffect(() => {
-        const rawEditorData = getSavedEditorData(); //savedData 
-        console.log('localdata 가져오기',rawEditorData)
+        /*const rawEditorData = getSavedEditorData(); //savedData 
+        console.log('로컬데이터 가져오기',rawEditorData)
         if (rawEditorData !== null) {
             const contentState = convertFromRaw(rawEditorData);
-            console.log('가져온 데이터 ContentState로',contentState)
+            console.log('가져온 로컬데이터 ContentState로 변환',contentState)
             setEditorState(EditorState.createWithContent(contentState));
             console.log(editorState)
             setEditorContentHtml(stateToHTML(contentState));
-        }
-  
+        }*/
+        dispatch({
+            type : LOAD_POSTS_REQUEST,
+        })
     }, []);
 
-    const getSavedEditorData = () => {
+    /*const getSavedEditorData = () => {
         const savedData = localStorage.getItem('content');
         console.log('savedData', savedData)
         return savedData ? JSON.parse(savedData) : null;
-    };
+    };*/
 
     return (
         <div className='blog'>
@@ -51,7 +55,7 @@ const Blog = () => {
                     })
                 }
             </div>
-            로컬스토리지에서 편집기 내용 렌더링
+            
             <div dangerouslySetInnerHTML={createMarkup(editorContentHtml)} />
             <div className='post-list'>
                 <ul>
