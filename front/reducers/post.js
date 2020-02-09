@@ -3,8 +3,8 @@ export const initialState = {
     mainPosts : [
         {
             id : 1,
-            tag : 'react',
             title : '제목1',
+            tag : null,
             content : '지금 이 포스트는 더미 내용입니다. 지금 이 포스트는 더미 내용입니다. 지금 이 포스트는 더미 내용입니다.',
             date : '2020.02.06',
             User : {
@@ -16,7 +16,7 @@ export const initialState = {
         {
             id : 2,
             title : '제목2',
-            tag : 'express',
+            tag : '["#가나다","#마다사"]',
             content : '지금 이 포스트는 더미 내용2입니다. 지금 이 포스트는 더미 내용2입니다. 지금 이 포스트는 더미 내용2입니다.',
             date : '2020.02.06',
             User : {

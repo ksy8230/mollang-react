@@ -27,7 +27,7 @@ class ControlledEditor extends Component {
     if (value !== newValue) {
       onChange(newValue);
     }
-    console.log(newValue)
+    //console.log(newValue)
     this.setState({
       editorState
     });

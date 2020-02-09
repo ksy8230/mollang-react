@@ -6,42 +6,34 @@ import EditorForm from '../Components/EditorForm';
 import RemoteSubmitButton from '../Components/RemoteSubmitButton';
 
 const Blog = () => {
-    const [text, setText] = useState('');
+    const [title, setTitle] = useState('');
+    const [tag, setTag] = useState('');
     const { postAdded } = useSelector(state => state.post);
     const dispatch = useDispatch();
 
-    const onSubmitForm = useCallback((e) => {
-        e.preventDefault();
-        dispatch({
-            type : ADD_POST_REQUEST,
-            data : {
-                text
-            }
-        });
-        //console.log(action.data)
+    const onChangeTitle = useCallback((e) => {
+        setTitle(e.target.value);
     }, []);
-
-    const onChangeText = useCallback((e) => {
-        setText(e.target.value);
+    const onChangeTag = useCallback((e) => {
+        setTag(e.target.value);
     }, []);
 
     useEffect(() => {
-        setText('');
+        setTitle('');
+        setTag('');
     }, [postAdded])
 
     return (
-        <>
+        <>  
+            관리자가 사용하는 에디터입니다
             <div>
-                <form onSubmit={onSubmitForm}>
-                    <input type="text" value={text} onChange={onChangeText} />
-                    <button>글쓰기</button>
-                </form>
+                <input type="text" value={title} onChange={onChangeTitle} placeholder="제목" />
             </div>
-            관리자가 사용하는 에디터
-            
-            리덕스-폼을 이용한 작동 방식
             <EditorForm dispatch={dispatch} />
-            <RemoteSubmitButton />
+            <div>
+                <input type="text" value={tag} onChange={onChangeTag} placeholder="태그" />
+            </div>
+            <RemoteSubmitButton title={title} tag={tag} />
         </>
     );
 };

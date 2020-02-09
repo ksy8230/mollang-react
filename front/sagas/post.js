@@ -1,24 +1,28 @@
-import { all, fork, put, takeLatest } from 'redux-saga/effects';
+import { all, fork, put, takeLatest, call } from 'redux-saga/effects';
 import axios from 'axios';
 import { ADD_POST_REQUEST, ADD_POST_FAILURE, ADD_POST_SUCCESS } from '../reducers/post';
 
 function addPostAPI(postData) {
     // server : post api
+    return axios.post('/post', postData, {
+        withCredentials : true,
+    });
 }
 
 function* addPost(action) {
     try {
-        // const result = yield call(addPostAPI, action.data);
+        const result = yield call(addPostAPI, action.data);
         yield put({
             type : ADD_POST_SUCCESS,
-            data : action.data,
+            data : result.data,
         })
-        console.log(action.data)
-    } catch(error) {
+        //console.log(action.data)
+    } catch(e) {
         yield put({
             type : ADD_POST_FAILURE,
-            error : error,
+            error : e,
         })
+        console.log(e)
     }
 }
 

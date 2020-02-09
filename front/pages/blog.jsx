@@ -40,7 +40,13 @@ const Blog = () => {
                 {
                     mainPosts.map((v,i) => {
                         return (
-                        <span>{v.tag}</span>
+                        <span>
+                            {
+                                // console.log(v.tag)
+                                //JSON.parse(v.tag).map(v => v)
+                                //console.log(JSON.parse(v.tag))
+                            }
+                        </span>
                         )
                     })
                 }

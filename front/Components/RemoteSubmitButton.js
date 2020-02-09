@@ -11,7 +11,7 @@ const style = {
   fontSize: '16px',
 };
 
-const RemoteSubmitButton = ( ) => {
+const RemoteSubmitButton = ({ title, tag }) => {
   const dispatch = useDispatch();
   const {user} = useSelector(state => state.user);
   const {draft} = useSelector(state => state.form);
@@ -20,8 +20,9 @@ const RemoteSubmitButton = ( ) => {
     dispatch({
         type : ADD_POST_REQUEST,
         data : {
-          date : '2020-02-08',
-          content : draft.values.editorText
+          title : title,
+          content : draft.values.editorText,
+          tag : tag,
         }
     });
   }
