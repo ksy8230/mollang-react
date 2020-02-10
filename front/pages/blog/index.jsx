@@ -1,10 +1,11 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { dummy } from '.';
-import PostCard from '../Components/PostCard';
+
 import { EditorState, convertFromRaw } from 'draft-js';
 import { stateToHTML } from 'draft-js-export-html';
 import { useSelector, useDispatch } from 'react-redux';
-import { LOAD_POSTS_REQUEST } from '../reducers/post';
+import { LOAD_POSTS_REQUEST } from '../../reducers/post';
+import PostCard from '../../Components/PostCard';
 
 function createMarkup(html) {
     return {__html: html};
@@ -56,7 +57,7 @@ const Blog = () => {
                 }
             </div>
             
-            <div dangerouslySetInnerHTML={createMarkup(editorContentHtml)} />
+            
             <div className='post-list'>
                 <ul>
                     {

@@ -17,7 +17,9 @@ export const initialState = {
     isAddingPost : false, // 포스트 업로드 중
     postAdded : false, // 포스트 업로드 됨
     addPostErrorReason : false, // 포스트 업로드 실패 사유
-    loadPostsErrorReason : '',
+    loadPostsErrorReason : '', // 포스트들 로드 실패 사유
+    loadPostErrorReason : '', // 포스트(개별) 로드 실패 사유
+    singlePost : { },
 };
 
 const dummyPost = {
@@ -37,6 +39,14 @@ export const ADD_POST_FAILURE = 'ADD_POST_FAILURE';
 export const LOAD_POSTS_REQUEST = 'LOAD_POSTS_REQUEST';
 export const LOAD_POSTS_SUCCESS = 'LOAD_POSTS_SUCCESS';
 export const LOAD_POSTS_FAILURE = 'LOAD_POSTS_FAILURE';
+// 태그 포스트들 불러오기 액션
+export const LOAD_TAG_POSTS_REQUEST = 'LOAD_TAG_POSTS_REQUEST';
+export const LOAD_TAG_POSTS_SUCCESS = 'LOAD_TAG_POSTS_SUCCESS';
+export const LOAD_TAG_POSTS_FAILURE = 'LOAD_TAG_POSTS_FAILURE';
+// 포스트(개별) 불러오기 액션
+export const LOAD_POST_REQUEST = 'LOAD_POST_REQUEST';
+export const LOAD_POST_SUCCESS = 'LOAD_POST_SUCCESS';
+export const LOAD_POST_FAILURE = 'LOAD_POST_FAILURE';
 
 const reducer = (state = initialState, action) => {
     switch (action.type) {
@@ -65,6 +75,7 @@ const reducer = (state = initialState, action) => {
                 addPostErrorReason : action.error,
             }
         }
+        case LOAD_TAG_POSTS_REQUEST :
         case LOAD_POSTS_REQUEST : {
             return {
                 ...state,
@@ -72,16 +83,38 @@ const reducer = (state = initialState, action) => {
                 loadPostsErrorReason : '',
             }
         }
+        case LOAD_TAG_POSTS_SUCCESS :
         case LOAD_POSTS_SUCCESS : {
             return {
                 ...state,
                 mainPosts : action.data,
             }
         }
+        case LOAD_TAG_POSTS_FAILURE :
         case LOAD_POSTS_FAILURE : {
             return {
                 ...state,
                 loadPostsErrorReason : action.error,
+            }
+        }
+        //
+        case LOAD_POST_REQUEST : {
+            return {
+                ...state,
+                singlePost : {},
+                loadPostErrorReason : '',
+            }
+        }
+        case LOAD_POST_SUCCESS : {
+            return {
+                ...state,
+                singlePost : action.data,
+            }
+        }
+        case LOAD_POST_FAILURE : {
+            return {
+                ...state,
+                loadPostErrorReason : action.error
             }
         }
         default : {

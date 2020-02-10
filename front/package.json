@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "dev": "next",
+    "dev": "nodemon",
     "build": "next build",
     "start": "next start"
   },
@@ -13,9 +13,14 @@
   "dependencies": {
     "axios": "^0.19.2",
     "babel-polyfill": "^6.26.0",
+    "cookie-parser": "^1.4.4",
+    "dotenv": "^8.2.0",
     "draft-js": "^0.11.4",
     "draft-js-export-html": "^1.4.1",
     "draftjs-to-html": "^0.9.1",
+    "express": "^4.17.1",
+    "express-session": "^1.17.0",
+    "morgan": "^1.9.1",
     "next": "^9.2.1",
     "next-redux-wrapper": "^4.0.1",
     "prop-types": "^15.7.2",

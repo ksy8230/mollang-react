@@ -14,7 +14,8 @@ router.post('/', async (req, res, next) => { // POST /api/post
             tag : tags,
         });
         if (tags) {
-            const result = await Promise.all(JSON.parse(tags).map(v => db.Tag.findOrCreate({ // 태그를 전부 찾아서 #제거하고 없으면 db 추가 없으면 db 생성
+            // 태그를 전부 찾아서 #제거하고 없으면 db 추가 없으면 db 생성
+            const result = await Promise.all(JSON.parse(tags).map(v => db.Tag.findOrCreate({ 
                 where : { name : v.slice(1).toLowerCase()},
             })));
             console.log('result',result)
@@ -27,8 +28,16 @@ router.post('/', async (req, res, next) => { // POST /api/post
     }
 });
 
-router.get('/', (req, res) => { // GET /api/post 
-
+router.get('/:id', async (req, res, next) => { // GET /api/post/:id
+    try {
+        const post = await db.Post.findOne({
+            where : { id : req.params.id }
+        });
+        res.json(post);
+    } catch (e) {
+        console.error(e);
+        next(e);
+    }
 });
 
 module.exports = router;

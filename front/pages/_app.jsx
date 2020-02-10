@@ -10,7 +10,7 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 import createSagaMiddleware from 'redux-saga';
 import rootSaga from '../sagas';
 
-const Mollang = ({ Component, store }) => {
+const Mollang = ({ Component, store, pageProps }) => {
     return (
         <Provider store={store}>
             <Head>
@@ -23,7 +23,7 @@ const Mollang = ({ Component, store }) => {
                 {/* 공통으로 사용하는 js */}
             </Head>
             <AppLayout>
-                <Component />
+                <Component {...pageProps} />
             </AppLayout>
         </Provider>
     );
@@ -32,6 +32,16 @@ const Mollang = ({ Component, store }) => {
 Mollang.propTypes = {
     Component : PropTypes.elementType,
     store : PropTypes.object.isRequired,
+};
+
+Mollang.getInitialProps = async (context) => {
+    const { ctx, Component } = context;
+    //console.log('ctx', ctx)
+    let pageProps = {};
+    if (Component.getInitialProps) {
+        pageProps = await context.Component.getInitialProps(ctx); 
+    }
+    return {pageProps};
 };
 
 export default withRedux((initialState, options) => {
