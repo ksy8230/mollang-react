@@ -40,6 +40,10 @@ app.prepare().then(() => {
         return app.render(req, res, '/id', { id: req.params.id });
     });
 
+    server.get('/admin/blog/update/:id', (req, res) => {
+        return app.render(req, res, '/id', { id: req.params.id });
+    });
+
     server.listen(3000, () => {
         console.log(`next + express running on port 3000`)
     });

@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useState } from "react";
 import { reduxForm } from "redux-form";
 import EditorField from "./EditorField";
 import { useDispatch, useSelector } from "react-redux";
@@ -12,10 +12,8 @@ import submit from './submit';
 
 const EditorForm = (props) => {
   const { handleSubmit } = props;
-  const user = useSelector(state => state.user);
-  const [data, setData] = useState('');
-  const {draft} = useSelector(state => state.form);
-  
+  const { content } = useSelector(state => state.post.singlePost);
+
   return (
     <form onSubmit={handleSubmit}>
       <EditorField
@@ -23,18 +21,13 @@ const EditorForm = (props) => {
         name="editorText"
         id="inputEditorText"
         disabled={false}
-        placeholder="Type here"
+        placeholder={content || ''}
       />
       {/*<button style={styles.button} key="submit" type="submit">
         Submit
   </button>*/}
     </form>
   );
-};
-const styles = {
-  button: {
-    width: "100%"
-  }
 };
 
 export default reduxForm({ 

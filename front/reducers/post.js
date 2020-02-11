@@ -16,9 +16,12 @@ export const initialState = {
     ], // 포스트들
     isAddingPost : false, // 포스트 업로드 중
     postAdded : false, // 포스트 업로드 됨
+    postEdited : false, // 포스트 업데이트 됨
     addPostErrorReason : false, // 포스트 업로드 실패 사유
     loadPostsErrorReason : '', // 포스트들 로드 실패 사유
     loadPostErrorReason : '', // 포스트(개별) 로드 실패 사유
+    editPostErrorReason : '', // 포스트 수정 실패 사유
+    deletePostErrorReason : '', // 포스트 수정 실패 사유
     singlePost : { },
 };
 
@@ -47,6 +50,14 @@ export const LOAD_TAG_POSTS_FAILURE = 'LOAD_TAG_POSTS_FAILURE';
 export const LOAD_POST_REQUEST = 'LOAD_POST_REQUEST';
 export const LOAD_POST_SUCCESS = 'LOAD_POST_SUCCESS';
 export const LOAD_POST_FAILURE = 'LOAD_POST_FAILURE';
+// 포스트 수정 액션
+export const EDIT_POST_REQUEST = 'EDIT_POST_REQUEST';
+export const EDIT_POST_SUCCESS = 'EDIT_POST_SUCCESS';
+export const EDIT_POST_FAILURE = 'EDIT_POST_FAILURE';
+// 포스트 삭제 액션
+export const DELETE_POST_REQUEST = 'DELETE_POST_REQUEST';
+export const DELETE_POST_SUCCESS = 'DELETE_POST_SUCCESS';
+export const DELETE_POST_FAILURE = 'DELETE_POST_FAILURE';
 
 const reducer = (state = initialState, action) => {
     switch (action.type) {
@@ -97,7 +108,6 @@ const reducer = (state = initialState, action) => {
                 loadPostsErrorReason : action.error,
             }
         }
-        //
         case LOAD_POST_REQUEST : {
             return {
                 ...state,
@@ -115,6 +125,54 @@ const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 loadPostErrorReason : action.error
+            }
+        }
+        //
+        case EDIT_POST_REQUEST : {
+            return {
+                ...state,
+                editPostErrorReason : '',
+                postEdited : false,
+            }
+        }
+        case EDIT_POST_SUCCESS : {
+            const postIndex = state.mainPosts.findIndex( v => v.id === action.data.PostId);
+            const post = state.mainPosts[postIndex];
+            const singlePost = state.singlePost;
+            post.content = action.data.content;
+            post.title = action.data.title;
+            post.tag = action.data.tag;
+            singlePost.content = action.data.content;
+            singlePost.title = action.data.title;
+            singlePost.tag = action.data.tag;
+            return {
+                ...state,
+                postEdited : true,
+            }
+        }
+        case EDIT_POST_FAILURE : {
+            return {
+                ...state,
+                editPostErrorReason : action.error,
+            }
+        }
+        //
+        case DELETE_POST_REQUEST : {
+            return {
+                ...state,
+                deletePostErrorReason : '',
+            }
+        }
+        case DELETE_POST_SUCCESS : {
+            return {
+                ...state,
+                mainPosts : state.mainPosts.filter( v => v.id !== action.data ),
+            }
+        }
+        case DELETE_POST_FAILURE : {
+            return {
+                ...state,
+                deletePostErrorReason : action.error,
             }
         }
         default : {

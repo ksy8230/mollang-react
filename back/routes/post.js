@@ -40,4 +40,46 @@ router.get('/:id', async (req, res, next) => { // GET /api/post/:id
     }
 });
 
+router.patch('/:id/edit', async(req, res, next) => { // PATCH /api/post/:id/edit
+    try {
+        const post = await db.Post.findOne({
+            where : { id : req.params.id }
+        });
+        // console.log(post)
+        if(!post) {
+            return res.status(404).send('포스트가 존재하지 않습니다.');
+        }
+        console.log('req.body',req.body)
+        const fullEditPost = await post.update(
+            { 
+                content : req.body.content,
+                title : req.body.title,
+                tag : req.body.tag,
+            }
+        );
+        console.log('fullEditPost',fullEditPost)
+        return res.json(fullEditPost);
+    } catch (e) {
+        console.error(e);
+        next(e);
+    }
+});
+
+router.delete('/:id/delete', async (req, res, next) => {
+    try {
+        // const post = await db.Post.findOne({ where : { id : req.params.id }});
+        await db.Post.destroy({ where : { id : req.params.id } });
+        await db.Tag.destroy({
+            include: [{
+                models : db.Posttag,
+                where : { post_id : req.params.id }
+            }]
+        })
+        res.send(req.params.id); 
+    } catch (e) {
+        console.error(e);
+        return next(e);
+    }
+});
+
 module.exports = router;

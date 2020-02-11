@@ -1,6 +1,6 @@
 import { all, fork, put, takeLatest, call } from 'redux-saga/effects';
 import axios from 'axios';
-import { ADD_POST_REQUEST, ADD_POST_FAILURE, ADD_POST_SUCCESS, LOAD_POSTS_REQUEST, LOAD_POSTS_SUCCESS, LOAD_POSTS_FAILURE, LOAD_TAG_POSTS_REQUEST, LOAD_TAG_POSTS_SUCCESS, LOAD_TAG_POSTS_FAILURE, LOAD_POST_REQUEST, LOAD_POST_SUCCESS, LOAD_POST_FAILURE } from '../reducers/post';
+import { ADD_POST_REQUEST, ADD_POST_FAILURE, ADD_POST_SUCCESS, LOAD_POSTS_REQUEST, LOAD_POSTS_SUCCESS, LOAD_POSTS_FAILURE, LOAD_TAG_POSTS_REQUEST, LOAD_TAG_POSTS_SUCCESS, LOAD_TAG_POSTS_FAILURE, LOAD_POST_REQUEST, LOAD_POST_SUCCESS, LOAD_POST_FAILURE, EDIT_POST_REQUEST, EDIT_POST_FAILURE, EDIT_POST_SUCCESS, DELETE_POST_REQUEST, DELETE_POST_SUCCESS, DELETE_POST_FAILURE } from '../reducers/post';
 
 function addPostAPI(postData) {
     return axios.post('/post', postData, { // server:POST /api/post
@@ -35,7 +35,6 @@ function* loadPosts() {
             type : LOAD_POSTS_SUCCESS,
             data : result.data,
         })
-        //console.log(action.data)
     } catch(e) {
         yield put({
             type : LOAD_POSTS_FAILURE,
@@ -46,7 +45,6 @@ function* loadPosts() {
 function* watchloadPosts() {
     yield takeLatest(LOAD_POSTS_REQUEST, loadPosts);
 }
-//
 function loadTagPostsAPI(tagData) {
     return axios.get(`/tag/${tagData}`); // server:GET /api/tag/:tag
 }
@@ -67,7 +65,6 @@ function* loadTagPosts(action) {
 function* watchloadTagPosts() {
     yield takeLatest(LOAD_TAG_POSTS_REQUEST, loadTagPosts);
 }
-//
 function loadPostAPI(postId) {
     return axios.get(`/post/${postId}`); // server:GET /api/post/:id
 }
@@ -88,11 +85,65 @@ function* loadPost(action) {
 function* watchloadPost() {
     yield takeLatest(LOAD_POST_REQUEST, loadPost);
 }
+//
+function editPostAPI(data) {
+    return axios.patch(`/post/${data.PostId}/edit`, data, { // server:POST /api/post/:id/edit
+        withCredentials : true,
+    });
+}
+function* editPost(action) {
+    try {
+        const result = yield call(editPostAPI, action.data);
+        yield put({
+            type : EDIT_POST_SUCCESS,
+            data : {
+                PostId : action.data.PostId,
+                content : result.data.content,
+                title : result.data.title,
+                tag : result.data.tag,
+            }
+        })
+    } catch(e) {
+        yield put({
+            type : EDIT_POST_FAILURE,
+            error : e.response && e.response.data,
+        })
+    }
+}
+function* watchEditPost() {
+    yield takeLatest(EDIT_POST_REQUEST, editPost);
+}
+//
+function deletePostAPI(data) {
+    return axios.delete(`/post/${data}/delete`, { // server:DELETE /api/post/:id/delete
+        withCredentials : true,
+    });
+}
+function* deletePost(action) {
+    try {
+        const result = yield call(deletePostAPI, action.data);
+        console.log('result',result)
+        yield put({
+            type : DELETE_POST_SUCCESS,
+            data :  result.data,
+        })
+    } catch(e) {
+        yield put({
+            type : DELETE_POST_FAILURE,
+            error : e.response && e.response.data,
+        })
+    }
+}
+function* watchDeletePost() {
+    yield takeLatest(DELETE_POST_REQUEST, deletePost);
+}
 export default function* postSaga() {
     yield all([
         fork(watchAddPost),
         fork(watchloadPosts),
         fork(watchloadTagPosts),
         fork(watchloadPost),
+        fork(watchEditPost),
+        fork(watchDeletePost),
     ])
 }

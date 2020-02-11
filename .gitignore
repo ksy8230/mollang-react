@@ -9,3 +9,7 @@ _Editor_hooks.js
 EditorContainer.js
 submit.js
 blog_back.jsx
+blogAdmin.jsx
+AdminHeader.jsx
+AppLayoutAdmin.js
+admin/index.jsx

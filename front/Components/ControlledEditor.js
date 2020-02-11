@@ -7,7 +7,7 @@ const Editor = dynamic(
     { ssr: false }
 );
 import draftToHtml from "draftjs-to-html";
-//import { stateToHTML } from "draft-js-export-html";
+import htmlToDraft from 'html-to-draftjs';
 
 class ControlledEditor extends Component {
   constructor(props) {
@@ -21,17 +21,26 @@ class ControlledEditor extends Component {
   }
 
   onEditorStateChange = editorState => {
-    const { onChange, value } = this.props;
+    const { onChange, value, placeholder } = this.props;
     const newValue = draftToHtml(convertToRaw(editorState.getCurrentContent()));
-
+    
     if (value !== newValue) {
       onChange(newValue);
     }
-    //console.log(newValue)
     this.setState({
       editorState
     });
   };
+
+  componentDidMount() {
+    const { placeholder } = this.props;
+    const blocksFromHtml = htmlToDraft(placeholder);
+    const { contentBlocks, entityMap } = blocksFromHtml;
+    const contentState = ContentState.createFromBlockArray(contentBlocks, entityMap);
+    this.setState({
+      editorState : EditorState.createWithContent(contentState),
+    });
+  }
 
   render() {
     const { editorState } = this.state;

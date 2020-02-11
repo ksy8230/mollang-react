@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
+import Router from 'next/router';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
-import { LOAD_POST_REQUEST } from '../../reducers/post';
+import { LOAD_POST_REQUEST, DELETE_POST_REQUEST } from '../../reducers/post';
 import Link from 'next/link';
 
 function createMarkup(html) {
@@ -36,6 +37,14 @@ const Detail = ({ id }) => {
         document.getElementById(titleTagId).scrollIntoView({behavior: 'smooth'});
     }
 
+    const onClickDeletePost = () => {
+        dispatch({
+            type : DELETE_POST_REQUEST,
+            data : id,
+        });
+        Router.push('/');
+    };
+
     useEffect(() => {
         dispatch({
             type : LOAD_POST_REQUEST,
@@ -48,9 +57,11 @@ const Detail = ({ id }) => {
 
     return (
         <>
-            <p>
+            <div>
                 {id}번 글
-            </p>
+                <button><Link href={{ pathname: '/admin/blogUpdate', query: {id : id} }} as={`/admin/blogUpdate/${id}`}><a>수정</a></Link></button>
+                <button onClick={onClickDeletePost}>삭제</button>
+            </div>
             <div>
                 <div>{singlePost.title}</div>
                 <span>{singlePost.created_at}</span>
