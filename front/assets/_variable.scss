@@ -1,0 +1,67 @@
+$pink:#db94a3;
+$darkpink:#dd5f7a;
+$black : #252525;
+$lightgray : #eee;
+$gray : #ddd;
+
+/*
+    공통 관련
+    input
+    layer-popup
+*/
+
+/* layer-popup */
+.layer-popup {
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    z-index: 20;
+    .overlay {
+      position: fixed;
+      top: 0px;
+      left: 0px;
+      width: 100%;
+      height: 100%;
+      z-index: 10;
+      background: rgba(249, 249, 249, 0.85);
+      //animation: 0.25s ease 0s 1 normal forwards running bcCCNc;
+    }
+    .wapper {
+      position: absolute;
+      top:50%;
+      left:50%;
+      transform: translate(-50%, -50%);
+      width: 80%;
+      //height: 50%;
+      box-shadow: rgba(0, 0, 0, 0.09) 0px 2px 12px 0px;
+      background: #fff;
+      //animation: 0.4s ease-in-out 0s 1 normal forwards running hwrkPK;
+      z-index: 11;
+      span {
+        position: absolute;
+        right: 0;
+        top: 0px;
+        width: 40px;
+        height: 40px;
+        line-height: 40px;
+        text-align: center;
+      }
+      .layer-popup-cotent {
+        padding: 15px;
+      }
+    }
+}
+
+/* input-box */
+.input-box {
+    margin:0 auto 15px;
+    text-align: center;
+    input {
+        display: inline-block;
+        padding: 1rem;
+        border:1px solid lightgray;
+        font-size: 1rem;
+    }
+}

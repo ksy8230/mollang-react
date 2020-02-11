@@ -27,23 +27,17 @@ const Login = () => {
         })
     }, [userId, password]);
 
-    const onClickLogOut = () => {
-        dispatch({
-            type : LOGOUT_REQUEST,
-        })
-    };
 
 
     return (
-        <>  
+        <div className='login'>  
             {
                 me && me.id ?
                 <>
-                    <p>{me.nickname}</p>
-                    <button onClick={onClickLogOut}>로그아웃</button>
+                    <p>반갑습니다. {me.nickname} 님!</p>
                 </>
                 :
-                <>
+                <div>
                     <form onSubmit={onSubmitForm}>
                         <div className='input-box'>
                             <input type="text" value={userId} placeholder='아이디' onChange={onChangeUserId} required />
@@ -51,15 +45,15 @@ const Login = () => {
                         <div className='input-box'>
                             <input type="password" value={password} placeholder='비밀번호' onChange={onChangePassword} required />
                         </div>
-                        <button type='submit'>로그인</button>
+                        <button type='submit'><a>로그인</a></button>
                     </form>
                     {logInErrorReason}
-                    <div><Link href='/signup'><a>회원가입</a></Link></div>
-                    <div><a href='http://localhost:8080/auth/kakao'>카카오로 간편 로그인</a></div>
-                </>
+                    <p><a href='http://localhost:8080/auth/kakao'>카카오로 간편 로그인</a></p>
+                    
+                </div>
             }
             
-        </>
+        </div>
     );
 };
 

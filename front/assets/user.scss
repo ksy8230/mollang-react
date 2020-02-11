@@ -1,0 +1,29 @@
+/*
+    user 관련 css
+    login
+    signup
+    edit-user
+    
+*/
+
+.login {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
+    min-height: 25rem;
+    -webkit-box-pack: center;
+    -webkit-justify-content: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    form {
+        margin-bottom: 10px;
+    }
+    p {
+        margin-bottom: 10px;
+    }
+}

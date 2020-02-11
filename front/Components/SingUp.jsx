@@ -39,7 +39,7 @@ const SignUp = () => {
         });
     }, [userId, password, password2, nickname]);
     return (
-        <>
+        <div className='login'>
             <form onSubmit={onSubmit}>
                 <div className='input-box'>
                     <input type='text' value={userId} placeholder='아이디' onChange={onChangeUserId} required />
@@ -55,9 +55,9 @@ const SignUp = () => {
                 </div>
                 {passwordCheckError && <p>비밀번호가 일치하지 않습니다.</p>}
                 <p>{signUpErrorReason}</p>
-                <button htmltype='submit'>가입하기</button>
+                <button htmltype='submit'><a>가입하기</a></button>
             </form>
-        </>
+        </div>
     );
 };
 

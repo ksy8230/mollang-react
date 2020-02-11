@@ -1,0 +1,206 @@
+html,
+body,
+div,
+span,
+applet,
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+a,
+abbr,
+acronym,
+address,
+big,
+cite,
+code,
+del,
+dfn,
+em,
+img,
+ins,
+kbd,
+q,
+s,
+samp,
+small,
+strike,
+strong,
+sub,
+sup,
+tt,
+var,
+b,
+u,
+i,
+center,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td,
+article,
+aside,
+canvas,
+details,
+embed,
+figure,
+figcaption,
+footer,
+header,
+hgroup,
+menu,
+nav,
+output,
+ruby,
+section,
+summary,
+time,
+mark,
+audio,
+video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 16px;
+  font-family: 'Noto Serif KR', Arial, Helvetica, sans-serif;
+  vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+menu,
+nav,
+section {
+  display: block;
+}
+body {
+  line-height: 1;
+}
+ol,
+ul {
+  list-style: none;
+}
+blockquote,
+q {
+  quotes: none;
+}
+blockquote:before,
+blockquote:after,
+q:before,
+q:after {
+  content: "";
+  content: none;
+}
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+a {
+  all: unset;
+  cursor: pointer;
+}
+
+*,
+input {
+  box-sizing: border-box;
+}
+
+input {
+  border: none;
+  box-sizing: border-box;
+  &:focus,
+  &:active {
+    outline: none;
+  }
+}
+
+a {
+    text-decoration:none;
+    color:$darkpink;
+    &:hover {
+      text-decoration: underline;
+    }
+}
+*{
+    box-sizing:border-box;
+}
+body {
+    font-size:14px;
+}
+button {
+  display: inline-block;
+  padding: 0;
+  background: #3B3B3B;
+  color: #fff;
+  line-height: 1rem;
+  border-radius: 5px;
+  font-weight: bold;
+  border: 0;
+  a{
+    display: block;
+    padding: 10px;
+    color:#fff;
+  }
+}
+/* scroll bar */
+::-webkit-scrollbar {
+  width: 7px;  /* 세로축 스크롤바 길이 */
+  height: 7px;  /* 가로축 스크롤바 길이 */
+}
+::-webkit-scrollbar-track {
+  // background-color: lightblue;
+}
+::-webkit-scrollbar-track-piece {
+  
+}
+::-webkit-scrollbar-thumb {
+  border-radius: 8px;
+  background-color: $pink;
+  opacity: .6;
+}
+::-webkit-scrollbar-button {
+
+}
+::-webkit-scrollbar-button:start {
+  
+}
+::-webkit-scrollbar-button:end {
+  
+}
+::-webkit-scrollbar-button:vertical:increment {
+}
+::-webkit-scrollbar-button:vertical:decrement {
+}
+::-webkit-scrollbar-corner {
+  
+}
+::-webkit-resizer {
+  
+}

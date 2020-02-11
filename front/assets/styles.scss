@@ -1,0 +1,26 @@
+@import './variable';
+@import './reset';
+@import './header';
+@import './user';
+@import './home';
+
+.layer-popup {
+    .wapper {
+        top: 150%;
+        width: 50%;
+        transition: all 0.3s;
+    }
+    &.active {
+        .wapper {
+            top: 50%;
+            width: 80%;
+        }
+    }
+    &.account {
+        .wapper {
+            .foot {
+                
+            }
+        }
+    }
+}

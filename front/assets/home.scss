@@ -1,0 +1,49 @@
+/*
+    home 관련 css
+*/
+
+.home {
+    width: 1200px;
+    margin: 0 auto;
+    @media screen and (max-width:1024px) {
+        width: 100%; 
+    }
+    h2, p {
+        text-align: center;
+    }
+    .typing-effect {
+        display: block;
+        margin: 2rem 0;
+        height:1.4rem;
+        p {
+            text-align: center;
+            color:$black;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+    }
+    .features {
+        display: flex;
+        justify-content: center;
+        justify-content: space-between;
+        .feature {
+            max-width: 30%;
+            h3 {
+                text-align: center;
+            }
+            p {
+                text-align: left;
+                line-height: 1.4rem;
+                span {
+                    display: inline-block;
+                    margin:0 5px;
+                    padding:2px;
+                    background: $lightgray;
+                    border-radius: 5px;
+                    font-size: .9rem;
+                    color:$black;
+                }
+            }
+        }
+    }
+}
