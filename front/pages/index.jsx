@@ -6,6 +6,7 @@ import { LOGIN_REQUEST, LOGIN_SUCCESS, LOAD_USER_REQUEST } from '../reducers/use
 //import ReactTypingEffect from 'react-typing-effect';
 //import Typing from 'react-typing-animation';
 import useTypewriter from "react-typewriter-hook";
+import Link from 'next/link';
 
 const MagicOcean = [
     "새로운 기술이 재밌고 신나요.",
@@ -23,16 +24,20 @@ const Home = () => {
     const intervalRef = useRef({});
     const name = useTypewriter(magicName);
 
+    const [imgTagPosition, setImgTagPosition] = useState('55%');
+    const imgTagIntervalRef = useRef();
+
     useEffect(() => {
         intervalRef.current = setInterval(() => {
-          // index = index + 1 > 2 ? 0 : ++index + 1;
-          index = index > 2 ? 0 : ++index;
-          setMagicName(MagicOcean[index]);
+            // index = index + 1 > 2 ? 0 : ++index + 1;
+            index = index > 2 ? 0 : ++index;
+            setMagicName(MagicOcean[index]);
         }, 5000);
         return function clear() {
-          clearInterval(intervalRef.current);
+            clearInterval(intervalRef.current);
         };
-      }, [magicName]);
+    }, [magicName]);
+
     useEffect(() => {
         if (!me) {
             dispatch({
@@ -41,17 +46,34 @@ const Home = () => {
         };
     }, [me]);
 
+    useEffect(() => {
+        imgTagIntervalRef.current = setInterval(changPosition, 600);
+        return () => {
+            clearInterval(imgTagIntervalRef.current);
+        };
+    }, [imgTagPosition]);
+
+    const changPosition = () => {
+        if (imgTagPosition === '55%') {
+            setImgTagPosition('45%')
+        } else if (imgTagPosition === '45%') {
+            setImgTagPosition('55%')
+        }
+    }
+
 
     return (
         <div className='home'>
             {/*me && me.id ? <>{me.nickname} 로그인 완료 </> : <>로그아웃 상태</>*/}
-            <h2>몰로그</h2>
-            <p>개발 관련 공부 및 스케줄 관리를 합니다.</p>
-            <div className='typing-effect'><p>{name}</p></div>
-            <pre>{`
-                <span>Hello<span>,   
-                World.
-            `}</pre>
+            <div className='main-features'>
+                <div className='typing-effect'><p>{name}</p></div>
+                <div className='img-pen'><img src="/images/pen.png" alt=""/></div>
+                <div className='img-tag'><img style={{top : imgTagPosition}} src="/images/tag_white.png" alt=""/></div>
+            </div>
+            <div className='title-features'>
+                <h2>몰랑이의 다락방</h2>
+                <p>개발 관련 공부 및 스케줄 관리를 합니다.</p>
+            </div>
             <div className='features'>
                 <div className='feature'>
                     <h3>안녕하세요! 몰랑입니다.</h3>
@@ -72,16 +94,17 @@ const Home = () => {
                 <div className='feature'>
                     <h3>프로젝트</h3>
                     <div>
-                        <p># 냉장고 프로젝트</p>
-                        <p># 몰로그</p>
-                        <p># 리덕스 토이 프로젝트</p>
+                        <p><a href="http://localhost:3000/"># 몰로그</a></p>
+                        <p><a href="http://drleesf.co.kr.s3-website.ap-northeast-2.amazonaws.com/"># 횟집 사이트</a></p>
+                        <p><a href="http://rgproject.co.kr/"># 냉장고 프로젝트</a></p>
+                        <p><a href="https://github.com/ksy8230/zerocho-reactgame/tree/master/9.%EC%88%9C%EB%B2%88%EB%B0%98%EC%9D%91%EC%86%8D%EB%8F%84%EC%B2%B4%ED%81%AC"># 리덕스 토이 프로젝트</a></p>
                     </div>
                 </div>
                 <div className='feature'>
                     <h3>관심사</h3>
                     <p>
-                        <span>{`#REACT`}</span>, <span>{`#JAVASCRIPT`}</span>, 
-                        <span>{`#EXPRESS`}</span>, <span>{`#NEXT`}</span>, 
+                        <span>{`#REACT`}</span> <span>{`#JAVASCRIPT`}</span> 
+                        <span>{`#EXPRESS`}</span> <span>{`#NEXT`}</span> 
                         <span>{`#VUE`}</span>
                     </p>
                 </div>

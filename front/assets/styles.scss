@@ -3,6 +3,8 @@
 @import './header';
 @import './user';
 @import './home';
+@import './footer';
+@import './blog';
 
 .layer-popup {
     .wapper {
@@ -22,5 +24,15 @@
                 
             }
         }
+    }
+}
+
+.contents-wrap {
+    position: relative;
+    //margin-top: 1.5rem;
+    width: 1024px;
+    margin: 1.5rem auto;
+    @media screen and (max-width:1024px) {
+        width: 100%; 
     }
 }

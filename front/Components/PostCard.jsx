@@ -13,17 +13,21 @@ function makeTagList(value) {
     return splitString
 }
 
-const PostCard = ({ post }) => {
+const PostCard = ({ post, i, summery }) => {
     return (
         <li>
-            <Link href={{ pathname: '/blog/detail', query: {id : post.id}}} as={`/blog/${post.id}`}><a>해당 게시글 상세페이지 링크</a></Link>
-            <div className='post-thumb'>
-                <img src={post.thumbImg} alt=""/>
-            </div>
             <div className='post-description'>
-                <h3>{post.title}</h3>
-                <p dangerouslySetInnerHTML={createMarkup(post.content)} />
-                <p className='post-date'>{post.date}</p>
+                <div className='post-head'>
+                    <div className='post-thumb'>
+                        <Link href={{ pathname: '/blog/detail', query: {id : post.id}}} as={`/blog/${post.id}`}><a><img src={post.thumbImg|| '/images/post_default_img.png'} alt=""/></a></Link>
+                    </div>
+                    <div className='post-title'>
+                        <h3><Link href={{ pathname: '/blog/detail', query: {id : post.id}}} as={`/blog/${post.id}`}><a>{post.title}</a></Link></h3>
+                        <p className='post-date'>{post.date|| '2020.02.12'}</p>
+                    </div>
+                </div>
+
+                {/*<div className='post-content' dangerouslySetInnerHTML={createMarkup(post.content)} />*/}
                 <p className='post-tag'>
                     {
                         post.tag ?
@@ -46,7 +50,7 @@ PostCard.propTypes = {
         content : PropTypes.string,
         date : PropTypes.string,
         createdAt : PropTypes.object,
-    })
+    }),
 };
 
 export default PostCard;

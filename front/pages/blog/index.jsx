@@ -6,16 +6,14 @@ import { stateToHTML } from 'draft-js-export-html';
 import { useSelector, useDispatch } from 'react-redux';
 import { LOAD_POSTS_REQUEST } from '../../reducers/post';
 import PostCard from '../../Components/PostCard';
-
-function createMarkup(html) {
-    return {__html: html};
-}
+import StackGrid from "react-stack-grid";
 
 const Blog = () => {
     const [editorState, setEditorState] = useState(EditorState.createEmpty());
     const [editorContentHtml, setEditorContentHtml] = useState('');
     const { mainPosts } = useSelector(state => state.post);
     const dispatch = useDispatch();
+    const [summery, setSummery] = useState([]);
 
     useEffect(() => {
         /*const rawEditorData = getSavedEditorData(); //savedData 
@@ -32,16 +30,38 @@ const Blog = () => {
         })
     }, []);
 
-    /*const getSavedEditorData = () => {
-        const savedData = localStorage.getItem('content');
-        console.log('savedData', savedData)
-        return savedData ? JSON.parse(savedData) : null;
-    };*/
+    useEffect(() => {
+        // 포스트들 요약글 만들기
+        summerySetFunction()
+    }, [mainPosts]);
+
+    const summerySetFunction = () => {
+        const contentArray = mainPosts.map((v,i) => {
+            return v.content;
+        });
+        //console.log(contentArray)
+        const summeryArray = contentArray.map((v,i) => {
+            return v.replace(/(<([^>]+)>)/ig,"");
+        });
+        //console.log(summeryArray)
+        const subStringSummeryArray = summeryArray.map((v,i) => {
+            console.log(v.length)
+            if(v.length>= 100) {
+                return v.substr(0,100)+"...";
+            } else {
+                return v;
+            }
+        })
+        setSummery(subStringSummeryArray);
+    };
 
     return (
-        <div className='blog'>
-            <h2>다양한 이야기를 기록하고 있어요</h2>
-            <div className='tags-list'> 태그 :  
+        <div className='contents-wrap'>
+            <div className='blog'>
+            <div className='blog-title'>
+                <h2>다양한 이야기를 기록하고 있어요</h2>
+            </div>
+            {/*<div className='tags-list'> 태그 :  
                 {
                     mainPosts.map((v,i) => {
                         return (
@@ -55,23 +75,27 @@ const Blog = () => {
                         )
                     })
                 }
-            </div>
-            
-            
+            </div>*/}
             <div className='post-list'>
                 <ul>
+                    <StackGrid
+                        columnWidth={330}
+                    >
                     {
                         mainPosts.map((v,i) => {
                             return (
                                 <PostCard 
                                     post={v}
-                                    key={i}
+                                    i={i}
+                                    summery={summery}
                                 />
                             )
                         })
                     }
+                    </StackGrid>
                 </ul>
             </div>
+        </div>
         </div>
     );
 };

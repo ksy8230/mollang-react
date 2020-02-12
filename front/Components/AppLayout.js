@@ -7,7 +7,7 @@ const AppLayout = ({ children }) => {
     return (
         <>
             <Header />
-            {children}
+                {children}
             <Footer />
         </>
     );

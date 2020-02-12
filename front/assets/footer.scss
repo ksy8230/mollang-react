@@ -1,0 +1,35 @@
+/*
+    footer 관련 css
+*/
+
+footer {
+    width: 1024px;
+    margin: 2rem auto;
+    padding: 2rem 0;
+    border-top:1px solid $gray;
+    text-align: center;
+    @media screen and (max-width:1024px) {
+        width: 100%; 
+    }
+    .logo {
+        img {
+            width: 2.5rem;
+        }
+    }
+    .contact {
+        margin: 1rem 0;
+        span {
+            display: inline-block;
+            margin: 0 .5rem;
+            font-size: .9rem;
+            color:$black;
+            img {
+                width: 2rem;
+            }
+        }
+    }
+    p {
+        font-size: .8rem;
+        color:#999;
+    }
+}

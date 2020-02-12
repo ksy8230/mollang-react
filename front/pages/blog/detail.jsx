@@ -56,30 +56,30 @@ const Detail = ({ id }) => {
     }, [id]);
 
     return (
-        <>
-            <div>
-                {id}번 글
-                <button><Link href={{ pathname: '/admin/blogUpdate', query: {id : id} }} as={`/admin/blogUpdate/${id}`}><a>수정</a></Link></button>
-                <button onClick={onClickDeletePost}>삭제</button>
+        <div className='contents-wrap'>
+            <div className='blog-detail'> 
+                <div className='admin-buttons'>
+                    <button><Link href={{ pathname: '/admin/blogUpdate', query: {id : id} }} as={`/admin/blogUpdate/${id}`}><a>수정</a></Link></button>
+                    <button onClick={onClickDeletePost}><a>삭제</a></button>
+                </div>
+                <div>
+                    <h2 className='title'>{singlePost.title}</h2>
+                    <span className='date'>{singlePost.created_at}</span>
+                    <div className='draft-editor-contents' dangerouslySetInnerHTML={createMarkup(singlePost.content)} />
+                    <p className='post-tag'>
+                        {
+                            singlePost.tag ?
+                            makeTagList(singlePost.tag).map((v,i) => {
+                                return (
+                                <span key={i} style={{marginRight:10}}><Link href={{ pathname: '/tag', query : {tag : v}}} as={`/tag/${v}`} ><a>#{v}</a></Link></span>
+                                )
+                            }) : null
+                        }
+                    </p>
+                </div>
             </div>
-            <div>
-                <div>{singlePost.title}</div>
-                <span>{singlePost.created_at}</span>
-                <div dangerouslySetInnerHTML={createMarkup(singlePost.content)} />
-                <p className='post-tag'>
-                    {
-                        singlePost.tag ?
-                        makeTagList(singlePost.tag).map((v,i) => {
-                            return (
-                            <span key={i} style={{marginRight:10}}><Link href={{ pathname: '/tag', query : {tag : v}}} as={`/tag/${v}`} ><a>#{v}</a></Link></span>
-                            )
-                        }) : null
-                    }
-                </p>
-            </div>
-            <div className='sidenav' style={{position:"fixed",top:"0",right:"0"}}>
-                사이드 링커
-                <aside>
+            <div className='sidenav'>
+                <ul>
                     {
                         sideLinker.map((v,i) => {
                             return (
@@ -89,9 +89,9 @@ const Detail = ({ id }) => {
                             )
                         })
                     }
-                </aside>
+                </ul>
             </div>
-        </>
+        </div>
     )
 };
 

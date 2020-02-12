@@ -1,0 +1,104 @@
+/*
+    blog 관련 css
+*/
+
+.blog {
+    .blog-title {
+        padding: 2rem 0;
+    }
+    h2 {
+        font-size: 1.4rem;
+        text-align: center;
+    }
+    .post-list {
+        ul {
+            li {
+                box-sizing: border-box;
+                padding: 1rem;
+                border-radius: 5px;
+                border: 1px solid $gray;
+                box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+                .post-head {
+                    border-bottom: 1px solid $gray;
+                    .post-thumb {
+                        img {
+                            width:100%;
+                        }
+                    }
+                    .post-title {
+                        margin: 1.5em 0;
+                        h3 {
+                            margin-bottom:1rem;
+                            a {
+                                color: $black;
+                            }
+                        }
+                        p {
+                            font-size: .9rem;
+                            color: $darkpink;
+                        }
+                    }
+                }
+                .post-content {
+                    position: relative;
+                    margin: 1.5em 0;
+                    p {
+                        line-height: 1.3rem;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.blog-detail {
+    position: relative;
+    width: 768px;
+    overflow: hidden;
+    //margin: 1.5rem auto;
+    @media screen and (max-width:1024px) {
+        width: 100%; 
+    }
+    .title {
+        margin-bottom: .5rem;
+        font-size: 1.6rem;
+        font-weight: normal;
+        color:$black;
+    }
+    .date {
+        font-size: .9rem;
+        color:$black;
+    }
+    .admin-buttons {
+        margin-bottom: 1rem;
+        >button {
+            margin-right:10px;
+        }
+    }
+}
+.sidenav {
+    position: absolute;
+    top: 100px;
+    right: 0px;
+    ul {
+        li {
+            margin-bottom: .5rem;
+            a {
+                font-size: .9rem;
+            }
+        }
+    }
+
+}
+
+.draft-editor-contents {
+    margin: 2rem 0;
+    p {
+        margin:10px 0;
+        color:$black;
+        line-height: 1.6rem;
+    }
+    span {
+        font-size: initial;
+    }
+}

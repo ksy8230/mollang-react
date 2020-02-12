@@ -3,40 +3,89 @@
 */
 
 .home {
-    width: 1200px;
-    margin: 0 auto;
     @media screen and (max-width:1024px) {
         width: 100%; 
     }
     h2, p {
         text-align: center;
     }
+    .main-features {
+        position: relative;
+        padding: 12rem 0;
+        background: $lightgray;
+        text-align: center;
+        .img-pen {
+            img {
+                width: 50%;
+            }
+        }
+        .img-tag {
+            position: absolute;
+            bottom:-50px;
+            left:50%;
+            margin-left: -50px;
+            display: inline-block;
+            width: 100px;
+            height: 100px;
+            box-sizing: border-box;
+            border-radius: 120px;
+            border:4px solid #fff;
+            background: $black;
+            img {
+                position: absolute;top:50%;left:50%;transform: translate(-50%,-50%);
+                transition: all 0.6s;
+            }
+        }
+    }
+    .title-features {
+        margin-top:80px;
+        h2 {
+            font-size: 1.4rem;
+        }
+        p {
+            margin: .5rem 0 0 0;
+            color: $black;
+        }
+    }
     .typing-effect {
         display: block;
-        margin: 2rem 0;
-        height:1.4rem;
+        margin-bottom: 1rem;
+        height:2.6rem;
         p {
             text-align: center;
             color:$black;
             font-weight: bold;
-            font-size: 1.2rem;
+            font-size: 2.5rem;
         }
     }
     .features {
+        width: 1024px;
+        margin: 2rem auto;
+        padding: 2rem 0;
         display: flex;
         justify-content: center;
         justify-content: space-between;
+        border-top:1px solid $gray;
+        @media screen and (max-width:1024px) {
+            width: 100%; 
+        }
         .feature {
             max-width: 30%;
             h3 {
+                margin-bottom: 1rem;
+                font-size: 1.1rem;
+                font-weight: bold;
                 text-align: center;
+                color: $lightblue;
+
             }
             p {
                 text-align: left;
-                line-height: 1.4rem;
+                line-height: 1.6rem;
+                color: $lightblue;
                 span {
                     display: inline-block;
-                    margin:0 5px;
+                    margin: 5px 5px 5px 0;
                     padding:2px;
                     background: $lightgray;
                     border-radius: 5px;
