@@ -27,7 +27,7 @@ const Blog = () => {
         <>  
             관리자가 사용하는 에디터입니다
             <div>
-                <input type="text" value={title} onChange={onChangeTitle} placeholder="제목" />
+                <input type="text" value={title} onChange={onChangeTitle} placeholder="제목" required />
             </div>
             <EditorForm dispatch={dispatch} />
             <div>

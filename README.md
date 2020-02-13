@@ -54,7 +54,8 @@
 - [v] 포스트 상세페이지에서 h태그를 사이드 목록형으로 만들기(+링커 이동)
 - [v] 서버를 이용해 포스트 수정하기
 - [v] 서버를 이용해 포스트 삭제하기
-- [] 서버를 이용해 편집기로 포스트 이미지 렌더링 해보기 
+- [v] 서버를 이용해 편집기로 포스트 이미지 렌더링 해보기 
+- [] 업로드할 때 이미지들을 redux 상태값에 넣어주기 (미리보기 이미지 불러오기 위함) 
 - [] 포스트들 무한 스크롤 추가하기
 
 #### design
@@ -68,6 +69,7 @@
 - blog
     - [v] `react-stack-grid`로 포스트들 레이아웃 입히기
     - [] 포스트들 요약글 추출하기 (답은 정규표현식? replace(/(<([^>]+)>)/ig,""))
+    - [] 포스트 상세 스타일 작업하기
 - +a 
     - [v] 카카오톡 간편 로그인
     - [] 카테고리로 포스트 구분하기
@@ -94,6 +96,8 @@
 
 ##### draft-js 이슈 모음 (에러 : 해결 링크)
 - window is not defined :  https://github.com/jpuri/react-draft-wysiwyg/issues/893
+- Unknown DraftEntity key: null : https://github.com/jpuri/react-draft-wysiwyg/issues/524
+    - 버전 수정하여 재설치 : "draft-js": "^0.10.4", "draft-js-export-html": "^1.2.0", "draftjs-to-html": "^0.7.4", "html-to-draftjs": "^1.0.1",
 
 ##### draft-js 리덕스 폼으로 편집기 value 값 전달하는 방법
 https://codesandbox.io/s/react-draft-wysiwyg-redux-forms-1bqcm
@@ -110,3 +114,7 @@ https://codesandbox.io/s/ElYvJR21K
 
 편집기의 submit 값이 post 리듀서에 들어가야하는데 리덕스폼이 제공하는 리덕스는 파일 형식으로 되어있지 않아 난감했다.
 해결한 방법 : `redux-form` submit 버튼을 외부 버튼으로 수정하고 해당 컴포넌트에서 draft.values.editorText 값을 가져와 버튼 onClickEvent 이벤트시 ADD_POST_REQUEST dispatch하였다.
+
+##### draft-js image 업로드 ( 키워드 : resolve({ data: { link } }) )
+https://github.com/jpuri/react-draft-wysiwyg/blob/master/stories/ImageUpload/index.js
+https://github.com/jpuri/react-draft-wysiwyg/issues/730

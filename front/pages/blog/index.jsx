@@ -32,7 +32,7 @@ const Blog = () => {
 
     useEffect(() => {
         // 포스트들 요약글 만들기
-        summerySetFunction()
+        //summerySetFunction();
     }, [mainPosts]);
 
     const summerySetFunction = () => {
@@ -87,6 +87,7 @@ const Blog = () => {
                                 <PostCard 
                                     post={v}
                                     i={i}
+                                    key={i}
                                     summery={summery}
                                 />
                             )

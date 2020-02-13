@@ -1,4 +1,6 @@
 const express = require('express');
+const multer = require('multer');
+const path = require('path');
 const db = require('../models');
 
 const router = express.Router();
@@ -80,6 +82,26 @@ router.delete('/:id/delete', async (req, res, next) => {
         console.error(e);
         return next(e);
     }
+});
+
+const upload = multer({
+    storage : multer.diskStorage({
+        destination(req, file, done) {
+            done(null, 'uploads');
+        },
+        filename(req, file, done) {
+            const ext = path.extname(file.originalname);
+            const basename = path.basename(file.originalname, ext);
+            done(null, basename + new Date().valueOf() + ext); // 파일명이 같아 덮어지는 걸 막기 위해 파일명+날짜
+        },
+    }),
+    limits : { fileSize : 20 * 1024 * 1024 },
+});
+
+// array, fields, single, none 메서드
+router.post('/images', upload.array('image'), (req, res) => {
+    console.log(req.files)
+    res.json(req.files.map(v => v.filename));
 });
 
 module.exports = router;
