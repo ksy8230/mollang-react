@@ -21,7 +21,7 @@ const PostCard = ({ post, i, summery }) => {
                 <div className='post-head'>
                     <div className='post-thumb'>
                         <Link href={{ pathname: '/blog/detail', query: {id : post.id}}} as={`/blog/${post.id}`}><a>
-                            <img src={ post.Images[0] ? `http://localhost:8080/${post.Images[0].src}` : '/images/post_default_img.jpg'} alt=""/>
+                            <img src={ post.Images && post.Images[0] ? `http://localhost:8080/${post.Images[0].src}` : '/images/post_default_img.jpg'} alt=""/>
                         </a></Link>
                     </div>
                     <div className='post-title'>

@@ -11,29 +11,9 @@ import StackGrid from "react-stack-grid";
 const Blog = () => {
     const [editorState, setEditorState] = useState(EditorState.createEmpty());
     const [editorContentHtml, setEditorContentHtml] = useState('');
-    const { mainPosts } = useSelector(state => state.post);
+    const { mainPosts, hasMorePost } = useSelector(state => state.post);
     const dispatch = useDispatch();
     const [summery, setSummery] = useState([]);
-
-    useEffect(() => {
-        /*const rawEditorData = getSavedEditorData(); //savedData 
-        console.log('로컬데이터 가져오기',rawEditorData)
-        if (rawEditorData !== null) {
-            const contentState = convertFromRaw(rawEditorData);
-            console.log('가져온 로컬데이터 ContentState로 변환',contentState)
-            setEditorState(EditorState.createWithContent(contentState));
-            console.log(editorState)
-            setEditorContentHtml(stateToHTML(contentState));
-        }*/
-        dispatch({
-            type : LOAD_POSTS_REQUEST,
-        })
-    }, []);
-
-    useEffect(() => {
-        // 포스트들 요약글 만들기
-        //summerySetFunction();
-    }, [mainPosts]);
 
     const summerySetFunction = () => {
         const contentArray = mainPosts.map((v,i) => {
@@ -54,6 +34,39 @@ const Blog = () => {
         })
         setSummery(subStringSummeryArray);
     };
+
+    const onScroll = useCallback(() => {
+        // 현재 scroll 값, 윈도우 현재 창 높이값, 전체 화면 높이값
+        if (window.scrollY + document.documentElement.clientHeight > document.documentElement.scrollHeight - 300) {
+            if (hasMorePost) {
+                dispatch({
+                    type: LOAD_POSTS_REQUEST,
+                    lastId: mainPosts[mainPosts.length - 1].id,
+                });
+            }
+        }
+    }, [hasMorePost, mainPosts.length]);
+
+    useEffect(() => {
+        dispatch({
+            type : LOAD_POSTS_REQUEST,
+            //lastId: mainPosts[mainPosts.length - 1].id,
+        })
+    }, []);
+
+    useEffect(() => {
+        // 포스트들 요약글 만들기
+        //summerySetFunction();
+    }, [mainPosts]);
+
+    useEffect(() => {
+        window.addEventListener('scroll', onScroll);
+        return () => {
+            window.removeEventListener('scroll', onScroll);
+        };
+    }, [mainPosts.length]);
+
+
 
     return (
         <div className='contents-wrap'>

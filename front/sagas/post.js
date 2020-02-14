@@ -1,4 +1,4 @@
-import { all, fork, put, takeLatest, call } from 'redux-saga/effects';
+import { all, fork, put, takeLatest, call, throttle } from 'redux-saga/effects';
 import axios from 'axios';
 import { ADD_POST_REQUEST, ADD_POST_FAILURE, ADD_POST_SUCCESS, LOAD_POSTS_REQUEST, LOAD_POSTS_SUCCESS, LOAD_POSTS_FAILURE, LOAD_TAG_POSTS_REQUEST, LOAD_TAG_POSTS_SUCCESS, LOAD_TAG_POSTS_FAILURE, LOAD_POST_REQUEST, LOAD_POST_SUCCESS, LOAD_POST_FAILURE, EDIT_POST_REQUEST, EDIT_POST_FAILURE, EDIT_POST_SUCCESS, DELETE_POST_REQUEST, DELETE_POST_SUCCESS, DELETE_POST_FAILURE, UPLOAD_THUMB_IMAGE_REQUEST, UPLOAD_THUMB_IMAGE_SUCCESS, UPLOAD_THUMB_IMAGE_FAILURE } from '../reducers/post';
 
@@ -25,12 +25,12 @@ function* addPost(action) {
 function* watchAddPost() {
     yield takeLatest(ADD_POST_REQUEST, addPost);
 }
-function loadPostsAPI() {
-    return axios.get('/posts'); // server:GET /api/posts
+function loadPostsAPI(lastId = 0, limit = 10) {
+    return axios.get(`/posts?lastId=${lastId}&limit=${limit}`); // server:GET /api/posts
 }
-function* loadPosts() {
+function* loadPosts(action) {
     try {
-        const result = yield call(loadPostsAPI);
+        const result = yield call(loadPostsAPI, action.lastId);
         yield put({
             type : LOAD_POSTS_SUCCESS,
             data : result.data,
@@ -38,19 +38,19 @@ function* loadPosts() {
     } catch(e) {
         yield put({
             type : LOAD_POSTS_FAILURE,
-            error : e,
+            error : e.response && e.response.data,
         })
     }
 }
 function* watchloadPosts() {
-    yield takeLatest(LOAD_POSTS_REQUEST, loadPosts);
+    yield throttle(2000, LOAD_POSTS_REQUEST, loadPosts);
 }
-function loadTagPostsAPI(tagData) {
-    return axios.get(`/tag/${tagData}`); // server:GET /api/tag/:tag
+function loadTagPostsAPI(tagData, lastId) {
+    return axios.get(`/tag/${encodeURIComponent(tagData)}?lastId=${lastId}&limit=10`); // server:GET /api/tag/:tag
 }
 function* loadTagPosts(action) {
     try {
-        const result = yield call(loadTagPostsAPI, action.data);
+        const result = yield call(loadTagPostsAPI, action.data, action.lastId);
         yield put({
             type : LOAD_TAG_POSTS_SUCCESS,
             data : result.data,

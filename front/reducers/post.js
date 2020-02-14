@@ -1,18 +1,18 @@
 // 포스트 정보만 담고 있는 포스트 store
 export const initialState = {
     mainPosts : [
-        {
-            id : 1,
-            title : '더미 데이터',
-            tag : null,
-            content : '지금 이 포스트는 더미 내용입니다. 지금 이 포스트는 더미 내용입니다. 지금 이 포스트는 더미 내용입니다.',
-            date : '2020.02.06',
-            User : {
-                id : 1,
-                nickname : 'mollang'
-            },
-            thumbImg : 'https://us.123rf.com/450wm/lcc54613/lcc546131011/lcc54613101100003/8159003-%EB%8B%AC%EC%BD%A4%ED%95%9C-%ED%91%B8%EB%94%A9-%EA%B3%84%EB%9E%80-%ED%91%B8%EB%94%A9.jpg?ver=6',
-        },
+        // {
+        //     id : 1,
+        //     title : '더미 데이터',
+        //     tag : null,
+        //     content : '지금 이 포스트는 더미 내용입니다. 지금 이 포스트는 더미 내용입니다. 지금 이 포스트는 더미 내용입니다.',
+        //     date : '2020.02.06',
+        //     User : {
+        //         id : 1,
+        //         nickname : 'mollang'
+        //     },
+        //     thumbImg : 'https://us.123rf.com/450wm/lcc54613/lcc546131011/lcc54613101100003/8159003-%EB%8B%AC%EC%BD%A4%ED%95%9C-%ED%91%B8%EB%94%A9-%EA%B3%84%EB%9E%80-%ED%91%B8%EB%94%A9.jpg?ver=6',
+        // },
     ], // 포스트들
     isAddingPost : false, // 포스트 업로드 중
     postAdded : false, // 포스트 업로드 됨
@@ -24,6 +24,7 @@ export const initialState = {
     deletePostErrorReason : '', // 포스트 수정 실패 사유
     singlePost : { },
     thumbImagePath : [], // 썸네일 이미지 미리보기 경로
+    hasMorePost : false,
 };
 
 const dummyPost = {
@@ -96,7 +97,8 @@ const reducer = (state = initialState, action) => {
         case LOAD_POSTS_REQUEST : {
             return {
                 ...state,
-                mainPosts : [],
+                mainPosts : action.lastId === 0 ? [] : state.mainPosts,
+                hasMorePost : action.lastId ? state.hasMorePost : true,
                 loadPostsErrorReason : '',
             }
         }
@@ -104,7 +106,8 @@ const reducer = (state = initialState, action) => {
         case LOAD_POSTS_SUCCESS : {
             return {
                 ...state,
-                mainPosts : action.data,
+                mainPosts : state.mainPosts.concat(action.data),
+                hasMorePost : action.data.length === 10,
                 thumbImagePath : [],
             }
         }
