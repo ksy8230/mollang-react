@@ -5,7 +5,21 @@ const db = require('../models');
 
 const router = express.Router();
 
-router.post('/', async (req, res, next) => { // POST /api/post 
+const upload = multer({
+    storage : multer.diskStorage({
+        destination(req, file, done) {
+            done(null, 'uploads');
+        },
+        filename(req, file, done) {
+            const ext = path.extname(file.originalname);
+            const basename = path.basename(file.originalname, ext);
+            done(null, basename + new Date().valueOf() + ext); // 파일명이 같아 덮어지는 걸 막기 위해 파일명+날짜
+        },
+    }),
+    limits : { fileSize : 20 * 1024 * 1024 },
+});
+
+router.post('/', upload.none(), async (req, res, next) => { // POST /api/post 
     try {
         const tags = JSON.stringify(req.body.tag.match(/#[^\s]+/g));
         console.log('req.body.tag',req.body.tag)
@@ -23,7 +37,24 @@ router.post('/', async (req, res, next) => { // POST /api/post
             console.log('result',result)
             await newPost.addTags(result.map(r => r[0]));
         }
-        res.json(newPost);
+        if (req.body.thumbimage) { // multer에서 이미지 주소를 여러개 올리면 thumbimage : [주소1, 주소2...]
+            if (Array.isArray(req.body.thumbimage)) {
+                const thumbimages = await Promise.all(req.body.thumbimage.map((image)=> {
+                    return db.Image.create({ src : image });
+                }));
+                await newPost.addImages(thumbimages);
+            } else { // 이미지 주소 하나면 thumbimage : 주소1
+                const thumbimage = await db.Image.create({ src : req.body.thumbimage });
+                await newPost.addImage(thumbimage);
+            }
+        }
+        const fullPost = await db.Post.findOne({
+            where : { id : newPost.id },
+            include : [{
+                model: db.Image,
+            }]
+        })
+        res.json(fullPost);
     } catch (error) {
         console.error(error);
         next(error);
@@ -84,24 +115,21 @@ router.delete('/:id/delete', async (req, res, next) => {
     }
 });
 
-const upload = multer({
-    storage : multer.diskStorage({
-        destination(req, file, done) {
-            done(null, 'uploads');
-        },
-        filename(req, file, done) {
-            const ext = path.extname(file.originalname);
-            const basename = path.basename(file.originalname, ext);
-            done(null, basename + new Date().valueOf() + ext); // 파일명이 같아 덮어지는 걸 막기 위해 파일명+날짜
-        },
-    }),
-    limits : { fileSize : 20 * 1024 * 1024 },
-});
-
 // array, fields, single, none 메서드
 router.post('/images', upload.array('image'), (req, res) => {
-    console.log(req.files)
+    //console.log(req.files)
     res.json(req.files.map(v => v.filename));
+});
+
+router.post('/thumbimage', upload.array('thumbimage'), (req, res, next) => {
+    try {
+        //console.log('req.file',req.file)
+        console.log('req.files',req.files)
+        res.json(req.files.map(v => v.filename));
+    } catch(e) {
+        console.error(e);
+        return next(e);
+    }
 });
 
 module.exports = router;

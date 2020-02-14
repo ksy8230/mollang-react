@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import ReactDOM from 'react-dom';
 import Router from 'next/router';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
@@ -20,6 +21,7 @@ const Detail = ({ id }) => {
     const dispatch = useDispatch();
     const { singlePost } = useSelector(state => state.post);
     const [sideLinker, setSideLinker] = useState([]);
+    const [scrollTop, setScrollTop] = useState(0);
 
     const makeSideLinker = () => { // h태그들 추출해 aside 링커로 만들기 & h태그들 링커id값 부여
         let hTag = Array.from(document.querySelectorAll('h1,h2,h3,h4'));
@@ -29,20 +31,32 @@ const Detail = ({ id }) => {
             hTagTitle.push(hTag[i].innerText.replace(/ /g,"_"));
         }
         return hTagTitle;
-    }
+    };
 
     const onClickToTitle = (e) => { // 링커 클릭시 해당 본문 id 값으로 이동
         e.preventDefault();
         let titleTagId = e.target.getAttribute('href').replace("#","");
         document.getElementById(titleTagId).scrollIntoView({behavior: 'smooth'});
-    }
+    };
 
-    const onClickDeletePost = () => {
+    const onClickDeletePost = () => { // 포스트 삭제
         dispatch({
             type : DELETE_POST_REQUEST,
             data : id,
         });
         Router.push('/');
+    };
+
+    const onScroll = (e) => { // 스크롤 이벤트
+        const currentScrollTop = ('scroll', e.srcElement.scrollingElement.scrollTop);
+        setScrollTop(currentScrollTop);
+        const top = document.querySelector('.draft-editor-contents').getBoundingClientRect().top;
+        const sideNav = document.querySelector('.sidenav');
+        if (currentScrollTop >= top - 50 ) {
+            sideNav.classList.add('active');
+        } else {
+            sideNav.classList.remove('active');
+        }
     };
 
     useEffect(() => {
@@ -52,11 +66,17 @@ const Detail = ({ id }) => {
         });
         setTimeout(() => {
             setSideLinker(makeSideLinker());
-        }, 300)
+        }, 300);
     }, [id]);
+
+    useEffect(() => {
+        window.addEventListener('scroll', onScroll);
+        return () => window.removeEventListener("scroll", onScroll);
+    }, []);
 
     return (
         <div className='contents-wrap'>
+            
             <div className='blog-detail'> 
                 <div className='admin-buttons'>
                     <button><Link href={{ pathname: '/admin/blogUpdate', query: {id : id} }} as={`/admin/blogUpdate/${id}`}><a>수정</a></Link></button>
@@ -77,19 +97,19 @@ const Detail = ({ id }) => {
                         }
                     </p>
                 </div>
-            </div>
-            <div className='sidenav'>
-                <ul>
-                    {
-                        sideLinker.map((v,i) => {
-                            return (
-                                <li key={i}>
-                                    <a href={`#${v}`} onClick={onClickToTitle}>{v}</a>
-                                </li>
-                            )
-                        })
-                    }
-                </ul>
+                <div className='sidenav'>
+                    <ul>
+                        {
+                            sideLinker.map((v,i) => {
+                                return (
+                                    <li key={i}>
+                                        <a href={`#${v}`} onClick={onClickToTitle}>{v}</a>
+                                    </li>
+                                )
+                            })
+                        }
+                    </ul>
+                </div>
             </div>
         </div>
     )

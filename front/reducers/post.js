@@ -23,6 +23,7 @@ export const initialState = {
     editPostErrorReason : '', // 포스트 수정 실패 사유
     deletePostErrorReason : '', // 포스트 수정 실패 사유
     singlePost : { },
+    thumbImagePath : [], // 썸네일 이미지 미리보기 경로
 };
 
 const dummyPost = {
@@ -58,6 +59,10 @@ export const EDIT_POST_FAILURE = 'EDIT_POST_FAILURE';
 export const DELETE_POST_REQUEST = 'DELETE_POST_REQUEST';
 export const DELETE_POST_SUCCESS = 'DELETE_POST_SUCCESS';
 export const DELETE_POST_FAILURE = 'DELETE_POST_FAILURE';
+// 썸네일 이미지 업로드 액션
+export const UPLOAD_THUMB_IMAGE_REQUEST = 'UPLOAD_THUMB_IMAGE_REQUEST';
+export const UPLOAD_THUMB_IMAGE_SUCCESS = 'UPLOAD_THUMB_IMAGE_SUCCESS';
+export const UPLOAD_THUMB_IMAGE_FAILURE = 'UPLOAD_THUMB_IMAGE_FAILURE';
 
 const reducer = (state = initialState, action) => {
     switch (action.type) {
@@ -76,6 +81,7 @@ const reducer = (state = initialState, action) => {
                 isAddingPost : false,
                 postAdded : true,
                 mainPosts : [action.data, ...state.mainPosts],
+                thumbImagePath : [],
             }
         }
         case ADD_POST_FAILURE : {
@@ -99,6 +105,7 @@ const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 mainPosts : action.data,
+                thumbImagePath : [],
             }
         }
         case LOAD_TAG_POSTS_FAILURE :
@@ -156,7 +163,6 @@ const reducer = (state = initialState, action) => {
                 editPostErrorReason : action.error,
             }
         }
-        //
         case DELETE_POST_REQUEST : {
             return {
                 ...state,
@@ -173,6 +179,23 @@ const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 deletePostErrorReason : action.error,
+            }
+        }
+        //
+        case UPLOAD_THUMB_IMAGE_REQUEST : {
+            return {
+                ...state,
+            }
+        }
+        case UPLOAD_THUMB_IMAGE_SUCCESS : {
+            return {
+                ...state,
+                thumbImagePath : action.data
+            }
+        }
+        case UPLOAD_THUMB_IMAGE_FAILURE : {
+            return {
+                ...state,
             }
         }
         default : {

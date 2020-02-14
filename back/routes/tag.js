@@ -8,6 +8,8 @@ router.get('/:tag', async (req, res, next) => { // GET /api/tag/:tag
             include: [{
               model: db.Tag,
               where: { name: decodeURIComponent(req.params.tag) },
+            }, {
+                model: db.Image,
             }],
         });
         res.json(posts);

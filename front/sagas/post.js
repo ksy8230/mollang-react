@@ -1,6 +1,6 @@
 import { all, fork, put, takeLatest, call } from 'redux-saga/effects';
 import axios from 'axios';
-import { ADD_POST_REQUEST, ADD_POST_FAILURE, ADD_POST_SUCCESS, LOAD_POSTS_REQUEST, LOAD_POSTS_SUCCESS, LOAD_POSTS_FAILURE, LOAD_TAG_POSTS_REQUEST, LOAD_TAG_POSTS_SUCCESS, LOAD_TAG_POSTS_FAILURE, LOAD_POST_REQUEST, LOAD_POST_SUCCESS, LOAD_POST_FAILURE, EDIT_POST_REQUEST, EDIT_POST_FAILURE, EDIT_POST_SUCCESS, DELETE_POST_REQUEST, DELETE_POST_SUCCESS, DELETE_POST_FAILURE } from '../reducers/post';
+import { ADD_POST_REQUEST, ADD_POST_FAILURE, ADD_POST_SUCCESS, LOAD_POSTS_REQUEST, LOAD_POSTS_SUCCESS, LOAD_POSTS_FAILURE, LOAD_TAG_POSTS_REQUEST, LOAD_TAG_POSTS_SUCCESS, LOAD_TAG_POSTS_FAILURE, LOAD_POST_REQUEST, LOAD_POST_SUCCESS, LOAD_POST_FAILURE, EDIT_POST_REQUEST, EDIT_POST_FAILURE, EDIT_POST_SUCCESS, DELETE_POST_REQUEST, DELETE_POST_SUCCESS, DELETE_POST_FAILURE, UPLOAD_THUMB_IMAGE_REQUEST, UPLOAD_THUMB_IMAGE_SUCCESS, UPLOAD_THUMB_IMAGE_FAILURE } from '../reducers/post';
 
 function addPostAPI(postData) {
     return axios.post('/post', postData, { // server:POST /api/post
@@ -113,7 +113,6 @@ function* editPost(action) {
 function* watchEditPost() {
     yield takeLatest(EDIT_POST_REQUEST, editPost);
 }
-//
 function deletePostAPI(data) {
     return axios.delete(`/post/${data}/delete`, { // server:DELETE /api/post/:id/delete
         withCredentials : true,
@@ -137,6 +136,32 @@ function* deletePost(action) {
 function* watchDeletePost() {
     yield takeLatest(DELETE_POST_REQUEST, deletePost);
 }
+//
+function uploadThumbImageAPI(formData) {
+    console.log('formData', formData)
+    return axios.post('/post/thumbimage', formData, { // server:POST /api/post/thumbimage
+        withCredentials : true,
+    });
+}
+function* uploadThumbImage(action) {
+    try {
+        const result = yield call(uploadThumbImageAPI, action.data);
+        console.log('result', result)
+        yield put({
+            type : UPLOAD_THUMB_IMAGE_SUCCESS,
+            data : result.data, // 서버로 저장된 이미지 주소를 서버로부터 받을 예정
+        })
+    } catch(e) {
+        console.log(e)
+        yield put({
+            type : UPLOAD_THUMB_IMAGE_FAILURE,
+            error : e.response && e.response.data,
+        })
+    }
+}
+function* watchUploadThumbImage() {
+    yield takeLatest(UPLOAD_THUMB_IMAGE_REQUEST, uploadThumbImage);
+}
 export default function* postSaga() {
     yield all([
         fork(watchAddPost),
@@ -145,5 +170,6 @@ export default function* postSaga() {
         fork(watchloadPost),
         fork(watchEditPost),
         fork(watchDeletePost),
+        fork(watchUploadThumbImage),
     ])
 }

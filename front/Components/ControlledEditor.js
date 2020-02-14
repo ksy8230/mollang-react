@@ -16,6 +16,7 @@ function uploadImageCallBack(file) {
       xhr.open('POST', 'http://localhost:8080/api/post/images');
       const data = new FormData(); // eslint-disable-line no-undef
       data.append('image', file);
+      console.log(data)
       xhr.send(data);
       
       xhr.addEventListener('load', () => {

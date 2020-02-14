@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { connect, useDispatch, useSelector } from 'react-redux';
 import { submit } from 'redux-form';
 import { ADD_POST_REQUEST } from '../reducers/post';
@@ -14,18 +14,23 @@ const style = {
 const RemoteSubmitButton = ({ title, tag }) => {
   const dispatch = useDispatch();
   const {user} = useSelector(state => state.user);
+  const { thumbImagePath } = useSelector(state => state.post);
   const {draft} = useSelector(state => state.form);
-  console.log(draft.values.editorText)
-  const onClickEvent = () => {
+  //console.log(draft.values.editorText)
+
+  const onClickEvent = useCallback(() => {
+    const formData = new FormData();
+    thumbImagePath.forEach((i) => {
+      formData.append('thumbimage', i)
+    });
+    formData.append('title', title);
+    formData.append('tag', tag);
+    formData.append('content', draft.values.editorText);
     dispatch({
         type : ADD_POST_REQUEST,
-        data : {
-          title : title,
-          content : draft.values.editorText,
-          tag : tag,
-        }
+        data : formData
     });
-  }
+  }, [title, tag, thumbImagePath ]);
 
   return (
     <>
@@ -36,9 +41,9 @@ const RemoteSubmitButton = ({ title, tag }) => {
       onClick={onClickEvent}
       //                              ^^^^^^^^^^^^ name of the form
     >
-      Submit
+      업로드
     </button>
-    <div>결과2:{draft.values.editorText}</div>
+    <div>{draft.values.editorText}</div>
     
     </>
   )

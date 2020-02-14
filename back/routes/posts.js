@@ -5,6 +5,9 @@ const router = express.Router();
 router.get('/', async (req, res, next) => { // GET /api/posts
     try {
         const posts = await db.Post.findAll({
+            include : [{
+                model: db.Image,
+            }],
             order: [['created_at', 'DESC']],
         });
         console.log('posts', posts)

@@ -22,24 +22,24 @@ const blogUpdate = ({ id }) => {
     useEffect(() => {
         setTitle('');
         setTag('');
-        //console.log(content)
     }, [])
 
     return (
-        <>  
-            {id} 수정 페이지
-            <div>
+        <div className='contents-wrap'>  
+            <div className='blog-editor'>
                 <div className='input-box'>
                     <input type="text" placeholder={singlePost.title} value={title} onChange={onChangeTitle} />
                 </div>
-                <EditorForm />
-                <div>
+                <div className='editor-form-box'>
+                    <EditorForm />
+                </div>
+                <div className='input-box tag'>
                     <input type="text" value={tag} onChange={onChangeTag} placeholder="#태그" />
                 </div>
                 <RemoteSubmitUpdateButton id={id} title={title} tag={tag} />
                 <button><a href="/">수정 취소</a></button>
             </div>
-        </>
+        </div>
     );
 };
 

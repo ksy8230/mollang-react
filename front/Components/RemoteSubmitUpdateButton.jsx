@@ -35,7 +35,7 @@ const RemoteSubmitUpdateButton = ({ title, tag, id }) => {
       type="button"
       onClick={onClickEvent}
     >
-      수정 완료
+      <a>수정 완료</a>
     </button>
     {/*<div>결과2:{draft.values.editorText}</div>*/}
     
