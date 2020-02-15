@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useState, useCallback, useRef } from 'react';
 import { dummy } from '.';
 
 import { EditorState, convertFromRaw } from 'draft-js';
@@ -13,6 +13,7 @@ const Blog = () => {
     const [editorContentHtml, setEditorContentHtml] = useState('');
     const { mainPosts, hasMorePost } = useSelector(state => state.post);
     const dispatch = useDispatch();
+    const countRef = useRef([]);
     const [summery, setSummery] = useState([]);
 
     const summerySetFunction = () => {
@@ -25,7 +26,7 @@ const Blog = () => {
         });
         //console.log(summeryArray)
         const subStringSummeryArray = summeryArray.map((v,i) => {
-            console.log(v.length)
+            //console.log(v.length)
             if(v.length>= 100) {
                 return v.substr(0,100)+"...";
             } else {
@@ -39,24 +40,30 @@ const Blog = () => {
         // 현재 scroll 값, 윈도우 현재 창 높이값, 전체 화면 높이값
         if (window.scrollY + document.documentElement.clientHeight > document.documentElement.scrollHeight - 300) {
             if (hasMorePost) {
-                dispatch({
-                    type: LOAD_POSTS_REQUEST,
-                    lastId: mainPosts[mainPosts.length - 1].id,
-                });
+                const lastId = mainPosts[mainPosts.length - 1].id;                
+                if (!countRef.current.includes(lastId)) {
+                    // lastId가 countRef에 속해있지 않으면 다음 포스트들 로드
+                    console.log('countRef.current', countRef.current)
+                    dispatch({
+                        type: LOAD_POSTS_REQUEST,
+                        lastId,
+                    });
+                    countRef.current.push(lastId);
+                    // 한번 요청을 보낸 lastId들을 countRef 배열에 담아
+                    // 다음 요청 때 if문에서 걸러지도록 만들기
+                }
+            } else {
+                countRef.current = [];
             }
         }
-    }, [hasMorePost, mainPosts.length]);
-
-    useEffect(() => {
-        dispatch({
-            type : LOAD_POSTS_REQUEST,
-            //lastId: mainPosts[mainPosts.length - 1].id,
-        })
-    }, []);
+    }, [hasMorePost, mainPosts.length, countRef]);
 
     useEffect(() => {
         // 포스트들 요약글 만들기
-        //summerySetFunction();
+        summerySetFunction();
+        console.log('hasMorePost',hasMorePost)
+        console.log('countRef.current',countRef.current)
+        
     }, [mainPosts]);
 
     useEffect(() => {
@@ -93,6 +100,8 @@ const Blog = () => {
                 <ul>
                     <StackGrid
                         columnWidth={330}
+                        // duration={0}
+                        monitorImagesLoaded ={true}
                     >
                     {
                         mainPosts.map((v,i) => {
@@ -112,6 +121,14 @@ const Blog = () => {
         </div>
         </div>
     );
+};
+
+Blog.getInitialProps = async (context) => {
+    console.log(Object.keys(context));
+    context.store.dispatch({
+        type : LOAD_POSTS_REQUEST,
+        lastId : 0,
+    });
 };
 
 export default Blog;

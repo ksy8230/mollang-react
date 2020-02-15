@@ -4,7 +4,7 @@ const router = express.Router();
 
 router.get('/', async (req, res, next) => { // GET /api/posts
     try {
-        let where = [];
+        let where = {};
         if (parseInt(req.query.lastId, 10)) {
             where = {
               id : {
@@ -29,6 +29,7 @@ router.get('/', async (req, res, next) => { // GET /api/posts
         console.error(error);
         next(error);
     }
+    
 });
 
 module.exports = router;

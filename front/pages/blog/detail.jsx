@@ -60,10 +60,10 @@ const Detail = ({ id }) => {
     };
 
     useEffect(() => {
-        dispatch({
-            type : LOAD_POST_REQUEST,
-            data : id,
-        });
+        // dispatch({
+        //     type : LOAD_POST_REQUEST,
+        //     data : id,
+        // });
         setTimeout(() => {
             setSideLinker(makeSideLinker());
         }, 300);
@@ -116,12 +116,17 @@ const Detail = ({ id }) => {
 };
 
 Detail.propTypes = {
-    id : PropTypes.number.isrequired,
+    id : PropTypes.number.isRequired,
 }
 
 Detail.getInitialProps = async (context) => {
     console.log('Detail getInitialProps', context.query.id)
-    return { id : parseInt(context.query.id, 10)}
+    const id = parseInt(context.query.id, 10);
+    context.store.dispatch({
+        type : LOAD_POST_REQUEST,
+        data : id,
+    })
+    return { id : id }
 };
 
 export default Detail;

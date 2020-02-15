@@ -38,13 +38,13 @@ const Home = () => {
         };
     }, [magicName]);
 
-    useEffect(() => {
-        if (!me) {
-            dispatch({
-                type : LOAD_USER_REQUEST,
-            });
-        };
-    }, [me]);
+    // useEffect(() => {
+    //     if (!me) {
+    //         dispatch({
+    //             type : LOAD_USER_REQUEST,
+    //         });
+    //     };
+    // }, [me]);
 
     useEffect(() => {
         imgTagIntervalRef.current = setInterval(changPosition, 600);

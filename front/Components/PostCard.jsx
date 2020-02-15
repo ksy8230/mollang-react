@@ -20,16 +20,16 @@ const PostCard = ({ post, i, summery }) => {
             <div className='post-description'>
                 <div className='post-head'>
                     <div className='post-thumb'>
-                        <Link href={{ pathname: '/blog/detail', query: {id : post.id}}} as={`/blog/${post.id}`}><a>
+                        <Link href={{ pathname: '/blog/detail', query: {id : post.id}}} as={`/blog/detail/${post.id}`}><a>
                             <img src={ post.Images && post.Images[0] ? `http://localhost:8080/${post.Images[0].src}` : '/images/post_default_img.jpg'} alt=""/>
                         </a></Link>
                     </div>
                     <div className='post-title'>
-                        <h3><Link href={{ pathname: '/blog/detail', query: {id : post.id}}} as={`/blog/${post.id}`}><a>{post.title}</a></Link></h3>
+                        <h3><Link href={{ pathname: '/blog/detail', query: {id : post.id}}} as={`/blog/detail/${post.id}`}><a>{post.title}</a></Link></h3>
                         <p className='post-date'>{post.date|| '2020.02.12'}</p>
+                        {/* <p>{summery[i]}</p> */}
                     </div>
                 </div>
-
                 {/*<div className='post-content' dangerouslySetInnerHTML={createMarkup(post.content)} />*/}
                 <p className='post-tag'>
                     {

@@ -28,20 +28,20 @@ app.prepare().then(() => {
         },
     }))
 
-    server.get('*', (req, res) => {
-        return handle(req, res);
-    });
-
     server.get('/tag/:tag', (req, res) => {
-        return app.render(req, res, '/tag', { tag: req.params.tag });
+        return app.render(req, res, '/tag', { tag : req.params.tag });
     });
 
     server.get('/blog/detail/:id', (req, res) => {
-        return app.render(req, res, '/id', { id: req.params.id });
+        return app.render(req, res, '/blog/detail', { id: req.params.id });
     });
 
     server.get('/admin/blog/update/:id', (req, res) => {
-        return app.render(req, res, '/id', { id: req.params.id });
+        return app.render(req, res, '/admin/blog/update', { id: req.params.id });
+    });
+
+    server.get('*', (req, res) => {
+        return handle(req, res);
     });
 
     server.listen(3000, () => {

@@ -4,11 +4,12 @@ const router = express.Router();
 
 router.get('/:tag', async (req, res, next) => { // GET /api/tag/:tag
     try {
-        let where = [];
+        let where = {};
         if (parseInt(req.query.lastId, 10)) {
+            console.log('tag lastId', 'aaa')
             where = {
               id : {
-                  [db.Sequelize.Op.lt] : parseInt(req.query.lastId, 10), // Id가 req.query.lastId보다 작은 게시글들 limit만큼 불러오기
+                    [db.Sequelize.Op.lt] : parseInt(req.query.lastId, 10), // Id가 req.query.lastId보다 작은 게시글들 limit만 불러오기
                 }
             };
         }
@@ -23,7 +24,7 @@ router.get('/:tag', async (req, res, next) => { // GET /api/tag/:tag
             order: [['created_at', 'DESC']],
             limit: parseInt(req.query.limit, 10),
         });
-        res.json(posts);
+        return res.json(posts);
     } catch (e) {
         console.error(e);
         next(e);

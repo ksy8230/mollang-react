@@ -56,7 +56,7 @@
 - [v] 서버를 이용해 포스트 삭제하기
 - [v] 서버를 이용해 편집기로 포스트 이미지 렌더링 해보기 
 - [v] 포스트 미리보기 이미지 업로드하고 불러오기 
-- [] 포스트들 무한 스크롤 추가하기
+- [v] 포스트들 무한 스크롤 추가하기 (블로그 포스트, 태그별 포스트)
 
 #### design
 - home
@@ -75,7 +75,15 @@
     - [v] 카카오톡 간편 로그인
     - [] 카테고리로 포스트 구분하기
     - [] 관리자단 tui-calendar 일정관리 기능 https://ui.toast.com/tui-calendar/
- 
+
+#### 에러
+- 프론트단 동적 페이지들 (/tag/:tag, /detail/:id) SSR시 404 에러 
+    - 해결 : server.js 라우터 & 프론트단 pathname 일치시키기
+- `react-stack-grid` 이미지영역 오버랩 되는 이슈
+    - 해결 : https://github.com/wadackel/react-stack-grid/issues/39
+- 프론트단 동적 페이지 메뉴 클릭시 10개씩 기존 포스트에 또 렌더링되는 에러
+    - 해결 : 각 api 요청하는 action.lastId 추가 되었는지 체크
+
 #### `draft-js` 편집기 
 - https://jpuri.github.io/react-draft-wysiwyg
 - https://codesandbox.io/s/0p6zjoy7x0

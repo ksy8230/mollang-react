@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback } from 'react';
+import React, { useEffect, useCallback, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import { LOAD_TAG_POSTS_REQUEST } from '../reducers/post';
@@ -7,33 +7,34 @@ import StackGrid from "react-stack-grid";
 
 const Tag = ({ tag }) => {
     const dispatch = useDispatch();
-    const {mainPosts, hasMorePost} = useSelector(state => state.post);
+    const {mainPosts, hasMoreTagPost} = useSelector(state => state.post);
+    const countRef = useRef([]);
 
     const onScroll = useCallback(() => {
-        // 현재 scroll 값, 윈도우 현재 창 높이값, 전체 화면 높이값
         if (window.scrollY + document.documentElement.clientHeight > document.documentElement.scrollHeight - 300) {
-            if (hasMorePost) {
-                dispatch({
-                    type: LOAD_TAG_POSTS_REQUEST,
-                    lastId: mainPosts[mainPosts.length - 1].id,
-                    data : tag,
-                });
+            if (hasMoreTagPost) {
+                const lastId = mainPosts[mainPosts.length - 1].id;
+                if (!countRef.current.includes(lastId)) {
+                    console.log('countRef.current', countRef.current)
+                    dispatch({
+                        type: LOAD_TAG_POSTS_REQUEST,
+                        lastId,
+                        data : tag,
+                    });
+                    countRef.current.push(lastId);
+                } 
+            } else {
+                countRef.current = [];
             }
         }
-    }, [hasMorePost, mainPosts.length]);
-
-    useEffect(() => {
-        dispatch({
-            type : LOAD_TAG_POSTS_REQUEST,
-            data : tag,
-            //lastId: mainPosts[mainPosts.length - 1].id,
-        });
-    }, [tag]);
+    }, [hasMoreTagPost, mainPosts.length, countRef ]);
 
     useEffect(() => {
         window.addEventListener('scroll', onScroll);
+        console.log('hasMorePost',hasMoreTagPost)
         return () => {
             window.removeEventListener('scroll', onScroll);
+            countRef.current = [];
         };
     }, [mainPosts.length]);
 
@@ -45,6 +46,8 @@ const Tag = ({ tag }) => {
                     <ul>
                     <StackGrid
                         columnWidth={330}
+                        duration={0}
+                        monitorImagesLoaded ={true}
                     >
                     {
                         mainPosts.map((v,i) => {
@@ -67,12 +70,18 @@ const Tag = ({ tag }) => {
 };
 
 Tag.propTypes = {
-    tag : PropTypes.string.isrequired,
+    tag: PropTypes.string.isRequired,
 }
 
 Tag.getInitialProps = async (context) => {
-    console.log('Tag getInitialProps', context)
-    return { tag : context.query.tag }
+    const tag = context.query.tag;
+    console.log('Tag getInitialProps', tag)
+    context.store.dispatch({
+        type : LOAD_TAG_POSTS_REQUEST,
+        data : tag,
+        lastId : 0,
+    })
+    return { tag }
 };
 
 export default Tag;

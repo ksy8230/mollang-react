@@ -45,8 +45,8 @@ function* loadPosts(action) {
 function* watchloadPosts() {
     yield throttle(2000, LOAD_POSTS_REQUEST, loadPosts);
 }
-function loadTagPostsAPI(tagData, lastId) {
-    return axios.get(`/tag/${encodeURIComponent(tagData)}?lastId=${lastId}&limit=10`); // server:GET /api/tag/:tag
+function loadTagPostsAPI(tag, lastId = 0, limit = 10) {
+    return axios.get(`/tag/${encodeURIComponent(tag)}?lastId=${lastId}&limit=${limit}`); // server:GET /api/tag/:tag
 }
 function* loadTagPosts(action) {
     try {
@@ -56,6 +56,7 @@ function* loadTagPosts(action) {
             data : result.data,
         })
     } catch(e) {
+        console.log(e)
         yield put({
             type : LOAD_TAG_POSTS_FAILURE,
             error : e.response && e.response.data,

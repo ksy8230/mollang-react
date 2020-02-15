@@ -25,6 +25,7 @@ export const initialState = {
     singlePost : { },
     thumbImagePath : [], // 썸네일 이미지 미리보기 경로
     hasMorePost : false,
+    hasMoreTagPost : false,
 };
 
 const dummyPost = {
@@ -93,7 +94,6 @@ const reducer = (state = initialState, action) => {
                 addPostErrorReason : action.error,
             }
         }
-        case LOAD_TAG_POSTS_REQUEST :
         case LOAD_POSTS_REQUEST : {
             return {
                 ...state,
@@ -102,12 +102,26 @@ const reducer = (state = initialState, action) => {
                 loadPostsErrorReason : '',
             }
         }
-        case LOAD_TAG_POSTS_SUCCESS :
         case LOAD_POSTS_SUCCESS : {
             return {
                 ...state,
-                mainPosts : state.mainPosts.concat(action.data),
+                mainPosts : action.lastId === 0 ? action.data : state.mainPosts.concat(action.data),
                 hasMorePost : action.data.length === 10,
+                thumbImagePath : [],
+            }
+        }
+        case LOAD_TAG_POSTS_REQUEST : {
+            return {
+                ...state,
+                mainPosts : action.lastId === 0 ? [] : state.mainPosts,
+                hasMoreTagPost : action.lastId ? state.hasMoreTagPost : true,
+            }
+        }
+        case LOAD_TAG_POSTS_SUCCESS : {
+            return {
+                ...state,
+                mainPosts : action.lastId === 0 ? action.data : state.mainPosts.concat(action.data),
+                hasMoreTagPost : action.data.length === 10,
                 thumbImagePath : [],
             }
         }
