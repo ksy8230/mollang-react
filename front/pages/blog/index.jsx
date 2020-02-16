@@ -78,25 +78,25 @@ const Blog = () => {
     return (
         <div className='contents-wrap'>
             <div className='blog'>
-            <div className='blog-title'>
-                <h2>다양한 이야기를 기록하고 있어요</h2>
-            </div>
-            {/*<div className='tags-list'> 태그 :  
-                {
-                    mainPosts.map((v,i) => {
-                        return (
-                        <span>
-                            {
-                                // console.log(v.tag)
-                                //JSON.parse(v.tag).map(v => v)
-                                //console.log(JSON.parse(v.tag))
-                            }
-                        </span>
-                        )
-                    })
-                }
-            </div>*/}
-            <div className='post-list'>
+                <div className='blog-title'>
+                    <h2>다양한 이야기를 기록하고 있어요</h2>
+                </div>
+                {/*<div className='tags-list'> 태그 :  
+                    {
+                        mainPosts.map((v,i) => {
+                            return (
+                            <span>
+                                {
+                                    // console.log(v.tag)
+                                    //JSON.parse(v.tag).map(v => v)
+                                    //console.log(JSON.parse(v.tag))
+                                }
+                            </span>
+                            )
+                        })
+                    }
+                </div>*/}
+                <div className='post-list'>
                 <ul>
                     <StackGrid
                         columnWidth={330}

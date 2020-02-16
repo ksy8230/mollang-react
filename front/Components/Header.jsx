@@ -76,9 +76,8 @@ const Header = () => {
 
                             <div><Link href='/profile'><a>프로필</a></Link></div>
                             <div><Link href='/blog'><a>블로그</a></Link></div>
+                            <div><Link href='/project'><a>프로젝트</a></Link></div>
                             <div><Link href=''><a>깃허브</a></Link></div>
-                            {/* <div><Link href='/about'><a>작품들</a></Link></div>
-                            <div><Link href='/about'><a>깃허브</a></Link></div> */}
                             <div><Link href='/admin/blog'><a>블로그 관리자</a></Link></div>
                         </nav>
                     </div>

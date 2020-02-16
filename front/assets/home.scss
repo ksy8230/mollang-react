@@ -69,30 +69,31 @@
         @media screen and (max-width:1024px) {
             width: 100%; 
         }
-        .feature {
-            max-width: 30%;
-            h3 {
-                margin-bottom: 1rem;
-                font-size: 1.1rem;
-                font-weight: bold;
-                text-align: center;
-                color: $lightblue;
 
-            }
-            p {
-                text-align: left;
-                line-height: 1.6rem;
-                color: $lightblue;
-                span {
-                    display: inline-block;
-                    margin: 5px 5px 5px 0;
-                    padding:2px;
-                    background: $lightgray;
-                    border-radius: 5px;
-                    font-size: .9rem;
-                    color:$black;
-                }
-            }
+    }
+}
+.feature {
+    max-width: 30%;
+    h3 {
+        margin-bottom: 1rem;
+        font-size: 1.1rem;
+        font-weight: bold;
+        text-align: center;
+        color: $lightblue;
+
+    }
+    p {
+        text-align: left;
+        line-height: 1.6rem;
+        color: $lightblue;
+        span {
+            display: inline-block;
+            margin: 5px 5px 5px 0;
+            padding:2px;
+            background: $lightgray;
+            border-radius: 5px;
+            font-size: .9rem;
+            color:$black;
         }
     }
 }

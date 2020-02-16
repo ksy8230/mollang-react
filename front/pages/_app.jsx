@@ -23,6 +23,7 @@ const Mollang = ({ Component, store, pageProps }) => {
                 <meta charSet="utf-8" />
                 {/* 공통으로 사용하는 css */}
                 <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/react-draft-wysiwyg@1.12.3/dist/react-draft-wysiwyg.css' />
+                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
 
                 {/* 공통으로 사용하는 js */}
             </Head>

@@ -1,0 +1,111 @@
+@import './mixin.scss';
+/*
+    profile 관련 css
+*/
+.profile {
+    h2 {
+        margin-bottom: 1rem;
+    }
+    h3 {
+        margin-bottom: 1rem;
+        font-size: 1.3rem;
+        font-weight: normal;
+    }
+    .box {
+        margin-bottom: 3rem;
+        &.skill {
+            .feature {
+                p.title {
+                    cursor: default;
+                }
+                .detail {
+                    @include css3(opacity, 1);
+                    max-height: initial;
+
+                    ul {
+                        display: flex;
+                        flex-wrap: wrap;
+                        li {
+                            display: flex;
+                            flex: 50%;
+                            margin-bottom: .5rem;
+                            img {
+                                margin-right: 10px;
+                            }
+                            .description {
+                                width: 80%;
+                                padding:5px 0 0 0;
+                                strong {
+                                    color: $black;
+                                }
+                                span {
+                                    display: inline-block;
+                                    margin-left: 5px;
+                                    font-size: .9rem;
+                                }
+                                p {
+
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        .feature {
+            margin-bottom: 1rem;
+            max-width: 100%;
+            &.active {
+                p.title {
+                    svg {
+                        @include css3(transform, rotate(180deg));
+                    }
+                }
+                .detail {
+                    max-height: 2000px;
+                    opacity: 1;
+                }
+            }
+            p {
+                &.title {
+                    margin-bottom: .5rem;
+                    color:$black;
+                    font-weight: bold;
+                    cursor: pointer;
+                    svg {
+                        vertical-align: middle;
+                        color: $black;
+                    }
+                }
+                a {
+                    &::before {
+                        content: '\f0c6';
+                        display: inline-block;
+                        font: normal normal normal 1rem FontAwesome;
+                        transform: rotate(70deg);
+                    }
+                }
+            }
+            .detail {
+                opacity: 0;
+                max-height: 0;
+                overflow: hidden;
+                @include css3(transition, all 0.5s);
+                h4 {
+                    line-height: 1.6rem;
+                    color: $darkblue;
+                }
+                p {
+                    span {
+                        margin: 0;
+                        padding: 0 5px;
+                    }
+                }
+            }
+            svg {
+                margin-right: 2px;
+            }
+        }
+    }
+
+}

@@ -5,6 +5,7 @@
 @import './home';
 @import './footer';
 @import './blog';
+@import './profile';
 
 .layer-popup {
     .wapper {
@@ -32,9 +33,18 @@
     //margin-top: 1.5rem;
     width: 1024px;
     margin: 1.5rem auto;
-    
     @media screen and (max-width:1024px) {
         width: 100%; 
         overflow: hidden;
     }
+    h2 {
+        padding: 2rem 0;
+        font-size: 1.4rem;
+        text-align: center;
+        color: $black;
+    }
+}
+
+svg {
+    width: .9rem;
 }
