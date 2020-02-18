@@ -1,0 +1,18 @@
+
+.admin {
+    display: flex;
+    .admin-menu {
+        width:20%;
+        //border-right: 1px solid $gray;
+        ul {
+            padding:1rem;
+            li {
+                margin-bottom: 1rem;
+            }
+        }
+    }
+    .admin-content {
+        //width: 80%;
+        padding:1rem;
+    }
+}

@@ -3,7 +3,9 @@ import axios from 'axios';
 import { SIGNUP_REQUEST, SIGNUP_FAILURE, SIGNUP_SUCCESS, LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILURE, LOGOUT_REQUEST, LOGOUT_SUCCESS, LOGOUT_FAILURE, LOAD_USER_REQUEST, LOAD_USER_SUCCESS, LOAD_USER_FAILURE, EDIT_USER_REQUEST, EDIT_USER_SUCCESS, EDIT_USER_FAILURE } from '../reducers/user';
 
 function signUpAPI(signUpData) {
-    return axios.post('/user', signUpData);
+    return axios.post('/user', signUpData, {
+        withCredentials : true,
+    });
 }
 function* signUp(action) {
     try {
@@ -119,6 +121,7 @@ function* editUser(action) {
 function* watchEditUser() {
     yield takeLatest(EDIT_USER_REQUEST, editUser);
 }
+
 export default function* userSaga() {
     yield all([
         fork(watchSignUp),

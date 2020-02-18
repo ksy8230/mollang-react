@@ -6,7 +6,7 @@ const expressSession = require('express-session');
 const dotenv = require('dotenv');
 const dev = process.env.NODE_ENV !== 'production';
 const prod = process.env.NODE_ENV === 'production';
-
+const { isAdmin } = require('./middleware');
 const app = next({ dev });
 const handle = app.getRequestHandler();
 dotenv.config();

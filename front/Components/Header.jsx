@@ -76,7 +76,11 @@ const Header = () => {
                                 <span className='account-more'><FontAwesomeIcon icon={faAngleDown} /></span>
                                 {
                                     accountOpen && <div className='account-menu'>
-                                        <Link href="/admin/blog"><a >포스트 쓰기</a></Link>
+                                        {
+                                            me && me.id === 1 ?
+                                            <Link href="/admin/blog"><a >포스트 쓰기</a></Link>
+                                            : null
+                                        }
                                         <Link href={{pathname:'/user', query : {id : me.id}} }><a >마이페이지</a></Link>
                                         <a onClick={onClickLogOut}>로그아웃</a>
                                     </div> 
@@ -92,7 +96,11 @@ const Header = () => {
                             <div><Link href={{ pathname: '/blog/index'}} as={'/blog'}><a>블로그</a></Link></div>
                             <div><Link href={{ pathname: '/project/index'}} as={'/project'}><a>프로젝트</a></Link></div>
                             <div><Link href=''><a>깃허브</a></Link></div>
-                            <div><Link href='/admin/blog'><a>블로그 관리자</a></Link></div>
+                            {
+                                me && me.id === 1 ?
+                                <div><Link href={{ pathname: '/admin/index'}} as={'/admin'}><a>블로그 관리자</a></Link></div>
+                                : null
+                            }
                         </nav>
                     </div>
                 </div>

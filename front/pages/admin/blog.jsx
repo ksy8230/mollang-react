@@ -3,11 +3,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import EditorForm from '../../Components/EditorForm';
 import RemoteSubmitButton from '../../Components/RemoteSubmitButton';
 import {UPLOAD_THUMB_IMAGE_REQUEST} from '../../reducers/post';
+import AdminMenu from '../../Components/AdminMenu';
+import { Router } from 'next/router';
 
 const Blog = () => {
     const [title, setTitle] = useState('');
     const [tag, setTag] = useState('');
     const { postAdded, thumbImagePath } = useSelector(state => state.post);
+    const { me } = useSelector(state => state.user);
     const refThumbImageInput = useRef();
     const dispatch = useDispatch();
 
@@ -41,11 +44,20 @@ const Blog = () => {
     useEffect(() => {
         setTitle('');
         setTag('');
-    }, [postAdded])
+    }, [postAdded]);
+
+    useEffect(() => {
+        if ( me == null || me.id !== 1 ){
+            alert('관리자 권한이 없습니다.');
+            Router.push('/');
+        }
+    }, [me && me.id]);
 
     return (
-        <div className='contents-wrap'> 
-            <div className='blog-editor'>
+        <div className='admin'> 
+            <AdminMenu />
+            <div className='admin-content'>
+                <div className='blog-editor'>
                 <div className='input-box'>
                     <input type="text" value={title} onChange={onChangeTitle} placeholder="제목" required />
                 </div>
@@ -68,6 +80,7 @@ const Blog = () => {
                 </div>
 
                 <RemoteSubmitButton title={title} tag={tag} />
+            </div>
             </div>
         </div>
     );

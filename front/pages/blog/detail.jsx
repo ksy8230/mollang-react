@@ -20,6 +20,7 @@ function makeTagList(value) { // singlePost 문자열된 태그들 추출
 const Detail = ({ id }) => {
     const dispatch = useDispatch();
     const { singlePost } = useSelector(state => state.post);
+    const { me } = useSelector(state => state.user);
     const [sideLinker, setSideLinker] = useState([]);
     const [scrollTop, setScrollTop] = useState(0);
 
@@ -78,10 +79,15 @@ const Detail = ({ id }) => {
         <div className='contents-wrap'>
             
             <div className='blog-detail'> 
-                <div className='admin-buttons'>
-                    <button><Link href={{ pathname: '/admin/blogUpdate', query: {id : id} }} as={`/admin/blogUpdate/${id}`}><a>수정</a></Link></button>
-                    <button onClick={onClickDeletePost}><a>삭제</a></button>
-                </div>
+                {
+                    me && me.id === 1 ?
+                    <div className='admin-buttons'>
+                        <button><Link href={{ pathname: '/admin/blogUpdate', query: {id : id} }} as={`/admin/blogUpdate/${id}`}><a>수정</a></Link></button>
+                        <button onClick={onClickDeletePost}><a>삭제</a></button>
+                    </div> 
+                    : null
+                }
+
                 <div>
                     <h2 className='title'>{singlePost.title}</h2>
                     <span className='date'>{singlePost.created_at}</span>
