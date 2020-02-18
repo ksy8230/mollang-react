@@ -22,8 +22,14 @@
     }
     &.account {
         .wapper {
-            .foot {
-                
+            .layer-popup-cotent {
+                .confirm-alert {
+                    padding: 4rem 0;
+                    p {
+                        font-size: 1.4rem;
+                        text-align: center;
+                    }
+                }
             }
         }
     }
@@ -44,6 +50,8 @@
         font-size: 1.4rem;
         //text-align: center;
         color: $black;
+        line-height: 2rem;
+        font-weight: normal;
     }
 }
 

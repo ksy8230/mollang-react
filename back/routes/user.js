@@ -16,13 +16,38 @@ router.post('/', async (req, res, next) => { // POST /api/user
             return res.status(403).send('이미 사용 중인 아이디입니다.')
         }
         const hashedPassword = await bcrypt.hash(req.body.password, 12);
-        const newUser = await db.User.create({
+        await db.User.create({
             nickname : req.body.nickname,
             userId : req.body.userId,
             password : hashedPassword,
         });
-        console.log('newUser', newUser);
-        return res.status(200).json(newUser);
+        await passport.authenticate('local', (err, user, info) => {
+            console.log(err, user, info)
+            if (err) {
+                console.error(err);
+                return next(err);
+            }
+            if (info) {
+                return res.status(401).send(info.reason);
+            }
+            return req.login(user, (loginErr) => {
+                console.log('req login', user)
+                if (loginErr) {
+                    return next(loginErr);
+                }
+                const filteredUser = Object.assign({}, user.toJSON());
+                delete filteredUser.password;
+                console.log('filteredUser', filteredUser)
+
+                return res.json(filteredUser);
+            });
+        })(req, res, next);
+        //const filteredUser = Object.assign({}, newUser.toJSON());
+        //delete filteredUser.password;
+        //console.log('filteredUser', filteredUser);
+
+        // return res.status(200).json(filteredUser);
+        // return res.status(200).json(newUser);
     } catch (e) {
         console.error(e);
         return next(e);
@@ -46,28 +71,47 @@ router.post('/logout', (req,res) => {
 });
 
 router.post('/login', (req, res, next) => { // POST /api/user/login
-    passport.authenticate('local', (err, user, info) => {
-        console.log(err, user, info)
-        if (err) {
-            console.error(err);
-            return next(err);
-        }
-        if (info) {
-            return res.status(401).send(info.reason);
-        }
-        return req.login(user, (loginErr) => {
-            if (loginErr) {
-                return next(loginErr);
+    try {
+        passport.authenticate('local', (err, user, info) => {
+            console.log(err, user, info)
+            if (err) {
+                console.error(err);
+                return next(err);
             }
-            const filteredUser = Object.assign({}, user.toJSON());
-            delete filteredUser.password;
-            return res.json(filteredUser);
-        });
-    })(req, res, next);
+            if (info) {
+                return res.status(401).send(info.reason);
+            }
+            return req.login(user, (loginErr) => {
+                if (loginErr) {
+                    return next(loginErr);
+                }
+                const filteredUser = Object.assign({}, user.toJSON());
+                delete filteredUser.password;
+                return res.json(filteredUser);
+            });
+        })(req, res, next);
+    } catch (e) {
+        console.error(e);
+        return next(e);
+    }
+
 });
 
-router.post('/login/kakao', (req, res, next) => { 
-
+router.patch('/:id/edit', async(req, res, next) => {
+    try {
+        const user = await db.User.findOne({
+            where : { id : req.params.id },
+        });
+        //console.log(req.body.editData.nickname)
+        const editUser = await user.update({
+            nickname : req.body.editData.nickname,
+        });
+        console.log(editUser)
+        return res.json(editUser);
+    } catch (e) {
+        console.error(e);
+        next(e);
+    }
 });
 
 module.exports = router;

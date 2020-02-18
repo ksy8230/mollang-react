@@ -107,7 +107,7 @@ Tag.getInitialProps = async (context) => {
     context.store.dispatch({
         type : LOAD_TAG_POSTS_REQUEST,
         data : tag,
-        //lastId : 0,
+        lastId : 0,
     })
     return { tag }
 };

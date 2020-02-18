@@ -11,7 +11,7 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 import createSagaMiddleware from 'redux-saga';
 import rootSaga from '../sagas';
 import '../assets/styles.scss';
-import axois from 'axios';
+import axios from 'axios';
 import { LOAD_USER_REQUEST } from '../reducers/user';
 
 const Mollang = ({ Component, store, pageProps }) => {
@@ -44,8 +44,9 @@ Mollang.getInitialProps = async (context) => {
     let pageProps = {};
     const state = ctx.store.getState();
     const cookie = ctx.isServer ? ctx.req.headers.cookie : '';
+    axios.defaults.headers.Cookie = '';
     if (ctx.isServer && cookie) {
-        axois.defaults.headers.Cookie = cookie;
+        axios.defaults.headers.Cookie = cookie;
         // 토큰 설정도 이곳에서 가능
     }
     if (!state.user.me) {

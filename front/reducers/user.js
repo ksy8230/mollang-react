@@ -6,6 +6,7 @@ export const initialState = {
     signUpErrorReason : '', // 회원가입 실패 사유
     isLoggedOut : false, // 로그아웃 여부
     loadUserErrorReason : '', // 회원가입 실패 사유
+    editUserErrorReason : '', // 회원가입 실패 사유
     me : null, // 내 정보
     user : {},
 };
@@ -25,6 +26,10 @@ export const LOGOUT_FAILURE = 'LOGOUT_FAILURE';
 export const LOAD_USER_REQUEST =  'LOAD_USER_REQUEST';
 export const LOAD_USER_SUCCESS =  'LOAD_USER_SUCCESS';
 export const LOAD_USER_FAILURE =  'LOAD_USER_FAILURE';
+// 사용자 정보 수정 액션
+export const EDIT_USER_REQUEST =  'EDIT_USER_REQUEST';
+export const EDIT_USER_SUCCESS =  'EDIT_USER_SUCCESS';
+export const EDIT_USER_FAILURE =  'EDIT_USER_FAILURE';
 
 const reducer = (state = initialState, action) => {
     switch (action.type) {
@@ -46,7 +51,6 @@ const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 isLoggedIn : false,
-                me : {},
                 logInErrorReason : action.error,
             }
         }
@@ -103,6 +107,29 @@ const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 loadUserErrorReason : action.error,
+            }
+        }
+
+        case EDIT_USER_REQUEST : {
+            return {
+                ...state,
+                editUserErrorReason : '',
+            }
+        }
+        case EDIT_USER_SUCCESS : {
+            return {
+                ...state,
+                me : {
+                    ...state.me,
+                    // id : action.data.id,
+                    nickname : action.data.nickname
+                }
+            }
+        }
+        case EDIT_USER_FAILURE : {
+            return {
+                ...state,
+                editUserErrorReason : action.error,
             }
         }
 

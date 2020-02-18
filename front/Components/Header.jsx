@@ -6,9 +6,10 @@ import { useSelector, useDispatch } from 'react-redux';
 import { LOGOUT_REQUEST } from '../reducers/user';
 import Login from './Login';
 import SingUp from './SingUp';
+import Router from 'next/router';
 
 const Header = () => {
-    const {me} = useSelector(state => state.user);
+    const {me, isLoggedIn, isSignedUp} = useSelector(state => state.user);
     const dispatch = useDispatch();
     const [accountOpen, setAccountOpen] = useState(false);
     const [layerPopup, setLayerPopup] = useState(false);
@@ -45,6 +46,19 @@ const Header = () => {
         setSingup(!signUp);
     }, [signUp]);
 
+    useEffect(() => {
+        if(isLoggedIn || isSignedUp) {
+            
+            setTimeout(() => {
+                setVisible(!visible);
+                setTimeout(() => {
+                    setLayerPopup(!layerPopup);
+                }, 300);
+            }, 1000);
+            
+        }
+    }, [isLoggedIn, isSignedUp, me && me.id]);
+
     return (
         <>
             <header>
@@ -63,7 +77,7 @@ const Header = () => {
                                 {
                                     accountOpen && <div className='account-menu'>
                                         <Link href="/admin/blog"><a >포스트 쓰기</a></Link>
-                                        <Link href="/profile"><a >마이페이지</a></Link>
+                                        <Link href={{pathname:'/user', query : {id : me.id}} }><a >마이페이지</a></Link>
                                         <a onClick={onClickLogOut}>로그아웃</a>
                                     </div> 
                                 }
@@ -93,19 +107,19 @@ const Header = () => {
                         <div className='layer-popup-cotent'>
                             {/* <Login /> */}
                             {
-                                signUp ?
+                                signUp && !me ?
                                 <>
                                     <SingUp />
                                     <div className='foot' onClick={onClickSignup}>이미 계정이 있나요? <a>로그인</a></div>
                                 </>
-                                : 
+                                : !signUp && !me ?
                                 <>
                                     <Login />
                                     <div className='foot' onClick={onClickSignup}>아직 회원이 아니신가요? <a>회원가입</a></div>
                                 </>
-
+                                : me.id && <div className='confirm-alert'><p>반갑습니다. {me.nickname} 님!</p></div>
+                                //isLoggedIn && <div className='confirm-alert'><p>반갑습니다. {me.nickname} 님!</p></div>
                             }
-                            
                         </div>
                     </div>
                 </div>

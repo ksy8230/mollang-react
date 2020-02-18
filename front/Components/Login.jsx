@@ -24,7 +24,7 @@ const Login = () => {
                 userId, 
                 password, 
             }
-        })
+        });
     }, [userId, password]);
 
 
@@ -32,11 +32,6 @@ const Login = () => {
     return (
         <div className='login'>  
             {
-                me && me.id ?
-                <>
-                    <p>반갑습니다. {me.nickname} 님!</p>
-                </>
-                :
                 <div>
                     <form onSubmit={onSubmitForm}>
                         <div className='input-box'>

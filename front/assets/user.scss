@@ -3,6 +3,7 @@
     login
     signup
     edit-user
+    user
     
 */
 
@@ -25,5 +26,41 @@
     }
     p {
         margin-bottom: 10px;
+    }
+}
+
+.user {
+    .user_box {
+        p {
+            &.title {
+                margin-bottom: 1.5rem;
+                font-size: 1.4rem;
+            }
+        }
+        .user_box-info {
+            p {
+                margin-bottom: .5rem;
+                color:$lightblue;
+                letter-spacing: 0.7px;
+                span {
+                    display: inline-block;
+                    margin-right: 1rem;
+                }
+                .input-box {
+                    text-align: left;
+                    display: inline-block;
+                    margin: 0;
+                    input {
+                        padding: 0.4rem;
+                    }
+                }
+            }
+        }
+    }
+    .user-edit {
+        margin-top: 2rem;
+        button {
+            margin-right: 10px;
+        }
     }
 }

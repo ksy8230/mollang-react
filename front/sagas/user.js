@@ -1,6 +1,6 @@
 import { all, fork, put, takeLatest, call } from 'redux-saga/effects';
 import axios from 'axios';
-import { SIGNUP_REQUEST, SIGNUP_FAILURE, SIGNUP_SUCCESS, LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILURE, LOGOUT_REQUEST, LOGOUT_SUCCESS, LOGOUT_FAILURE, LOAD_USER_REQUEST, LOAD_USER_SUCCESS, LOAD_USER_FAILURE } from '../reducers/user';
+import { SIGNUP_REQUEST, SIGNUP_FAILURE, SIGNUP_SUCCESS, LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILURE, LOGOUT_REQUEST, LOGOUT_SUCCESS, LOGOUT_FAILURE, LOAD_USER_REQUEST, LOAD_USER_SUCCESS, LOAD_USER_FAILURE, EDIT_USER_REQUEST, EDIT_USER_SUCCESS, EDIT_USER_FAILURE } from '../reducers/user';
 
 function signUpAPI(signUpData) {
     return axios.post('/user', signUpData);
@@ -70,7 +70,6 @@ function* logOut() {
 function* watchLogout() {
     yield takeLatest(LOGOUT_REQUEST, logOut);
 }
-//
 function LoadUserAPI() {
     return axios.get('/user', {
         withCredentials : true,
@@ -93,12 +92,39 @@ function* loadUser() {
 function* watchLoadUser() {
     yield takeLatest(LOAD_USER_REQUEST, loadUser);
 }
-
+//
+function editUserAPI(editData) {
+    return axios.patch(`/user/${editData.id}/edit`, {editData}, {
+        withCredentials : true,
+    });
+}
+function* editUser(action) {
+    try {
+        const result = yield call(editUserAPI, action.data);
+        yield put({
+            type : EDIT_USER_SUCCESS,
+            data : {
+                // id : action.data.id,
+                nickname : result.data.nickname
+            },
+        });
+        console.log(result)
+    } catch (e) {
+        yield put({
+            type : EDIT_USER_FAILURE,
+            error : e.response && e.response.data,
+        })
+    }
+}
+function* watchEditUser() {
+    yield takeLatest(EDIT_USER_REQUEST, editUser);
+}
 export default function* userSaga() {
     yield all([
         fork(watchSignUp),
         fork(watchLogin),
         fork(watchLogout),
         fork(watchLoadUser),
+        fork(watchEditUser),
     ])
 }
