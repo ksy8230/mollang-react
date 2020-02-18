@@ -1,10 +1,39 @@
 /*
     blog 관련 css
+    blog search 관련 css
 */
 
 .blog {
-    .blog-title {
-        
+    .blog-head {
+        position: relative;
+        margin-bottom: 1rem;
+        .input-box {
+            padding-right:50px;
+            position: absolute;
+            right: 0;
+            bottom: 0;
+            margin: 0;
+            border-bottom: 1px solid #ddd;
+            input {
+                border: 0;
+                padding: .5rem;
+                color : $black;
+            }
+            span {
+                position: absolute;
+                right: 0;
+                top: 0;
+                display: inline-block;
+                width: 50px;
+                height: 100%;
+                z-index: 1;
+                svg {
+                    position: relative;
+                    width: 1rem;
+                    top: 9px;
+                }
+            }
+        }
     }
     .post-list {
         ul {
@@ -44,6 +73,9 @@
                             color: $darkpink;
                         }
                     }
+                }
+                .post-summery {
+                    margin: 1.5rem 0;
                 }
                 .post-content {
                     position: relative;

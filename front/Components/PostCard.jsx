@@ -27,8 +27,10 @@ const PostCard = ({ post, i, summery }) => {
                     <div className='post-title'>
                         <h3><Link href={{ pathname: '/blog/detail', query: {id : post.id}}} as={`/blog/detail/${post.id}`}><a>{post.title}</a></Link></h3>
                         <p className='post-date'>{post.date|| '2020.02.12'}</p>
-                        {/* <p>{summery[i]}</p> */}
                     </div>
+                </div>
+                <div className='post-summery'>
+                    <p>{summery[i]}</p>
                 </div>
                 {/*<div className='post-content' dangerouslySetInnerHTML={createMarkup(post.content)} />*/}
                 <p className='post-tag'>

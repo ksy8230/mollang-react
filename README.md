@@ -5,7 +5,7 @@
 `#react #next #express #sequelize #mysql`
 
 0. 메인화면
-- [] 검색 기능
+- [v] 검색 기능
 - 코드 에디터로 간략 소개 (https://62che.com/)
 - [] 포스트들 `react-slick` 슬라이드로 적용
 
@@ -24,7 +24,7 @@
 - [v] 컨텐츠들 추가
 
 3. 프로젝트
-- []
+- [v] 컨텐츠들 추가
 
 4. 블로그 
 - [] 게시판 페이지네이션
@@ -62,6 +62,9 @@
 - [v] 포스트들 무한 스크롤 추가하기 (블로그 포스트, 태그별 포스트)
 
 #### design
+- 유저 관련 
+    - [] 로그인 완료시 로그인 팝업창 자동으로 내려가기
+    - 
 - home
     - [v] 로고 만들기 / `scss` 연결 / 헤더 > 유저 부분 스타일 작업하기
     - [] 로그인, 회원가입 완료시 팝업 내리기
@@ -79,13 +82,20 @@
     - [] 카테고리로 포스트 구분하기
     - [] 관리자단 tui-calendar 일정관리 기능 https://ui.toast.com/tui-calendar/
 
-#### 에러
+#### 에러 및 개선하고 싶은 사항
 - 프론트단 동적 페이지들 (/tag/:tag, /detail/:id) SSR시 404 에러 
-    - 해결 : server.js 라우터 & 프론트단 pathname 일치시키기
-- `react-stack-grid` 이미지영역 오버랩 되는 이슈
-    - 해결 : https://github.com/wadackel/react-stack-grid/issues/39
-- 프론트단 동적 페이지 메뉴 클릭시 10개씩 기존 포스트에 또 렌더링되는 에러
-    - 해결 : 각 api 요청하는 action.lastId 추가 되었는지 체크
+    - >해결 : server.js 라우터 & 프론트단 pathname 일치시키기
+
+- `react-stack-grid` 이미지영역 오버랩 되는 이슈 
+    - >해결 : https://github.com/wadackel/react-stack-grid/issues/39
+
+- 프론트단 동적 페이지 메뉴 클릭시 10개씩 기존 포스트에 또 렌더링되는 에러 
+    - >해결 : 각 api 요청하는 action.lastId 추가 되었는지 체크
+
+- 메인 페이지 레이아웃 / 서브 페이지 레이아웃 분기를 위한 AppLayout 2 타입 만드는 게 가능할까?
+
+- 태그 수정 후 수정한 게시글 검색시 해당 게시글 검색 안 되는 에러 
+    - >해결 : route에서 post할 때와 마찬가지로 본문에서 보내는 태그 데이터 가공 후 post.addTags 시키기
 
 #### `draft-js` 편집기 
 - https://jpuri.github.io/react-draft-wysiwyg

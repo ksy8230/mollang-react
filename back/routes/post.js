@@ -30,7 +30,7 @@ router.post('/', upload.none(), async (req, res, next) => { // POST /api/post
             tag : tags,
         });
         if (tags) {
-            // 태그를 전부 찾아서 #제거하고 없으면 db 추가 없으면 db 생성
+            // 태그를 전부 찾아서 #제거하고 있으면 db 찾기 없으면 db 생성
             const result = await Promise.all(JSON.parse(tags).map(v => db.Tag.findOrCreate({ 
                 where : { name : v.slice(1).toLowerCase()},
             })));
@@ -78,7 +78,15 @@ router.patch('/:id/edit', async(req, res, next) => { // PATCH /api/post/:id/edit
         const post = await db.Post.findOne({
             where : { id : req.params.id }
         });
-        // console.log(post)
+        const tags = JSON.stringify(req.body.tag.match(/#[^\s]+/g));
+        if (tags) {
+            // 태그를 전부 찾아서 #제거하고 있으면 db 찾기 없으면 db 생성
+            const result = await Promise.all(JSON.parse(tags).map(v => db.Tag.findOrCreate({ 
+                where : { name : v.slice(1).toLowerCase()},
+            })));
+            console.log('result',result)
+            await post.addTags(result.map(r => r[0]));
+        }
         if(!post) {
             return res.status(404).send('포스트가 존재하지 않습니다.');
         }
@@ -87,7 +95,7 @@ router.patch('/:id/edit', async(req, res, next) => { // PATCH /api/post/:id/edit
             { 
                 content : req.body.content,
                 title : req.body.title,
-                tag : req.body.tag,
+                tag : tags,
             }
         );
         console.log('fullEditPost',fullEditPost)

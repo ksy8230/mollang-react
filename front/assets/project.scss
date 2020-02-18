@@ -1,0 +1,119 @@
+@import './mixin.scss';
+/*
+    project 관련 css
+    project_detail 관련 css
+*/
+.project {
+    h3 + p {
+        margin-bottom:1.3rem;
+    }
+    .project-list {
+        display: flex;
+        flex-wrap: wrap;
+        @media screen and (max-width:1024px) {
+            .project {
+                width: 50% !important;
+            }
+        }
+        .project {
+            position: relative;
+            width: 25%;
+            padding:0 1rem 1rem 0;
+            a {
+                display: block;
+                position: absolute;
+                top:0; left:0;
+                width: 100%; height: 100%;
+                z-index: 1;
+            }
+            img {
+                width:100%;
+            }
+            .project-description {
+                margin:1rem 0 0 0;
+                strong {
+                    display: block;
+                    margin-bottom: .5rem;
+                    font-weight: normal;
+                }
+                p {
+                    margin-bottom: .3rem;
+                    height: 2.5rem;
+                    line-height: 1.2rem;
+                    color: $lightblue;
+                    font-size: .9rem;
+                    &.date {
+                        height: auto;
+                        font-size: .8rem;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.project_detail {
+    .title {
+        p {
+            &.date {
+                font-size: .9rem;
+            }
+        }
+        a {
+            display: inline-block;
+            margin: 1rem 0;
+            &::before {
+                content: '\F0C6';
+                display: inline-block;
+                margin-right: 5px;
+                font: normal normal normal 1rem FontAwesome;
+                transform: rotate(70deg);
+            }
+        }
+    }
+    .visual {
+        margin-bottom: 3rem;
+        img { width : 100% };
+    }
+    section {
+        position: relative;
+        padding-bottom: 2rem;
+        border-bottom: 1px solid $gray;
+        margin: 0 0 2rem;
+        h3 {
+            margin-bottom: 1rem;
+            font-size: 1.35rem;
+            line-height: 1.3rem;
+            font-weight: normal;
+            color:$darkblue;
+        }
+        .git, .issue {
+            position: absolute;
+            right:0;
+            bottom: 2rem;
+            @media screen and (max-width:1024px) {
+                position: relative;
+                right: inherit;
+                bottom: inherit;
+                margin: 1rem 0 0 0;
+                display: inline-block;
+            }
+            &:hover {
+                svg {
+                    animation : ting 1s linear infinite;
+                }
+            }
+            svg {
+                margin-right: 5px;
+            }
+        }
+    }
+    p {
+        line-height: 1.6rem;
+    }
+}
+
+@keyframes ting {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}

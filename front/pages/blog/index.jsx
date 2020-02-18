@@ -1,12 +1,31 @@
 import React, { useEffect, useState, useCallback, useRef } from 'react';
-import { dummy } from '.';
-
 import { EditorState, convertFromRaw } from 'draft-js';
 import { stateToHTML } from 'draft-js-export-html';
 import { useSelector, useDispatch } from 'react-redux';
 import { LOAD_POSTS_REQUEST } from '../../reducers/post';
 import PostCard from '../../Components/PostCard';
 import StackGrid from "react-stack-grid";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSearch } from "@fortawesome/free-solid-svg-icons";
+import SearchForm from '../../Components/SearchForm';
+import Router from 'next/router';
+
+export function summary (postsState, summaryState) {
+    const contentArray = postsState.map((v,i) => {
+        return v.content;
+    });
+    const summeryArray = contentArray.map((v,i) => {
+        return v.replace(/(<([^>]+)>)/ig,"");
+    });
+    const subStringSummeryArray = summeryArray.map((v,i) => {
+        if(v.length>= 100) {
+            return v.substr(0,100)+"...";
+        } else {
+            return v;
+        }
+    });
+    summaryState(subStringSummeryArray);
+}
 
 const Blog = () => {
     const [editorState, setEditorState] = useState(EditorState.createEmpty());
@@ -15,26 +34,7 @@ const Blog = () => {
     const dispatch = useDispatch();
     const countRef = useRef([]);
     const [summery, setSummery] = useState([]);
-
-    const summerySetFunction = () => {
-        const contentArray = mainPosts.map((v,i) => {
-            return v.content;
-        });
-        //console.log(contentArray)
-        const summeryArray = contentArray.map((v,i) => {
-            return v.replace(/(<([^>]+)>)/ig,"");
-        });
-        //console.log(summeryArray)
-        const subStringSummeryArray = summeryArray.map((v,i) => {
-            //console.log(v.length)
-            if(v.length>= 100) {
-                return v.substr(0,100)+"...";
-            } else {
-                return v;
-            }
-        })
-        setSummery(subStringSummeryArray);
-    };
+    const [searchValue, setSearchValue] = useState('');
 
     const onScroll = useCallback(() => {
         // 현재 scroll 값, 윈도우 현재 창 높이값, 전체 화면 높이값
@@ -60,10 +60,8 @@ const Blog = () => {
 
     useEffect(() => {
         // 포스트들 요약글 만들기
-        summerySetFunction();
-        console.log('hasMorePost',hasMorePost)
-        console.log('countRef.current',countRef.current)
-        
+        //summerySetFunction();
+        summary(mainPosts, setSummery);        
     }, [mainPosts]);
 
     useEffect(() => {
@@ -73,14 +71,33 @@ const Blog = () => {
         };
     }, [mainPosts.length]);
 
+    const onChangeSearch = useCallback((e) => {
+        setSearchValue(e.target.value);
+    }, []);
 
+    const onSubmitSearch = useCallback((e) => {
+        e.preventDefault();
+        if ( !searchValue || !searchValue.trim() ) {
+            return alert('검색어를 입력하세요.');
+        }
+        Router.push({ pathname : '/tag', query: { tag: searchValue}}, `/tag/${searchValue}`);
+    }, [searchValue]);
 
     return (
         <div className='contents-wrap'>
             <div className='blog'>
-                <div className='blog-title'>
-                    <h2>다양한 이야기를 기록하고 있어요</h2>
+                <div className='blog-head'>
+                    <div className='blog-title'>
+                        <h2>다양한 이야기를 기록하고 있어요</h2>
+                    </div>
+                    <div class="input-box">
+                        <SearchForm 
+                            onSubmitSearch={onSubmitSearch}
+                            onChangeSearch={onChangeSearch}
+                        />
+                    </div>
                 </div>
+
                 {/*<div className='tags-list'> 태그 :  
                     {
                         mainPosts.map((v,i) => {
@@ -97,28 +114,28 @@ const Blog = () => {
                     }
                 </div>*/}
                 <div className='post-list'>
-                <ul>
-                    <StackGrid
-                        columnWidth={330}
-                        // duration={0}
-                        monitorImagesLoaded ={true}
-                    >
-                    {
-                        mainPosts.map((v,i) => {
-                            return (
-                                <PostCard 
-                                    post={v}
-                                    i={i}
-                                    key={i}
-                                    summery={summery}
-                                />
-                            )
-                        })
-                    }
-                    </StackGrid>
-                </ul>
+                    <ul>
+                        <StackGrid
+                            columnWidth={337.5}
+                            // duration={0}
+                            monitorImagesLoaded ={true}
+                        >
+                        {
+                            mainPosts.map((v,i) => {
+                                return (
+                                    <PostCard 
+                                        post={v}
+                                        i={i}
+                                        key={i}
+                                        summery={summery}
+                                    />
+                                )
+                            })
+                        }
+                        </StackGrid>
+                    </ul>
+                </div>
             </div>
-        </div>
         </div>
     );
 };

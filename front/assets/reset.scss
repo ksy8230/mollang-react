@@ -84,7 +84,9 @@ video {
   border: 0;
   font-size: 16px;
   font-family: 'Noto Serif KR', Arial, Helvetica, sans-serif;
+  line-height: 1rem;
   vertical-align: baseline;
+  color:$black;
 }
 /* HTML5 display-role reset for older browsers */
 article,
