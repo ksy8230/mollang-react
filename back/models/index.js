@@ -10,6 +10,7 @@ db.Post = require('./post')(sequelize, Sequelize);
 db.Tag = require('./tag')(sequelize, Sequelize);
 db.Comment = require('./comment')(sequelize, Sequelize);
 db.Image = require('./image')(sequelize, Sequelize);
+db.Calendar = require('./calendar')(sequelize, Sequelize);
 
 Object.keys(db).forEach(modelName => {
     if (db[modelName].associate) {

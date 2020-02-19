@@ -4,6 +4,9 @@ import AdminMenu from '../../Components/AdminMenu';
 import { useSelector } from 'react-redux';
 import Router from 'next/router';
 
+import TUICalendar from "@toast-ui/react-calendar";
+
+
 const Admin = () => {
     const { me } = useSelector(state => state.user);
     useEffect(() => {
@@ -13,11 +16,12 @@ const Admin = () => {
         }
     }, [me && me.id]);
     
+
     return (
-        <div className='admin'>
+        <div className='admin'> 
             <AdminMenu />
             <div className='admin-content'>
-                admin main
+                main
             </div>
         </div>
     );

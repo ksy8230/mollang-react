@@ -12,6 +12,8 @@ const postAPIRouter = require('./routes/post');
 const postsAPIRouter = require('./routes/posts');
 const tagAPIRouter = require('./routes/tag');
 const authAPIRouter = require('./routes/auth');
+const calendarsAPIRouter = require('./routes/calendars');
+const calendarAPIRouter = require('./routes/calendar');
 
 dotenv.config();
 const app = express();
@@ -45,6 +47,8 @@ app.use('/api/post', postAPIRouter);
 app.use('/auth', authAPIRouter);
 app.use('/api/posts', postsAPIRouter);
 app.use('/api/tag', tagAPIRouter);
+app.use('/api/calendars', calendarsAPIRouter);
+app.use('/api/calendar', calendarAPIRouter);
 
 app.get('/', (req, res) => {
     res.send('hello')

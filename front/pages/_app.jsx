@@ -25,6 +25,11 @@ const Mollang = ({ Component, store, pageProps }) => {
                 <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/react-draft-wysiwyg@1.12.3/dist/react-draft-wysiwyg.css' />
                 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
 
+                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tui-calendar/1.12.7/tui-calendar.css" />
+                <link rel="stylesheet" href="https://uicdn.toast.com/tui.date-picker/latest/tui-date-picker.css" />
+                <link rel="stylesheet" href="https://uicdn.toast.com/tui.time-picker/latest/tui-time-picker.css" />
+                <script src="https://uicdn.toast.com/tui.date-picker/latest/tui-date-picker.js"></script>
+                
                 {/* 공통으로 사용하는 js */}
             </Head>
             <AppLayout>

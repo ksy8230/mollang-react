@@ -30,11 +30,11 @@
 4. 블로그 
 - [] 게시판 페이지네이션
 - [v] 첫번째 이미지 썸네일, 이미지 없는 경우 기본 이미지
-- [] 관리자만 포스트 작성
+- [v] 관리자만 포스트 작성
 
 5. 포스트 상세페이지
-- [] 관리자만 포스트 수정
-- [] 관리자만 포스트 삭제
+- [v] 관리자만 포스트 수정
+- [v] 관리자만 포스트 삭제
 - [v] velog처럼 h1, h2... 태그별로 우측에 링커 걸기
 - [] 댓글 달기 (본인만 삭제, 수정)
 - [] 댓글 달기 삭제 알럿
@@ -81,6 +81,8 @@
     - [] 프로필 섬네일
     - [] 카테고리로 포스트 구분하기
     - [] 관리자단 tui-calendar 일정관리 기능 https://ui.toast.com/tui-calendar/
+        - [v] 기본 기능 추가하기 (다음 달력 보기, 이전 달력 보기, week 기준으로 보기, month 기준으로 보기)
+        - [v] DB 연동하여 CRUD 기능 추가하기
 
 #### 에러 및 개선하고 싶은 사항
 - 프론트단 동적 페이지들 (/tag/:tag, /detail/:id) SSR시 404 에러 
@@ -99,7 +101,7 @@
 - 회원가입 후 자동로그인 되는 부분은 어떻게 구현하는 걸까
     - >해결 : 회원가입 라우터에서 passport.authenticate 호출 && 리덕스사가에서 withCredentials : true 추가 잊지 말기
 
-#### `draft-js` 편집기 
+#### `draft-js` 편집기 참고 링크
 - https://jpuri.github.io/react-draft-wysiwyg
 - https://codesandbox.io/s/0p6zjoy7x0
 
@@ -142,3 +144,9 @@ https://codesandbox.io/s/ElYvJR21K
 ##### draft-js image 업로드 ( 키워드 : resolve({ data: { link } }) )
 https://github.com/jpuri/react-draft-wysiwyg/blob/master/stories/ImageUpload/index.js
 https://github.com/jpuri/react-draft-wysiwyg/issues/730
+
+
+#### `tui.calendar` 달력 참고 링크
+https://github.com/nhn/toast-ui.react-calendar
+https://github.com/nhn/tui.calendar/blob/master/docs/getting-started.md
+http://forward.nhnent.com/hands-on-labs/toastui.calendar-timetable/02%20setup.html
