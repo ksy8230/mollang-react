@@ -15,4 +15,58 @@
         width: 90%;
         padding:1rem;
     }
+    .calendar {
+        .calendar_head {
+            margin-bottom: 1rem;
+            .date {
+                display: inline-block;
+                margin-left: 1rem;
+                font-size: 1.3rem;
+                vertical-align: middle;
+                color:$darkblue;
+            }
+            span {
+                margin-right: .5rem;
+                padding:.5rem;
+                border-radius: 20px;
+                border: 1px solid $lightblue;
+                color: $darkblue;
+                &:hover {
+                    background: $lightblue;
+                    color: #fff;
+                }
+            }
+            .navigation {
+                display: inline-block;
+                vertical-align: middle;
+                button {
+                    position: relative;
+                    margin-right: .5rem;
+                    width: 1.5rem;
+                    height: 1.5rem;
+                    background: none;
+                    color:$darkblue;
+                    padding:1rem;
+                    border-radius: 20px;
+                    border: 1px solid $lightblue;
+                    &:hover {
+                        background: $lightblue;
+                        color: #fff;
+                    }
+                    svg {
+                        position: absolute;
+                        top:50%;left:50%;
+                        transform: translate(-50%,-50%);
+                        width: .7rem;
+                    }
+                }
+            }
+        }
+        .tui-full-calendar-time-schedule {
+            background: $green !important;
+            .tui-full-calendar-time-schedule-content  {
+                padding:1rem;
+            }
+        }
+    }
 }

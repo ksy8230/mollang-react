@@ -11,7 +11,7 @@ const style = {
   fontSize: '16px',
 };
 
-const RemoteSubmitButton = ({ title, tag }) => {
+const RemoteSubmitButton = ({ title, tag, category }) => {
   const dispatch = useDispatch();
   const {user} = useSelector(state => state.user);
   const { thumbImagePath } = useSelector(state => state.post);
@@ -24,13 +24,14 @@ const RemoteSubmitButton = ({ title, tag }) => {
       formData.append('thumbimage', i)
     });
     formData.append('title', title);
+    formData.append('category', category);
     formData.append('tag', tag);
     formData.append('content', draft.values.editorText);
     dispatch({
         type : ADD_POST_REQUEST,
         data : formData
     });
-  }, [title, tag, thumbImagePath ]);
+  }, [title, category, tag, thumbImagePath ]);
 
   return (
     <>

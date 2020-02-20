@@ -171,6 +171,13 @@ button {
     padding: 10px;
     color:#fff;
   }
+  &:active {
+    outline: none;
+    border: none;
+  }
+  &:focus {
+    outline:0;
+  }
 }
 /* scroll bar */
 ::-webkit-scrollbar {

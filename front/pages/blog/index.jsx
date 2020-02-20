@@ -9,13 +9,14 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import SearchForm from '../../Components/SearchForm';
 import Router from 'next/router';
+import Link from 'next/link';
 
 export function summary (postsState, summaryState) {
     const contentArray = postsState.map((v,i) => {
         return v.content;
     });
     const summeryArray = contentArray.map((v,i) => {
-        return v.replace(/(<([^>]+)>)/ig,"");
+        return v.replace(/(<([^>]+)>)/ig,"").replace("&nbsp;","");
     });
     const subStringSummeryArray = summeryArray.map((v,i) => {
         if(v.length>= 100) {
@@ -27,6 +28,16 @@ export function summary (postsState, summaryState) {
     summaryState(subStringSummeryArray);
 }
 
+function makeUniqueTagList(arrays) {
+    console.log('make Unique TagList')
+    const tagsArray = [];
+    arrays.map((v,i) => {
+        tagsArray.push(...v)
+    })
+    console.log(tagsArray)
+    return tagsArray;
+}
+
 const Blog = () => {
     const [editorState, setEditorState] = useState(EditorState.createEmpty());
     const [editorContentHtml, setEditorContentHtml] = useState('');
@@ -35,6 +46,7 @@ const Blog = () => {
     const countRef = useRef([]);
     const [summery, setSummery] = useState([]);
     const [searchValue, setSearchValue] = useState('');
+    const [categoryList, setCategoryList] = useState('post');
 
     const onScroll = useCallback(() => {
         // 현재 scroll 값, 윈도우 현재 창 높이값, 전체 화면 높이값
@@ -60,8 +72,7 @@ const Blog = () => {
 
     useEffect(() => {
         // 포스트들 요약글 만들기
-        //summerySetFunction();
-        summary(mainPosts, setSummery);        
+        summary(mainPosts, setSummery);      
     }, [mainPosts]);
 
     useEffect(() => {
@@ -83,6 +94,15 @@ const Blog = () => {
         Router.push({ pathname : '/tag', query: { tag: searchValue}}, `/tag/${searchValue}`);
     }, [searchValue]);
 
+    const onClickSeriesList = useCallback(() => {
+        setCategoryList('category');
+    }, [categoryList]);
+    const onClickPostList = useCallback(() => {
+        setCategoryList('post');
+    }, [categoryList]);
+    const onClickTagList = useCallback(() => {
+        setCategoryList('tag');
+    }, [categoryList]);
     return (
         <div className='contents-wrap'>
             <div className='blog'>
@@ -90,51 +110,74 @@ const Blog = () => {
                     <div className='blog-title'>
                         <h2>다양한 이야기를 기록하고 있어요</h2>
                     </div>
-                    <div class="input-box">
+                    <div className="input-box">
                         <SearchForm 
                             onSubmitSearch={onSubmitSearch}
                             onChangeSearch={onChangeSearch}
                         />
                     </div>
                 </div>
-
-                {/*<div className='tags-list'> 태그 :  
-                    {
-                        mainPosts.map((v,i) => {
-                            return (
-                            <span>
-                                {
-                                    // console.log(v.tag)
-                                    //JSON.parse(v.tag).map(v => v)
-                                    //console.log(JSON.parse(v.tag))
-                                }
-                            </span>
-                            )
-                        })
-                    }
-                </div>*/}
-                <div className='post-list'>
-                    <ul>
-                        <StackGrid
-                            columnWidth={337.5}
-                            // duration={0}
-                            monitorImagesLoaded ={true}
-                        >
+                <div className='blog-filter'>
+                    <div className={categoryList === 'post' ? 'active' : ''} onClick={onClickPostList}>포스트</div>
+                    <div className={categoryList === 'category' ? 'active' : ''} onClick={onClickSeriesList}>시리즈</div>
+                    <div className={categoryList === 'tag' ? 'active' : ''} onClick={onClickTagList}>태그</div>
+                </div>
+                {
+                    categoryList === 'category' ? 
+                    <div className='series-list'>
                         {
-                            mainPosts.map((v,i) => {
+                            Array.from(new Set(mainPosts.map( v => v.category ))).map((v,i) => {
                                 return (
-                                    <PostCard 
-                                        post={v}
-                                        i={i}
-                                        key={i}
-                                        summery={summery}
-                                    />
+                                    <div key={i}>
+                                        <p className='title'>
+                                        <Link href={{ pathname: '/blog/series', query : {category : v}}} as={`/blog/series/${v}`} >
+                                            {v}
+                                        </Link>
+                                        </p>
+                                        <p>{mainPosts.filter(c => c.category === v).map(c => c).length}개의 포스트</p>
+                                        
+                                    </div>
                                 )
                             })
                         }
-                        </StackGrid>
-                    </ul>
-                </div>
+                    </div>
+                    : categoryList === 'post' ?
+                    <div className='post-list'>
+                        <ul>
+                            <StackGrid
+                                columnWidth={337.5}
+                                // duration={0}
+                                monitorImagesLoaded ={true}
+                            >
+                            {
+                                mainPosts.map((v,i) => {
+                                    return (
+                                        <PostCard 
+                                            post={v}
+                                            i={i}
+                                            key={i}
+                                            summery={summery}
+                                        />
+                                    )
+                                })
+                            }
+                            </StackGrid>
+                        </ul>
+                    </div>
+                    : categoryList === 'tag' ?
+                    <div className='tag-list'>
+                        {   
+                            Array.from(new Set(
+                                makeUniqueTagList(mainPosts.map((v,i) => { return v.tag.replace("[","").replace("]","").replace(/"/g,"").replace(/#/g,"").split(",") })))
+                            ).map((v,i) => {
+                                return (
+                                    <span className='tag' key={i}><Link href={{ pathname: '/tag', query : {tag : v}}} as={`/tag/${v}`}><a>#{v}</a></Link></span>
+                                )
+                            })
+                        }
+                    </div>
+                    : null
+                }            
             </div>
         </div>
     );

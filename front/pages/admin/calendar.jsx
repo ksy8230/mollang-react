@@ -4,7 +4,8 @@ import AdminMenu from '../../Components/AdminMenu';
 import { useSelector, useDispatch } from 'react-redux';
 import Router from 'next/router';
 import TUICalendar from "@toast-ui/react-calendar";
-import { ISchedule, ICalendarInfo } from "tui-calendar";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faAngleRight, faAngleLeft } from "@fortawesome/free-solid-svg-icons";
 import { LOAD_SCHEDULES_REQUEST, ADD_SCHEDULE_REQUEST, EDIT_SCHEDULE_REQUEST, DELETE_SCHEDULE_REQUEST } from '../../reducers/calendar';
 //import "tui-calendar/dist/tui-calendar.css";
 //import "tui-date-picker/dist/tui-date-picker.css";
@@ -55,7 +56,7 @@ const ToastCalendar = () => {
   const calendars = [
     {
       id: "1",
-      name: "My Calendar",
+      name: "프로젝트",
       color: "#ffffff",
       bgColor: "#9e5fff",
       dragBgColor: "#9e5fff",
@@ -63,7 +64,7 @@ const ToastCalendar = () => {
     },
     {
       id: "2",
-      name: "Company",
+      name: "공부",
       color: "#00a9ff",
       bgColor: "#00a9ff",
       dragBgColor: "#00a9ff",
@@ -237,57 +238,59 @@ const ToastCalendar = () => {
   }, [])
 
   return (
-      <div className='admin'> 
+    <div className='admin'> 
       <AdminMenu />
-      <div className='admin-content'>
-        <div>
+      <div className='admin-content calendar'>
+        <div className='calendar_head'>
           <span onClick={handleClickWeekCalendarButton}>week</span>
           <span onClick={handleClickMonthCalendarButton}>month</span>
+          <div className='navigation'>
+            <button onClick={handleClickPrevCalendarButton}><FontAwesomeIcon icon={faAngleLeft} /></button>
+            <button onClick={handleClickNextCalendarButton}><FontAwesomeIcon icon={faAngleRight} /></button>
+          </div>
+          <div className='date'>2020.{startMonth}.{startDate} - {endMonth}.{endDate}</div>
         </div>
-      <button onClick={handleClickPrevCalendarButton}>이전</button>
-      <button onClick={handleClickNextCalendarButton}>다음</button>
-      <div>2020.{startMonth}.{startDate} ~ {endMonth}.{endDate}</div>
-      <TUICalendar
-          ref={cal}
-          onClickDayname={handleClickDayname}
-          usageStatistics={false}
-          height="90%"
-          taskView={false}
-          useCreationPopup={true}
-          useDetailPopup={true}
-          //defaultView='month'
-          template={templates}
-          calendars={calendars}
-          schedules={schedules}
-          scheduleView
-          timezones={[
-              {
-                  timezoneOffset: 540,
-                  displayLabel: 'GMT+09:00',
-                  tooltip: 'Seoul'
-              },
-          ]}
-          useDetailPopup
-          useCreationPopup
-          view='month'
-          month={{
-            daynames: ['일', '월', '화', '수', '목', '금', '토'],
-            startDayOfWeek: 0,
-            narrowWeekend: true
-          }}
-          week={{
-            daynames: ['일', '월', '화', '수', '목', '금', '토'],
-            //startDayOfWeek: 0,
-            narrowWeekend: true,
-          }}
-          onClickSchedule={onClickSchedule}
-          onBeforeCreateSchedule={onBeforeCreateSchedule}
-          onBeforeDeleteSchedule={onBeforeDeleteSchedule}
-          onBeforeUpdateSchedule={onBeforeUpdateSchedule}
-      />
-      </div>
 
+        <TUICalendar
+            ref={cal}
+            onClickDayname={handleClickDayname}
+            usageStatistics={false}
+            height="90%"
+            //taskView={true}
+            useCreationPopup={true}
+            useDetailPopup={true}
+            //defaultView='month'
+            template={templates}
+            calendars={calendars}
+            schedules={schedules}
+            scheduleView
+            timezones={[
+                {
+                    timezoneOffset: 540,
+                    displayLabel: 'GMT+09:00',
+                    tooltip: 'Seoul'
+                },
+            ]}
+            useDetailPopup
+            useCreationPopup
+            view='month'
+            month={{
+              daynames: ['일', '월', '화', '수', '목', '금', '토'],
+              startDayOfWeek: 0,
+              narrowWeekend: true
+            }}
+            week={{
+              daynames: ['일', '월', '화', '수', '목', '금', '토'],
+              //startDayOfWeek: 0,
+              narrowWeekend: true,
+            }}
+            onClickSchedule={onClickSchedule}
+            onBeforeCreateSchedule={onBeforeCreateSchedule}
+            onBeforeDeleteSchedule={onBeforeDeleteSchedule}
+            onBeforeUpdateSchedule={onBeforeUpdateSchedule}
+        />
       </div>
+    </div>
   );
 };
 

@@ -79,7 +79,7 @@
 - +a 
     - [v] 카카오톡 간편 로그인
     - [] 프로필 섬네일
-    - [] 카테고리로 포스트 구분하기
+    - [v] 카테고리로 포스트 구분하기
     - [] 관리자단 tui-calendar 일정관리 기능 https://ui.toast.com/tui-calendar/
         - [v] 기본 기능 추가하기 (다음 달력 보기, 이전 달력 보기, week 기준으로 보기, month 기준으로 보기)
         - [v] DB 연동하여 CRUD 기능 추가하기
@@ -100,7 +100,9 @@
 - 메인 페이지 레이아웃 / 서브 페이지 레이아웃 분기를 위한 AppLayout 2 타입 만드는 게 가능할까?
 - 회원가입 후 자동로그인 되는 부분은 어떻게 구현하는 걸까
     - >해결 : 회원가입 라우터에서 passport.authenticate 호출 && 리덕스사가에서 withCredentials : true 추가 잊지 말기
-
+- created_at.toString() Cannot read property toString()
+    - >해결 : 
+    
 #### `draft-js` 편집기 참고 링크
 - https://jpuri.github.io/react-draft-wysiwyg
 - https://codesandbox.io/s/0p6zjoy7x0

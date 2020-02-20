@@ -26,7 +26,7 @@ const PostCard = ({ post, i, summery }) => {
                     </div>
                     <div className='post-title'>
                         <h3><Link href={{ pathname: '/blog/detail', query: {id : post.id}}} as={`/blog/detail/${post.id}`}><a>{post.title}</a></Link></h3>
-                        <p className='post-date'>{post.date|| '2020.02.12'}</p>
+                        <p className='post-date'>{post.created_at && post.created_at.toString().split('T')[0]}</p>
                     </div>
                 </div>
                 <div className='post-summery'>

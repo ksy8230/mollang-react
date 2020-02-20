@@ -8,6 +8,7 @@ import { Router } from 'next/router';
 
 const Blog = () => {
     const [title, setTitle] = useState('');
+    const [category, setCategory] = useState('');
     const [tag, setTag] = useState('');
     const { postAdded, thumbImagePath } = useSelector(state => state.post);
     const { me } = useSelector(state => state.user);
@@ -16,6 +17,10 @@ const Blog = () => {
 
     const onChangeTitle = useCallback((e) => {
         setTitle(e.target.value);
+    }, []);
+
+    const onChangeCategory = useCallback((e) => {
+        setCategory(e.target.value);
     }, []);
 
     const onChangeTag = useCallback((e) => {
@@ -61,6 +66,9 @@ const Blog = () => {
                 <div className='input-box'>
                     <input type="text" value={title} onChange={onChangeTitle} placeholder="제목" required />
                 </div>
+                <div className='input-box'>
+                    <input type="text" value={category} onChange={onChangeCategory} placeholder="새로운 시리즈" />
+                </div>
                 <div className='editor-form-box'>
                     <EditorForm />
                 </div>
@@ -79,7 +87,7 @@ const Blog = () => {
                     <button onClick={onClickUploadThumbImage}><a>썸네일 이미지 업로드</a></button>
                 </div>
 
-                <RemoteSubmitButton title={title} tag={tag} />
+                <RemoteSubmitButton title={title} tag={tag} category={category} />
             </div>
             </div>
         </div>

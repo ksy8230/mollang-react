@@ -1,3 +1,4 @@
+
 const express = require('express');
 const multer = require('multer');
 const path = require('path');
@@ -21,20 +22,20 @@ const upload = multer({
 
 router.post('/', upload.none(), async (req, res, next) => { // POST /api/post 
     try {
-        const tags = JSON.stringify(req.body.tag.match(/#[^\s]+/g));
-        console.log('req.body.tag',req.body.tag)
-        console.log('tags',tags)
+        const tags = JSON.stringify(req.body.tag.match(/#[^\s]+/g));        
         const newPost = await db.Post.create({
             title : req.body.title,
+            category : req.body.category,
             content : req.body.content,
             tag : tags,
+            UserId: req.user.id,
         });
         if (tags) {
             // 태그를 전부 찾아서 #제거하고 있으면 db 찾기 없으면 db 생성
             const result = await Promise.all(JSON.parse(tags).map(v => db.Tag.findOrCreate({ 
                 where : { name : v.slice(1).toLowerCase()},
             })));
-            console.log('result',result)
+            console.log('태그 result',result)
             await newPost.addTags(result.map(r => r[0]));
         }
         if (req.body.thumbimage) { // multer에서 이미지 주소를 여러개 올리면 thumbimage : [주소1, 주소2...]
@@ -48,11 +49,24 @@ router.post('/', upload.none(), async (req, res, next) => { // POST /api/post
                 await newPost.addImage(thumbimage);
             }
         }
+        if (req.body.category) {
+            // category가 요청 들어왔을 때 디비에 category가 있으면 찾고 없으면 db 생성
+            const result = await db.Category.findOrCreate({
+                where : { name : req.body.category }
+            })
+        }
         const fullPost = await db.Post.findOne({
             where : { id : newPost.id },
-            include : [{
-                model: db.Image,
-            }]
+            include : [
+                {
+                    model: db.Image,
+                },
+                {
+                    model: db.Category,
+                    //as : 'PostCategory',
+                    attributes: ['id'],
+                },
+            ]
         })
         res.json(fullPost);
     } catch (error) {

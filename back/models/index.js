@@ -8,6 +8,7 @@ const db = {};
 db.User = require('./user')(sequelize, Sequelize);
 db.Post = require('./post')(sequelize, Sequelize);
 db.Tag = require('./tag')(sequelize, Sequelize);
+db.Category = require('./category')(sequelize, Sequelize);
 db.Comment = require('./comment')(sequelize, Sequelize);
 db.Image = require('./image')(sequelize, Sequelize);
 db.Calendar = require('./calendar')(sequelize, Sequelize);

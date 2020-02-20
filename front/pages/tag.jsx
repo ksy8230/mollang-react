@@ -61,7 +61,7 @@ const Tag = ({ tag }) => {
             <div className='blog'>
                 <div className='blog-head'>
                     <div className='blog-title'>
-                        <h2>검색 단어 : {tag}</h2>
+                        <h2>{tag} 관련 포스트</h2>
                     </div>
                     <div class="input-box">
                         <SearchForm 

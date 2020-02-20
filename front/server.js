@@ -36,6 +36,10 @@ app.prepare().then(() => {
         return app.render(req, res, '/blog/detail', { id: req.params.id });
     });
 
+    server.get('/blog/series/:category', (req, res) => {
+        return app.render(req, res, '/blog/series', { id: req.params.category });
+    });
+
     server.get('/admin/blog/update/:id', (req, res) => {
         return app.render(req, res, '/admin/blog/update', { id: req.params.id });
     });

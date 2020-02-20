@@ -90,7 +90,10 @@ const Detail = ({ id }) => {
 
                 <div>
                     <h2 className='title'>{singlePost.title}</h2>
-                    <span className='date'>{singlePost.created_at}</span>
+                    {
+                        singlePost.category && <span>시리즈 포스트</span>
+                    }
+                    <p className='date'>{singlePost.created_at && singlePost.created_at.toString().split('T')[0]}</p>
                     <div className='draft-editor-contents' dangerouslySetInnerHTML={createMarkup(singlePost.content)} />
                     <p className='post-tag'>
                         {
