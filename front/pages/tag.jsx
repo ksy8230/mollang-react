@@ -18,7 +18,7 @@ const Tag = ({ tag }) => {
     const onScroll = useCallback(() => {
         if (window.scrollY + document.documentElement.clientHeight > document.documentElement.scrollHeight - 300) {
             if (hasMoreTagPost) {
-                const lastId = mainPosts[mainPosts.length - 1].id;
+                const lastId = mainPosts[mainPosts.length - 1].id || 0;
                 if (!countRef.current.includes(lastId)) {
                     console.log('countRef.current', countRef.current)
                     dispatch({

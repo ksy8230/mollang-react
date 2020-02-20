@@ -113,7 +113,7 @@ const reducer = (state = initialState, action) => {
         case LOAD_TAG_POSTS_REQUEST : {
             return {
                 ...state,
-                mainPosts : !action.lastId ? [] : state.mainPosts,
+                mainPosts : action.lastId === 0 ? [] : state.mainPosts,
                 hasMoreTagPost : action.lastId ? state.hasMoreTagPost : true,
             }
         }

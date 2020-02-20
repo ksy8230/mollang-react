@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import { LOAD_POST_REQUEST, DELETE_POST_REQUEST } from '../../reducers/post';
 import Link from 'next/link';
+import Helmet from 'react-helmet';
 
 function createMarkup(html) {
     return {__html: html};
@@ -76,51 +77,65 @@ const Detail = ({ id }) => {
     }, []);
 
     return (
-        <div className='contents-wrap'>
-            
-            <div className='blog-detail'> 
-                {
-                    me && me.id === 1 ?
-                    <div className='admin-buttons'>
-                        <button><Link href={{ pathname: '/admin/blogUpdate', query: {id : id} }} as={`/admin/blogUpdate/${id}`}><a>수정</a></Link></button>
-                        <button onClick={onClickDeletePost}><a>삭제</a></button>
-                    </div> 
-                    : null
-                }
-
-                <div>
-                    <h2 className='title'>{singlePost.title}</h2>
+        <>
+            <Helmet 
+                //title={`${singlePost.User.nickname}님의 게시글`}
+                description={singlePost && singlePost.content || ''}
+                meta={[{
+                    name: 'description', content: singlePost && singlePost.content,
+                }, {
+                    //property: 'og:title', content: `${singlePost.User.nickname}님의 게시글`
+                }, {
+                    //property: 'og:image', content: singlePost.Images[0] && `http://localhost:8080/${singlePost.Images[0].src}`
+                }, {
+                    property : 'og:url', content: `http://localhost:3000/blog/detail/${id}`
+                }]}
+            />
+            <div className='contents-wrap'>  
+                <div className='blog-detail'> 
                     {
-                        singlePost.category && <span>시리즈 포스트</span>
+                        me && me.id === 1 ?
+                        <div className='admin-buttons'>
+                            <button><Link href={{ pathname: '/admin/blogUpdate', query: {id : id} }} as={`/admin/blogUpdate/${id}`}><a>수정</a></Link></button>
+                            <button onClick={onClickDeletePost}><a>삭제</a></button>
+                        </div> 
+                        : null
                     }
-                    <p className='date'>{singlePost.created_at && singlePost.created_at.toString().split('T')[0]}</p>
-                    <div className='draft-editor-contents' dangerouslySetInnerHTML={createMarkup(singlePost.content)} />
-                    <p className='post-tag'>
+
+                    <div>
+                        <h2 className='title'>{singlePost && singlePost.title}</h2>
                         {
-                            singlePost.tag ?
-                            makeTagList(singlePost.tag).map((v,i) => {
-                                return (
-                                <span key={i} style={{marginRight:10}}><Link href={{ pathname: '/tag', query : {tag : v}}} as={`/tag/${v}`} ><a>#{v}</a></Link></span>
-                                )
-                            }) : null
+                            singlePost && singlePost.category && <span>시리즈 포스트</span>
                         }
-                    </p>
-                </div>
-                <div className='sidenav'>
-                    <ul>
-                        {
-                            sideLinker.map((v,i) => {
-                                return (
-                                    <li key={i}>
-                                        <a href={`#${v}`} onClick={onClickToTitle}>{v}</a>
-                                    </li>
-                                )
-                            })
-                        }
-                    </ul>
+                        <p className='date'>{singlePost && singlePost.created_at && singlePost.created_at.toString().split('T')[0]}</p>
+                        <div className='draft-editor-contents' dangerouslySetInnerHTML={createMarkup(singlePost && singlePost.content)} />
+                        <p className='post-tag'>
+                            {
+                                singlePost && singlePost.tag ?
+                                makeTagList(singlePost.tag).map((v,i) => {
+                                    return (
+                                    <span key={i} style={{marginRight:10}}><Link href={{ pathname: '/tag', query : {tag : v}}} as={`/tag/${v}`} ><a>#{v}</a></Link></span>
+                                    )
+                                }) : null
+                            }
+                        </p>
+                    </div>
+                    <div className='sidenav'>
+                        <ul>
+                            {
+                                sideLinker.map((v,i) => {
+                                    return (
+                                        <li key={i}>
+                                            <a href={`#${v}`} onClick={onClickToTitle}>{v}</a>
+                                        </li>
+                                    )
+                                })
+                            }
+                        </ul>
+                    </div>
                 </div>
             </div>
-        </div>
+        </>
     )
 };
 

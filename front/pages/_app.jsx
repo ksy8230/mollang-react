@@ -12,30 +12,72 @@ import createSagaMiddleware from 'redux-saga';
 import rootSaga from '../sagas';
 import '../assets/styles.scss';
 import axios from 'axios';
+import Helmet from 'react-helmet';
+import App, { Container } from 'next/app';
 import { LOAD_USER_REQUEST } from '../reducers/user';
 
 const Mollang = ({ Component, store, pageProps }) => {
     return (
-        <Provider store={store}>
-            <Head>
+        <Container>
+            <Provider store={store}>
+            <Helmet
+                title="mollang"
+                htmlAttributes={{ lang: 'ko' }}
+                meta={[{
+                    charset: 'UTF-8',
+                }, {
+                    name: 'viewport',
+                    content: 'width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=yes,viewport-fit=cover',
+                }, {
+                    'http-equiv': 'X-UA-Compatible', content: 'IE=edge',
+                }, {
+                    name: 'description', content: '몰로그의 블로그',
+                }, {
+                    name: 'og:title', content: 'mollang',
+                }, {
+                    name: 'og:description', content: '몰로그의 블로그',
+                }, {
+                    property: 'og:type', content: 'website',
+                }, {
+                    property: 'og:image', content: '/favicon.ico',
+                }]}
+                link={[{
+                    rel: 'shortcut icon', href: '/favicon.ico',
+                }, {
+                    rel: 'stylesheet', href: 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css',
+                },{
+                    rel: 'stylesheet', href: 'https://cdn.jsdelivr.net/npm/react-draft-wysiwyg@1.12.3/dist/react-draft-wysiwyg.css',
+                }, {
+                    rel: 'stylesheet', href: 'https://cdnjs.cloudflare.com/ajax/libs/tui-calendar/1.12.7/tui-calendar.css',
+                }, {
+                    rel: 'stylesheet', href: 'https://uicdn.toast.com/tui.date-picker/latest/tui-date-picker.css',
+                }, {
+                    rel: 'stylesheet', href: 'https://uicdn.toast.com/tui.time-picker/latest/tui-time-picker.css',
+                },{
+                    rel : 'stylesheet', type : 'text/css', href: '/_next/static/css/styles.chunk.css',
+                }, ]}
+                script={[{
+                    src: 'https://uicdn.toast.com/tui.date-picker/latest/tui-date-picker.js'
+                }]}
+                />
+            {/*<Head>
                 <title>mollang</title>
                 <meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
                 <meta charSet="utf-8" />
-                {/* 공통으로 사용하는 css */}
                 <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/react-draft-wysiwyg@1.12.3/dist/react-draft-wysiwyg.css' />
-                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" /> 
 
                 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tui-calendar/1.12.7/tui-calendar.css" />
                 <link rel="stylesheet" href="https://uicdn.toast.com/tui.date-picker/latest/tui-date-picker.css" />
                 <link rel="stylesheet" href="https://uicdn.toast.com/tui.time-picker/latest/tui-time-picker.css" />
                 <script src="https://uicdn.toast.com/tui.date-picker/latest/tui-date-picker.js"></script>
                 
-                {/* 공통으로 사용하는 js */}
-            </Head>
+            </Head>*/}
             <AppLayout>
                 <Component {...pageProps} />
             </AppLayout>
         </Provider>
+        </Container>
     );
 };
 
@@ -49,7 +91,9 @@ Mollang.getInitialProps = async (context) => {
     let pageProps = {};
     const state = ctx.store.getState();
     const cookie = ctx.isServer ? ctx.req.headers.cookie : '';
-    axios.defaults.headers.Cookie = '';
+    if (ctx.isServer) {
+        axios.defaults.headers.Cookie = '';
+    }
     if (ctx.isServer && cookie) {
         axios.defaults.headers.Cookie = cookie;
         // 토큰 설정도 이곳에서 가능
