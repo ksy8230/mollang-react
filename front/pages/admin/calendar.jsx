@@ -1,15 +1,18 @@
 import React, { useEffect, useState, useCallback, useRef } from 'react';
-import Link from 'next/link';
+import dynamic from 'next/dynamic';
 import AdminMenu from '../../Components/AdminMenu';
 import { useSelector, useDispatch } from 'react-redux';
 import Router from 'next/router';
-import TUICalendar from "@toast-ui/react-calendar";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleRight, faAngleLeft } from "@fortawesome/free-solid-svg-icons";
+// import TUICalendar from "@toast-ui/react-calendar";
+const TUICalendar = dynamic(
+  import('@toast-ui/react-calendar'), {
+    loading: () => (<div>서버사이드에서 대체되는 영역</div>),
+    ssr: false,
+  },
+);  
 import { LOAD_SCHEDULES_REQUEST, ADD_SCHEDULE_REQUEST, EDIT_SCHEDULE_REQUEST, DELETE_SCHEDULE_REQUEST } from '../../reducers/calendar';
-//import "tui-calendar/dist/tui-calendar.css";
-//import "tui-date-picker/dist/tui-date-picker.css";
-//import "tui-time-picker/dist/tui-time-picker.css";
 
 const ToastCalendar = () => {
   const dispatch = useDispatch();

@@ -1,13 +1,21 @@
 import React, { Component } from "react";
 import dynamic from 'next/dynamic';
 import { EditorState, convertToRaw, ContentState } from "draft-js";
-//import { Editor } from "react-draft-wysiwyg";
 const Editor = dynamic(
-    () => import('react-draft-wysiwyg').then(mod => mod.Editor),
-    { ssr: false }
+  () => import('react-draft-wysiwyg').then(mod => mod.Editor),
+  { ssr: false }
 );
-import draftToHtml from "draftjs-to-html";
-import htmlToDraft from 'html-to-draftjs';
+//import { Editor } from "react-draft-wysiwyg";
+//import draftToHtml from "draftjs-to-html";
+//import htmlToDraft from 'html-to-draftjs';
+const draftToHtml = dynamic(
+  () => import('draftjs-to-html'),
+  { ssr: false }
+);
+const htmlToDraft = dynamic(
+  () => import('html-to-draftjs'),
+  { ssr: false }
+);
 
 function uploadImageCallBack(file) {
   return new Promise(

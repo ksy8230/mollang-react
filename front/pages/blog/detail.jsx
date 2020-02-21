@@ -2,10 +2,12 @@ import React, { useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
 import Router from 'next/router';
 import PropTypes from 'prop-types';
-import { useDispatch, useSelector } from 'react-redux';
-import { LOAD_POST_REQUEST, DELETE_POST_REQUEST } from '../../reducers/post';
 import Link from 'next/link';
 import Helmet from 'react-helmet';
+import { useDispatch, useSelector } from 'react-redux';
+import { LOAD_POST_REQUEST, DELETE_POST_REQUEST } from '../../reducers/post';
+import moment from 'moment';
+//moment.locale('ko');
 
 function createMarkup(html) {
     return {__html: html};
@@ -107,7 +109,8 @@ const Detail = ({ id }) => {
                         {
                             singlePost && singlePost.category && <span>시리즈 포스트</span>
                         }
-                        <p className='date'>{singlePost && singlePost.created_at && singlePost.created_at.toString().split('T')[0]}</p>
+                        {/* <p className='date'>{singlePost && singlePost.created_at && singlePost.created_at.toString().split('T')[0]}</p> */}
+                        <p className='date'>{moment(singlePost.created_at).format('YYYY.MM.DD')}</p>
                         <div className='draft-editor-contents' dangerouslySetInnerHTML={createMarkup(singlePost && singlePost.content)} />
                         <p className='post-tag'>
                             {

@@ -40,6 +40,9 @@
 
 6. 배포 관련
 - [v] `react-helmet`으로 헤드태그 추가, _document.js 에서 `react-helmet` SSR
+- next/dynamic 이용해 특정 컴포넌트 SSR 안하고, 클라이언트에서만 렌더링하기 (편집기, 달력 같이 윈도우에서만 실행되는 라이브러리)
+https://kokohapps.tistory.com/entry/Nextjs-nextdynamic-%EC%9D%B4%EC%9A%A9%ED%95%B4%EC%84%9C-%ED%8A%B9%EC%A0%95-%EC%BB%B4%ED%8F%AC%EB%84%8C%ED%8A%B8-SSR-%EC%95%88%ED%95%98%EA%B3%A0-%ED%81%B4%EB%9D%BC%EC%9D%B4%EC%96%B8%ED%8A%B8%EC%97%90%EC%84%9C%EB%A7%8C-%EB%A0%8C%EB%8D%94%EB%A7%81%ED%95%98%EA%B8%B0
+- BundleAnalyzer에서 moment플러그인 한국어만 적용되도록 tree shaking, 플러그인들 gzipped로 압축
 
  To Do List (or 진행 사항들)
 #### front & back

@@ -2,7 +2,9 @@ uploads
 node_modules
 .env
 .next
+bundles
 !**/.eslintrc*
+public/images
 
 연습용이라 깃 커밋 제외 파일
 _Editor_backup.js
@@ -10,7 +12,7 @@ _Editor_hooks.js
 EditorContainer.js
 submit.js
 blog_back.jsx
-blogAdmin.jsx
+blog_admin.jsx
 AdminHeader.jsx
 AppLayoutAdmin.js
 admin/index.jsx

@@ -39,10 +39,10 @@ const Mollang = ({ Component, store, pageProps }) => {
                 }, {
                     property: 'og:type', content: 'website',
                 }, {
-                    property: 'og:image', content: '/favicon.ico',
+                    property: 'og:image', content: '/images/favicon.ico',
                 }]}
                 link={[{
-                    rel: 'shortcut icon', href: '/favicon.ico',
+                    rel: 'shortcut icon', href: '/images/favicon.ico',
                 }, {
                     rel: 'stylesheet', href: 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css',
                 },{
@@ -84,6 +84,7 @@ const Mollang = ({ Component, store, pageProps }) => {
 Mollang.propTypes = {
     Component : PropTypes.elementType,
     store : PropTypes.object.isRequired,
+    pageProps: PropTypes.object.isRequired,
 };
 
 Mollang.getInitialProps = async (context) => {
