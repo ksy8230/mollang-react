@@ -4,7 +4,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "nodemon",
-    "build": "cross-env ANALYZE=both next build",
+    "build": "cross-env ANALYZE=true next build",
     "prestart": "npm run build",
     "start": "cross-env NODE_ENV=production next start"
   },

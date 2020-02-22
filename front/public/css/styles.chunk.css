@@ -1,0 +1,971 @@
+@charset "UTF-8";
+/*
+    공통 관련
+    input
+    layer-popup
+*/
+/* layer-popup */
+.layer-popup {
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 100%;
+  z-index: 20; }
+  .layer-popup .overlay {
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    z-index: 10;
+    background: rgba(249, 249, 249, 0.85); }
+  .layer-popup .wapper {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80%;
+    box-shadow: rgba(0, 0, 0, 0.09) 0px 2px 12px 0px;
+    background: #fff;
+    z-index: 11; }
+    .layer-popup .wapper span {
+      position: absolute;
+      right: 0;
+      top: 0px;
+      width: 40px;
+      height: 40px;
+      line-height: 40px;
+      text-align: center; }
+    .layer-popup .wapper .layer-popup-cotent {
+      padding: 15px; }
+
+/* input-box */
+.input-box {
+  margin: 0 auto 15px;
+  text-align: center; }
+  .input-box input {
+    display: inline-block;
+    padding: 1rem;
+    border: 1px solid lightgray;
+    font-size: 1rem; }
+
+html,
+body,
+div,
+span,
+applet,
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+a,
+abbr,
+acronym,
+address,
+big,
+cite,
+code,
+del,
+dfn,
+em,
+img,
+ins,
+kbd,
+q,
+s,
+samp,
+small,
+strike,
+strong,
+sub,
+sup,
+tt,
+var,
+b,
+u,
+i,
+center,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td,
+article,
+aside,
+canvas,
+details,
+embed,
+figure,
+figcaption,
+footer,
+header,
+hgroup,
+menu,
+nav,
+output,
+ruby,
+section,
+summary,
+time,
+mark,
+audio,
+video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 16px;
+  font-family: 'Noto Serif KR', Arial, Helvetica, sans-serif;
+  vertical-align: baseline;
+  color: #252525;
+  letter-spacing: 0; }
+
+/* HTML5 display-role reset for older browsers */
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+menu,
+nav,
+section {
+  display: block; }
+
+body {
+  line-height: 1; }
+
+ol,
+ul {
+  list-style: none; }
+
+blockquote,
+q {
+  quotes: none; }
+
+blockquote:before,
+blockquote:after,
+q:before,
+q:after {
+  content: "";
+  content: none; }
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0; }
+
+a {
+  all: unset;
+  cursor: pointer; }
+
+*,
+input {
+  box-sizing: border-box; }
+
+input {
+  border: none;
+  box-sizing: border-box; }
+  input:focus, input:active {
+    outline: none; }
+
+a {
+  text-decoration: none;
+  color: #dd5f7a; }
+  a:hover {
+    text-decoration: underline; }
+
+* {
+  box-sizing: border-box; }
+
+body {
+  font-size: 14px; }
+
+button {
+  display: inline-block;
+  padding: 0;
+  background: #3B3B3B;
+  color: #fff;
+  line-height: 1rem;
+  border-radius: 5px;
+  font-weight: bold;
+  border: 0; }
+  button a {
+    display: block;
+    padding: 10px;
+    color: #fff; }
+  button:active {
+    outline: none;
+    border: none; }
+  button:focus {
+    outline: 0; }
+
+/* scroll bar */
+::-webkit-scrollbar {
+  width: 7px;
+  /* 세로축 스크롤바 길이 */
+  height: 7px;
+  /* 가로축 스크롤바 길이 */ }
+
+::-webkit-scrollbar-thumb {
+  border-radius: 8px;
+  background-color: #db94a3;
+  opacity: .6; }
+
+/*
+    header 관련 css
+*/
+header {
+  position: relative;
+  display: block;
+  border-bottom: 1px solid #eaeaea;
+  z-index: 1; }
+  header a {
+    display: block; }
+  header .wrapper {
+    width: 1024px;
+    margin: 0 auto;
+    padding: 15px 0; }
+    @media screen and (max-width: 1024px) {
+      header .wrapper {
+        width: 100%; } }
+  header .logo {
+    display: inline-block;
+    width: 2.5rem;
+    vertical-align: middle; }
+    header .logo img {
+      width: 100%; }
+  header .account {
+    position: relative;
+    float: right;
+    padding-bottom: 1rem;
+    text-align: right; }
+    header .account .account-user .account-profile-img {
+      position: relative;
+      display: inline-block;
+      height: 2.5rem;
+      width: 2.5rem;
+      margin-right: 10px;
+      border-radius: 50px;
+      overflow: hidden;
+      vertical-align: middle; }
+      header .account .account-user .account-profile-img img {
+        position: absolute;
+        width: 100%;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%); }
+    header .account .account-user .account-more {
+      display: inline-block;
+      margin-left: 10px;
+      width: 1rem;
+      vertical-align: middle; }
+    header .account button a {
+      color: #fff; }
+    header .account .account-menu {
+      position: absolute;
+      top: 100%;
+      right: 0;
+      width: 10rem;
+      padding: .5rem;
+      text-align: left;
+      box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 8px;
+      background: #fff; }
+      header .account .account-menu a {
+        display: inline-block;
+        padding: 0.75rem 1rem;
+        font-size: 1rem; }
+  header .links {
+    display: inline-block;
+    margin-left: 15px; }
+    header .links nav div {
+      display: inline-block;
+      margin-right: 15px; }
+      header .links nav div.active a {
+        pointer-events: none; }
+        header .links nav div.active a::after {
+          bottom: 5px;
+          background: #dd5f7a; }
+      header .links nav div a {
+        position: relative;
+        display: block;
+        text-decoration: none;
+        color: #252525;
+        line-height: 40px; }
+        header .links nav div a:hover:after {
+          bottom: 5px;
+          background: #dd5f7a; }
+        header .links nav div a:after {
+          position: absolute;
+          bottom: 0px;
+          left: 0;
+          content: '';
+          display: inline-block;
+          width: 100%;
+          height: 2px;
+          background: transparent;
+          transition: all 0.3s; }
+
+/*
+    user 관련 css
+    login
+    signup
+    edit-user
+    user
+    
+*/
+.login {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+  min-height: 25rem;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center; }
+  .login form {
+    margin-bottom: 10px; }
+  .login p {
+    margin-bottom: 10px; }
+
+.user .user_box p.title {
+  margin-bottom: 1.5rem;
+  font-size: 1.4rem; }
+
+.user .user_box .user_box-info p {
+  margin-bottom: .5rem;
+  color: #4e6e8e;
+  letter-spacing: 0.7px; }
+  .user .user_box .user_box-info p span {
+    display: inline-block;
+    margin-right: 1rem; }
+  .user .user_box .user_box-info p .input-box {
+    text-align: left;
+    display: inline-block;
+    margin: 0; }
+    .user .user_box .user_box-info p .input-box input {
+      padding: 0.4rem; }
+
+.user .user-edit {
+  margin-top: 2rem; }
+  .user .user-edit button {
+    margin-right: 10px; }
+
+/*
+    home 관련 css
+*/
+@media screen and (max-width: 1024px) {
+  .home {
+    width: 100%; } }
+
+.home h2, .home p {
+  text-align: center; }
+
+.home .main-features {
+  position: relative;
+  padding: 12rem 0;
+  background: #eaeaea;
+  text-align: center; }
+  .home .main-features .img-pen img {
+    width: 50%; }
+  .home .main-features .img-tag {
+    position: absolute;
+    bottom: -50px;
+    left: 50%;
+    margin-left: -50px;
+    display: inline-block;
+    width: 100px;
+    height: 100px;
+    box-sizing: border-box;
+    border-radius: 120px;
+    border: 4px solid #fff;
+    background: #252525; }
+    .home .main-features .img-tag img {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      transition: all 0.6s; }
+
+.home .title-features {
+  margin-top: 80px; }
+  .home .title-features h2 {
+    font-size: 1.4rem; }
+  .home .title-features p {
+    margin: .5rem 0 0 0;
+    color: #252525; }
+
+.home .typing-effect {
+  display: block;
+  margin-bottom: 1rem;
+  height: 2.6rem; }
+  .home .typing-effect p {
+    text-align: center;
+    color: #252525;
+    font-weight: bold;
+    font-size: 2.5rem; }
+
+.home .features {
+  width: 1024px;
+  margin: 2rem auto;
+  padding: 2rem 0;
+  display: flex;
+  justify-content: center;
+  justify-content: space-between;
+  border-top: 1px solid #ddd; }
+  @media screen and (max-width: 1024px) {
+    .home .features {
+      width: 100%; } }
+
+.feature {
+  max-width: 30%; }
+  .feature h3 {
+    margin-bottom: 1rem;
+    font-size: 1.1rem;
+    font-weight: bold;
+    text-align: center;
+    color: #4e6e8e; }
+  .feature p {
+    text-align: left;
+    line-height: 1.6rem;
+    color: #4e6e8e; }
+    .feature p span {
+      display: inline-block;
+      margin: 5px 5px 5px 0;
+      padding: 2px;
+      background: #eaeaea;
+      border-radius: 5px;
+      font-size: .9rem;
+      color: #252525; }
+
+/*
+    footer 관련 css
+*/
+footer {
+  width: 1024px;
+  margin: 2rem auto;
+  padding: 2rem 0;
+  border-top: 1px solid #ddd;
+  text-align: center; }
+  @media screen and (max-width: 1024px) {
+    footer {
+      width: 100%; } }
+  footer .logo img {
+    width: 2.5rem; }
+  footer .contact {
+    margin: 1rem 0; }
+    footer .contact span {
+      display: inline-block;
+      margin: 0 .5rem;
+      font-size: .9rem;
+      color: #252525; }
+      footer .contact span img {
+        width: 2rem; }
+  footer p {
+    font-size: .8rem;
+    color: #999; }
+
+/*
+    blog 관련 css
+    blog search 관련 css
+*/
+.blog .blog-head {
+  position: relative;
+  margin-bottom: 1rem; }
+  .blog .blog-head .input-box {
+    padding-right: 50px;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    margin: 0;
+    border-bottom: 1px solid #ddd; }
+    .blog .blog-head .input-box input {
+      border: 0;
+      padding: .5rem;
+      color: #252525; }
+    .blog .blog-head .input-box span {
+      position: absolute;
+      right: 0;
+      top: 0;
+      display: inline-block;
+      width: 50px;
+      height: 100%;
+      z-index: 1; }
+      .blog .blog-head .input-box span svg {
+        position: relative;
+        width: 1rem;
+        top: 9px; }
+
+.blog .blog-filter {
+  margin-bottom: 1rem; }
+  .blog .blog-filter div {
+    display: inline-block;
+    margin-right: 15px;
+    padding-bottom: 5px; }
+    .blog .blog-filter div::after {
+      content: '';
+      display: inline-block;
+      width: 100%;
+      height: 2px;
+      background: transparent; }
+    .blog .blog-filter div.active::after {
+      background: #db94a3; }
+
+.blog .series-list div {
+  display: inline-block;
+  margin-right: 1rem; }
+  .blog .series-list div p {
+    font-size: .9rem; }
+    .blog .series-list div p.title {
+      margin-bottom: 5px;
+      font-weight: bold;
+      font-size: 1rem; }
+
+.blog .post-list ul li {
+  display: block;
+  box-sizing: border-box;
+  padding: 1rem;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1); }
+  .blog .post-list ul li .post-description {
+    display: block; }
+  .blog .post-list ul li .post-head {
+    display: block;
+    border-bottom: 1px solid #ddd; }
+    .blog .post-list ul li .post-head .post-thumb {
+      display: block; }
+      .blog .post-list ul li .post-head .post-thumb a {
+        display: block; }
+      .blog .post-list ul li .post-head .post-thumb img {
+        width: 100%; }
+    .blog .post-list ul li .post-head .post-title {
+      margin: 1.5em 0; }
+      .blog .post-list ul li .post-head .post-title h3 {
+        margin-bottom: 1rem; }
+        .blog .post-list ul li .post-head .post-title h3 a {
+          color: #252525; }
+      .blog .post-list ul li .post-head .post-title p {
+        font-size: .9rem;
+        color: #dd5f7a; }
+  .blog .post-list ul li .post-summery {
+    margin: 1.5rem 0; }
+  .blog .post-list ul li .post-content {
+    position: relative;
+    margin: 1.5em 0; }
+    .blog .post-list ul li .post-content p {
+      line-height: 1.3rem; }
+
+.blog .tag-list span {
+  display: inline-block;
+  margin-right: 5px;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+  padding: 10px; }
+
+.blog .blog-series .series {
+  position: relative;
+  margin-bottom: 1rem;
+  display: flex; }
+  @media screen and (max-width: 1024px) {
+    .blog .blog-series .series {
+      display: block; } }
+  .blog .blog-series .series a {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1; }
+  .blog .blog-series .series .series-thumb {
+    margin-right: 1rem;
+    width: 20rem; }
+    .blog .blog-series .series .series-thumb img {
+      width: 100%; }
+  .blog .blog-series .series .series-info {
+    min-width: 0px;
+    display: flex;
+    flex-direction: column;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+    flex: 1 1 0%;
+    padding: 1rem 0; }
+    .blog .blog-series .series .series-info p {
+      color: #666; }
+
+.blog-detail {
+  position: relative;
+  width: 768px; }
+  @media screen and (max-width: 1024px) {
+    .blog-detail {
+      width: 100%; } }
+  .blog-detail .title {
+    margin-bottom: .5rem;
+    font-size: 1.6rem;
+    font-weight: normal;
+    color: #252525; }
+  .blog-detail .date {
+    font-size: .9rem;
+    color: #252525; }
+  .blog-detail .admin-buttons {
+    margin-bottom: 1rem; }
+    .blog-detail .admin-buttons > button {
+      margin-right: 10px; }
+  .blog-detail .sidenav {
+    position: absolute;
+    left: 100%;
+    top: 0;
+    width: 200px;
+    margin-left: 100px; }
+    .blog-detail .sidenav.active ul {
+      position: fixed; }
+    .blog-detail .sidenav ul {
+      position: absolute;
+      top: 100px; }
+      .blog-detail .sidenav ul li {
+        margin-bottom: .5rem; }
+        .blog-detail .sidenav ul li a {
+          font-size: .9rem; }
+
+.blog-footer {
+  padding: 2rem 0 0 0;
+  margin-top: 2rem;
+  border-top: 1px solid #ddd; }
+
+.blog-editor .input-box {
+  margin-bottom: 2rem;
+  text-align: left;
+  width: 100%;
+  border-bottom: 1px solid #ddd; }
+  .blog-editor .input-box.tag {
+    border: 0; }
+    .blog-editor .input-box.tag input {
+      font-size: 1rem; }
+  .blog-editor .input-box input {
+    border: 0;
+    font-size: 2rem; }
+
+.blog-editor .editor-form-box {
+  margin-bottom: 2rem;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid #ddd; }
+  .blog-editor .editor-form-box .DraftEditor-root {
+    padding: 1rem; }
+
+.blog-editor .thumb-preview-box div {
+  margin-bottom: 1rem;
+  width: 100px;
+  height: 100px; }
+  .blog-editor .thumb-preview-box div img {
+    width: 100%; }
+
+.blog-editor button {
+  margin-right: 10px; }
+
+.draft-editor-contents {
+  margin: 2rem 0; }
+  .draft-editor-contents p {
+    margin: 10px 0;
+    color: #252525;
+    line-height: 1.6rem; }
+  .draft-editor-contents span {
+    font-size: initial; }
+
+/*
+    profile 관련 css
+*/
+.project h2, .profile h2 {
+  margin-bottom: 1rem; }
+
+.project h3, .profile h3 {
+  margin-bottom: 1.5rem;
+  font-size: 1.3rem;
+  font-weight: normal; }
+
+.project .box, .profile .box {
+  margin-bottom: 3rem; }
+  .project .box.skill .feature, .profile .box.skill .feature {
+    margin-bottom: 1rem; }
+    .project .box.skill .feature p.title, .profile .box.skill .feature p.title {
+      cursor: default; }
+    .project .box.skill .feature .detail, .profile .box.skill .feature .detail {
+      opacity: 1;
+      -webkit-opacity: 1;
+      -ms-opacity: 1;
+      -moz-opacity: 1;
+      -o-opacity: 1;
+      max-height: initial; }
+      .project .box.skill .feature .detail ul, .profile .box.skill .feature .detail ul {
+        display: flex;
+        flex-wrap: wrap; }
+        .project .box.skill .feature .detail ul li, .profile .box.skill .feature .detail ul li {
+          display: flex;
+          flex: 50%;
+          margin-bottom: .5rem; }
+          .project .box.skill .feature .detail ul li img, .profile .box.skill .feature .detail ul li img {
+            margin-right: 20px; }
+          .project .box.skill .feature .detail ul li .description, .profile .box.skill .feature .detail ul li .description {
+            width: 80%;
+            padding: 5px 0 0 0; }
+            .project .box.skill .feature .detail ul li .description strong, .profile .box.skill .feature .detail ul li .description strong {
+              color: #252525; }
+            .project .box.skill .feature .detail ul li .description span, .profile .box.skill .feature .detail ul li .description span {
+              display: inline-block;
+              margin-left: 5px;
+              font-size: .9rem; }
+  .project .box .feature, .profile .box .feature {
+    max-width: 100%; }
+    .project .box .feature.active p.title svg, .profile .box .feature.active p.title svg {
+      transform: rotate(180deg);
+      -webkit-transform: rotate(180deg);
+      -ms-transform: rotate(180deg);
+      -moz-transform: rotate(180deg);
+      -o-transform: rotate(180deg); }
+    .project .box .feature.active .detail, .profile .box .feature.active .detail {
+      max-height: 2000px;
+      margin-bottom: 1rem;
+      opacity: 1; }
+    .project .box .feature p.title, .profile .box .feature p.title {
+      margin-bottom: .5rem;
+      color: #252525;
+      font-weight: bold;
+      cursor: pointer; }
+      .project .box .feature p.title svg, .profile .box .feature p.title svg {
+        margin-left: 5px;
+        vertical-align: middle;
+        color: #252525; }
+    .project .box .feature p a::before, .profile .box .feature p a::before {
+      content: '\F0C6';
+      display: inline-block;
+      font: normal normal normal 1rem FontAwesome;
+      transform: rotate(70deg); }
+    .project .box .feature .detail, .profile .box .feature .detail {
+      opacity: 0;
+      max-height: 0;
+      overflow: hidden;
+      transition: all 0.5s;
+      -webkit-transition: all 0.5s;
+      -ms-transition: all 0.5s;
+      -moz-transition: all 0.5s;
+      -o-transition: all 0.5s; }
+      .project .box .feature .detail h4, .profile .box .feature .detail h4 {
+        line-height: 1.6rem;
+        color: #173757; }
+      .project .box .feature .detail p span, .profile .box .feature .detail p span {
+        margin: 0;
+        padding: 0 5px; }
+    .project .box .feature svg, .profile .box .feature svg {
+      margin-right: 2px; }
+
+/*
+    project 관련 css
+    project_detail 관련 css
+*/
+.project h3 + p {
+  margin-bottom: 1.3rem; }
+
+.project .project-list {
+  display: flex;
+  flex-wrap: wrap; }
+  @media screen and (max-width: 1024px) {
+    .project .project-list .project {
+      width: 50% !important; } }
+  .project .project-list .project {
+    position: relative;
+    width: 25%;
+    padding: 0 1rem 1rem 0; }
+    .project .project-list .project a {
+      display: block;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1; }
+    .project .project-list .project img {
+      width: 100%; }
+    .project .project-list .project .project-description {
+      margin: 1rem 0 0 0; }
+      .project .project-list .project .project-description strong {
+        display: block;
+        margin-bottom: .5rem;
+        font-weight: normal; }
+      .project .project-list .project .project-description p {
+        margin-bottom: .3rem;
+        height: 2.5rem;
+        line-height: 1.2rem;
+        color: #4e6e8e;
+        font-size: .9rem; }
+        .project .project-list .project .project-description p.date {
+          height: auto;
+          font-size: .8rem; }
+
+.project_detail .title p.date {
+  font-size: .9rem; }
+
+.project_detail .title a {
+  display: inline-block;
+  margin: 1rem 0; }
+  .project_detail .title a::before {
+    content: '\F0C6';
+    display: inline-block;
+    margin-right: 5px;
+    font: normal normal normal 1rem FontAwesome;
+    transform: rotate(70deg); }
+
+.project_detail .visual {
+  margin-bottom: 3rem; }
+  .project_detail .visual img {
+    width: 100%; }
+
+.project_detail section {
+  position: relative;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid #ddd;
+  margin: 0 0 2rem; }
+  .project_detail section h3 {
+    margin-bottom: 1rem;
+    font-size: 1.35rem;
+    line-height: 1.3rem;
+    font-weight: normal;
+    color: #173757; }
+  .project_detail section .git, .project_detail section .issue {
+    position: absolute;
+    right: 0;
+    bottom: 2rem; }
+    @media screen and (max-width: 1024px) {
+      .project_detail section .git, .project_detail section .issue {
+        position: relative;
+        right: inherit;
+        bottom: inherit;
+        margin: 1rem 0 0 0;
+        display: inline-block; } }
+    .project_detail section .git:hover svg, .project_detail section .issue:hover svg {
+      animation: ting 1s linear infinite; }
+    .project_detail section .git svg, .project_detail section .issue svg {
+      margin-right: 5px; }
+
+.project_detail p {
+  line-height: 1.6rem; }
+
+@keyframes ting {
+  0% {
+    transform: rotate(0deg); }
+  100% {
+    transform: rotate(360deg); } }
+
+.admin {
+  display: flex; }
+  .admin .admin-menu {
+    width: 10%; }
+    .admin .admin-menu ul {
+      padding: 1rem; }
+      .admin .admin-menu ul li {
+        margin-bottom: 1rem; }
+  .admin .admin-content {
+    width: 90%;
+    padding: 1rem; }
+  .admin .calendar .calendar_head {
+    margin-bottom: 1rem; }
+    .admin .calendar .calendar_head .date {
+      display: inline-block;
+      margin-left: 1rem;
+      font-size: 1.3rem;
+      vertical-align: middle;
+      color: #173757; }
+    .admin .calendar .calendar_head span {
+      margin-right: .5rem;
+      padding: .5rem;
+      border-radius: 20px;
+      border: 1px solid #4e6e8e;
+      color: #173757; }
+      .admin .calendar .calendar_head span:hover {
+        background: #4e6e8e;
+        color: #fff; }
+    .admin .calendar .calendar_head .navigation {
+      display: inline-block;
+      vertical-align: middle; }
+      .admin .calendar .calendar_head .navigation button {
+        position: relative;
+        margin-right: .5rem;
+        width: 1.5rem;
+        height: 1.5rem;
+        background: none;
+        color: #173757;
+        padding: 1rem;
+        border-radius: 20px;
+        border: 1px solid #4e6e8e; }
+        .admin .calendar .calendar_head .navigation button:hover {
+          background: #4e6e8e;
+          color: #fff; }
+        .admin .calendar .calendar_head .navigation button svg {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          width: .7rem; }
+  .admin .calendar .tui-full-calendar-time-schedule {
+    background: #03BD9E !important; }
+    .admin .calendar .tui-full-calendar-time-schedule .tui-full-calendar-time-schedule-content {
+      padding: 1rem; }
+
+.layer-popup .wapper {
+  top: 150%;
+  width: 50%;
+  transition: all 0.3s; }
+
+.layer-popup.active .wapper {
+  top: 50%;
+  width: 80%; }
+
+.layer-popup.account .wapper .layer-popup-cotent .confirm-alert {
+  padding: 4rem 0; }
+  .layer-popup.account .wapper .layer-popup-cotent .confirm-alert p {
+    font-size: 1.4rem;
+    text-align: center; }
+
+.contents-wrap {
+  position: relative;
+  width: 1024px;
+  margin: 1.5rem auto; }
+  @media screen and (max-width: 1024px) {
+    .contents-wrap {
+      width: 100%;
+      overflow: hidden;
+      padding: 0 15px; } }
+  .contents-wrap h2 {
+    padding: 2rem 0;
+    font-size: 1.4rem;
+    color: #252525;
+    line-height: 2rem;
+    font-weight: normal; }
+
+svg {
+  width: .9rem; }
+
