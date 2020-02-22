@@ -3,6 +3,7 @@ node_modules
 .env
 .next
 bundles
+mollang.pem
 !**/.eslintrc*
 public/images/*
 

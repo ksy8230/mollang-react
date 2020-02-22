@@ -88,7 +88,7 @@ const Detail = ({ id }) => {
                 }, {
                     //property: 'og:title', content: `${singlePost.User.nickname}님의 게시글`
                 }, {
-                    //property: 'og:image', content: singlePost.Images[0] && `http://localhost:8080/${singlePost.Images[0].src}`
+                    property: 'og:image', content: singlePost.Images[0] && `http://localhost:8080/${singlePost.Images[0].src}`
                 }, {
                     property : 'og:url', content: `http://localhost:3000/blog/detail/${id}`
                 }]}

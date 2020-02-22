@@ -78,7 +78,10 @@ router.post('/', upload.none(), async (req, res, next) => { // POST /api/post
 router.get('/:id', async (req, res, next) => { // GET /api/post/:id
     try {
         const post = await db.Post.findOne({
-            where : { id : req.params.id }
+            where : { id : req.params.id },
+            include : [{
+                model: db.Image,
+            }],
         });
         res.json(post);
     } catch (e) {
