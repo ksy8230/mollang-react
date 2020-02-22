@@ -6,7 +6,7 @@
     "dev": "nodemon",
     "build": "cross-env ANALYZE=true next build",
     "prestart": "npm run build",
-    "start": "cross-env NODE_ENV=production next start"
+    "start": "cross-env NODE_ENV=production PORT=80 pm2 start server"
   },
   "author": "",
   "license": "ISC",
@@ -38,6 +38,7 @@
     "next-redux-saga": "^4.1.2",
     "next-redux-wrapper": "^4.0.1",
     "node-sass": "^4.13.1",
+    "pm2": "^4.2.3",
     "prop-types": "^15.7.2",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",

@@ -54,6 +54,6 @@ app.get('/', (req, res) => {
     res.send('hello')
 });
 
-app.listen(8080, () => {
-    console.log('server is running on 8080')
+app.listen(process.env.NODE_ENV === 'production' ? process.env.PORT : 8080, () => {
+    console.log(`server is running on ${process.env.PORT}`)
 });
