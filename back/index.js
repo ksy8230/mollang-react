@@ -51,7 +51,7 @@ app.use('/api/calendars', calendarsAPIRouter);
 app.use('/api/calendar', calendarAPIRouter);
 
 app.get('/', (req, res) => {
-    res.send('hello')
+    res.send('백엔드 정상 동작')
 });
 
 app.listen(process.env.NODE_ENV === 'production' ? process.env.PORT : 8080, () => {
