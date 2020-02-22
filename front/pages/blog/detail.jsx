@@ -103,7 +103,6 @@ const Detail = ({ id }) => {
                         </div> 
                         : null
                     }
-
                     <div>
                         <h2 className='title'>{singlePost && singlePost.title}</h2>
                         {
@@ -136,6 +135,9 @@ const Detail = ({ id }) => {
                             }
                         </ul>
                     </div>
+                </div>
+                <div className='blog-footer'>
+                    <Link href='/blog'><a>목록으로 돌아가기</a></Link>
                 </div>
             </div>
         </>

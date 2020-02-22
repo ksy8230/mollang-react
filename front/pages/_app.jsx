@@ -99,11 +99,12 @@ Mollang.getInitialProps = async (context) => {
         axios.defaults.headers.Cookie = cookie;
         // 토큰 설정도 이곳에서 가능
     }
+    // 내 정보를 먼저 가져오고
     if (!state.user.me) {
         ctx.store.dispatch({
             type : LOAD_USER_REQUEST,
         });
-    } // 내 정보를 먼저 가져오고
+    } 
     if (Component.getInitialProps) { 
         pageProps = await context.Component.getInitialProps(ctx); // 페이지들의 getInitialProps를 실행
     }

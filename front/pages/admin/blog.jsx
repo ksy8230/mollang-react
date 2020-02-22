@@ -1,10 +1,12 @@
 import React, { useCallback, useState, useEffect, useRef } from 'react';
+import dynamic from 'next/dynamic';
 import { useDispatch, useSelector } from 'react-redux';
 import EditorForm from '../../Components/EditorForm';
 import RemoteSubmitButton from '../../Components/RemoteSubmitButton';
 import {UPLOAD_THUMB_IMAGE_REQUEST} from '../../reducers/post';
 import AdminMenu from '../../Components/AdminMenu';
 import { Router } from 'next/router';
+import { LOAD_USER_REQUEST } from '../../reducers/user';
 
 const Blog = () => {
     const [title, setTitle] = useState('');
@@ -51,12 +53,20 @@ const Blog = () => {
         setTag('');
     }, [postAdded]);
 
+    // useEffect(() => {
+    //     useDispatch({
+    //       type : LOAD_USER_REQUEST
+    //     })
+    // }, [me]);
+
     useEffect(() => {
         if ( me == null || me.id !== 1 ){
             alert('관리자 권한이 없습니다.');
             Router.push('/');
         }
     }, [me && me.id]);
+
+
 
     return (
         <div className='admin'> 

@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import PropTypes from 'prop-types';
-import { useEffect } from 'react';
+import { useEffect, memo } from 'react';
 
 function createMarkup(html) {
     return {__html: html};
@@ -14,7 +14,7 @@ function makeTagList(value) {
     return splitString
 }
 
-const PostCard = ({ post, i, summery }) => {
+const PostCard = memo(({ post, i, summery }) => {
     return (
         <li>
             <div className='post-description'>
@@ -46,7 +46,7 @@ const PostCard = ({ post, i, summery }) => {
             </div>
         </li>
     );
-};
+});
 
 PostCard.propTypes = {
     post : PropTypes.shape({

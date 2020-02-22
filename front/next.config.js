@@ -2,25 +2,16 @@
 // module.exports = withSass({
 //     cssModules: true
 // });
-const withBundleAnalyzer = require("@zeit/next-bundle-analyzer");
+const webpack = require('webpack');
+const withBundleAnalyzer = require("@next/bundle-analyzer")({
+  enabled: process.env.ANALYZE === 'true',
+});
 const withSass = require('@zeit/next-sass');
 const MomentLocalesPlugin = require('moment-locales-webpack-plugin');
 const CompressionPlugin = require('compression-webpack-plugin');
 
 module.exports = withBundleAnalyzer(withSass({
     distDir : '.next',
-    analyzeServer: ["server", "both"].includes(process.env.BUNDLE_ANALYZE),
-    analyzeBrowser: ["browser", "both"].includes(process.env.BUNDLE_ANALYZE),
-    bundleAnalyzerConfig: {
-      server: {
-        analyzerMode: 'static',
-        reportFilename: '../../bundles/server.html'
-      },
-      browser: {
-        analyzerMode: 'static',
-        reportFilename: '../bundles/client.html'
-      }
-    },
     webpack(config) {
         const prod = process.env.NODE_ENV === 'production';
         const plugins = [
@@ -28,6 +19,7 @@ module.exports = withBundleAnalyzer(withSass({
             new MomentLocalesPlugin({
                localesToKeep: ['ko'],
            }),
+           //new webpack.IgnorePlugin(/jsdom$/),
          ];
         if (prod) {
             plugins.push(new CompressionPlugin()); // gz 로 압축

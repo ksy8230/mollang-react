@@ -1,9 +1,9 @@
-import React, { useState, useCallback, useEffect } from 'react';
+import React, { useState, useCallback, useEffect, memo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Link from 'next/link';
 import { LOGIN_REQUEST, LOGOUT_REQUEST } from '../reducers/user';
 
-const Login = () => {
+const Login = memo(() => {
     const [userId, setUserId] = useState('');
     const [password, setPassword] = useState('');
     const dispatch = useDispatch();
@@ -27,8 +27,6 @@ const Login = () => {
         });
     }, [userId, password]);
 
-
-
     return (
         <div className='login'>  
             {
@@ -50,6 +48,6 @@ const Login = () => {
             
         </div>
     );
-};
+});
 
 export default Login;

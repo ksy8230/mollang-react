@@ -1,8 +1,8 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, memo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { SIGNUP_REQUEST } from '../reducers/user';
 
-const SignUp = () => {
+const SignUp = memo(() => {
     const [userId, setUserId] = useState('');
     const [nickname, setNickname] = useState('');
     const [password, setPassword] = useState('');
@@ -38,6 +38,7 @@ const SignUp = () => {
             }
         });
     }, [userId, password, password2, nickname]);
+
     return (
         <div className='login'>
             <form onSubmit={onSubmit}>
@@ -59,6 +60,6 @@ const SignUp = () => {
             </form>
         </div>
     );
-};
+});
 
 export default SignUp;

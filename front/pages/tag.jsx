@@ -7,6 +7,7 @@ import StackGrid from "react-stack-grid";
 import { summary } from './blog/index';
 import SearchForm from '../Components/SearchForm';
 import Router from 'next/router';
+import Link from 'next/link';
 
 const Tag = ({ tag }) => {
     const dispatch = useDispatch();
@@ -91,6 +92,9 @@ const Tag = ({ tag }) => {
                     }
                     </StackGrid>
                 </ul>
+                </div>
+                <div className='blog-footer'>
+                    <Link href='/blog'><a>목록으로 돌아가기</a></Link>
                 </div>
             </div>
         </div>

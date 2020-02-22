@@ -42,7 +42,9 @@
 - [v] `react-helmet`으로 헤드태그 추가, _document.js 에서 `react-helmet` SSR
 - next/dynamic 이용해 특정 컴포넌트 SSR 안하고, 클라이언트에서만 렌더링하기 (편집기, 달력 같이 윈도우에서만 실행되는 라이브러리)
 https://kokohapps.tistory.com/entry/Nextjs-nextdynamic-%EC%9D%B4%EC%9A%A9%ED%95%B4%EC%84%9C-%ED%8A%B9%EC%A0%95-%EC%BB%B4%ED%8F%AC%EB%84%8C%ED%8A%B8-SSR-%EC%95%88%ED%95%98%EA%B3%A0-%ED%81%B4%EB%9D%BC%EC%9D%B4%EC%96%B8%ED%8A%B8%EC%97%90%EC%84%9C%EB%A7%8C-%EB%A0%8C%EB%8D%94%EB%A7%81%ED%95%98%EA%B8%B0
+
 - BundleAnalyzer에서 moment플러그인 한국어만 적용되도록 tree shaking, 플러그인들 gzipped로 압축
+- 불필요한 렌더링 `memo`로 수정
 
  To Do List (or 진행 사항들)
 #### front & back
@@ -131,6 +133,15 @@ https://kokohapps.tistory.com/entry/Nextjs-nextdynamic-%EC%9D%B4%EC%9A%A9%ED%95%
 - window is not defined :  https://github.com/jpuri/react-draft-wysiwyg/issues/893
 - Unknown DraftEntity key: null : https://github.com/jpuri/react-draft-wysiwyg/issues/524
     - 버전 수정하여 재설치 : "draft-js": "^0.10.4", "draft-js-export-html": "^1.2.0", "draftjs-to-html": "^0.7.4", "html-to-draftjs": "^1.0.1",
+- react-draft-wysiwyg ssr 이슈
+    - https://github.com/facebook/draft-js/issues/2121
+    - window defined 값으로 구별하여 editorState 값 생성시키기
+        - https://stackoverflow.com/questions/56462574/unable-to-edit-text-in-react-draft-wysiwyg-editor-loaded-in-componentdidmount
+    - dynamic 함수로 편집기를 클라이언트 사이드에서만 렌더링 되도록 수정
+        - https://github.com/facebook/draft-js/issues/2013
+    - 처음 draftjs 연결 데모 파일들 콜렉팅할 때 봤던 예시들 중 하나에서 답을 찾았다. 
+        - draft-js-export-html, draft-js-import-html editorState 변환하는 모듈 변경하니 window defined 에러 해결됨. 아마도 이 모듈들은 window 객체를 바라보고 있지 않은 듯.
+    
 
 ##### draft-js 리덕스 폼으로 편집기 value 값 전달하는 방법
 https://codesandbox.io/s/react-draft-wysiwyg-redux-forms-1bqcm
@@ -154,6 +165,11 @@ https://github.com/jpuri/react-draft-wysiwyg/issues/730
 
 
 #### `tui.calendar` 달력 참고 링크
+https://nhn.github.io/tui.calendar/latest/tutorial-example00-basic
 https://github.com/nhn/toast-ui.react-calendar
 https://github.com/nhn/tui.calendar/blob/master/docs/getting-started.md
 http://forward.nhnent.com/hands-on-labs/toastui.calendar-timetable/02%20setup.html
+
+##### tui.calendar 이슈 모음 (에러 : 해결 링크)
+- tui.calendar ssr 이슈
+    - @toast-ui/react-calendar가 window 객체를 보는 모듈이라 리액트 로드시 에러가 발생하여 typeof window !== 'undefined'일 때 tui-calendar 모듈로 calendar 직접 호출함.

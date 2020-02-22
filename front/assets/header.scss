@@ -83,6 +83,15 @@ header {
             div {
                 display: inline-block;
                 margin-right: 15px;
+                &.active {
+                    a {
+                        pointer-events: none;
+                        &::after {
+                            bottom:5px;
+                            background: $darkpink;
+                        }
+                    }
+                }
                 a {
                     position: relative;
                     display: block;

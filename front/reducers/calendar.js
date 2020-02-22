@@ -1,20 +1,6 @@
 // 달력 정보 담고 있는 캘린더 store
 export const initialState = {
-    schedules : [{
-        id: 1,
-        calendarId: 0,
-        title: '더미 데이터 입니다',
-        category: 'time',
-        start : new Date(),
-        end : new Date(new Date().setHours(new Date().getHours() + 1)),
-    },{
-        id: 2,
-        calendarId: 1,
-        title: '더미2.. 데이터 입니다',
-        category: 'time',
-        start : new Date(),
-        end : new Date(new Date().setHours(new Date().getHours() + 1)),
-    }],
+    schedules : [],
     isAddingSchedules : false,
     scheduleEdited : false,
     scheduleDeleted : false,
@@ -96,6 +82,7 @@ const reducer = (state = initialState, action) => {
         case EDIT_SCHEDULE_SUCCESS : {
             const scheduleIndex = state.schedules.findIndex( v => v.id === action.data.id );
             const schedule = state.schedules[scheduleIndex];
+            schedule.calendarId = action.data.calendarId;
             schedule.title = action.data.title;
             schedule.category = action.data.category;
             schedule.start = action.data.start;

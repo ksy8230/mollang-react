@@ -4,15 +4,17 @@ node_modules
 .next
 bundles
 !**/.eslintrc*
-public/images
+public/images/*
 
 연습용이라 깃 커밋 제외 파일
-_Editor_backup.js
+ControlledEditor_back.js
+Editor_test_with_draft.jsx
+Editor_test_with_wysiwyg.js
 _Editor_hooks.js
 EditorContainer.js
+calendar_back.jsx
+
 submit.js
-blog_back.jsx
-blog_admin.jsx
 AdminHeader.jsx
 AppLayoutAdmin.js
 admin/index.jsx

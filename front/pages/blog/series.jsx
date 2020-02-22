@@ -38,6 +38,9 @@ const Category = ({ category }) => {
                         })
                     }
                 </div>
+                <div className='blog-footer'>
+                    <Link href='/blog'><a>목록으로 돌아가기</a></Link>
+                </div>
             </div>
         </div>
     )

@@ -8,6 +8,7 @@ router.post('/', async (req, res, next) => { // POST /api/calendar
         console.log('POST /api/calendar')
         console.log('newSchedule',req.body)
         const newSchedule = await db.Calendar.create({
+            calendarId : req.body.calendarId,
             title : req.body.title,
             category : req.body.category,
             start : req.body.start,
@@ -28,6 +29,7 @@ router.patch('/:id/edit', async(req,res,next) => { // PATCH /api/calendar/:id/ed
         });
         const fullEditSchedule = await schedule.update(
             {
+                calendarId : req.body.calendarId,
                 title : req.body.title,
                 category : req.body.category,
                 start : req.body.start,

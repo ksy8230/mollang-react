@@ -16,7 +16,6 @@ const RemoteSubmitButton = ({ title, tag, category }) => {
   const {user} = useSelector(state => state.user);
   const { thumbImagePath } = useSelector(state => state.post);
   const {draft} = useSelector(state => state.form);
-  //console.log(draft.values.editorText)
 
   const onClickEvent = useCallback(() => {
     const formData = new FormData();
@@ -44,7 +43,7 @@ const RemoteSubmitButton = ({ title, tag, category }) => {
     >
       업로드
     </button>
-    <div>{draft.values.editorText}</div>
+    {/*<div>{draft.values.editorText}</div>*/}
     
     </>
   )

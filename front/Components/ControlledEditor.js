@@ -1,21 +1,13 @@
 import React, { Component } from "react";
 import dynamic from 'next/dynamic';
-import { EditorState, convertToRaw, ContentState } from "draft-js";
 const Editor = dynamic(
   () => import('react-draft-wysiwyg').then(mod => mod.Editor),
   { ssr: false }
 );
-//import { Editor } from "react-draft-wysiwyg";
-//import draftToHtml from "draftjs-to-html";
-//import htmlToDraft from 'html-to-draftjs';
-const draftToHtml = dynamic(
-  () => import('draftjs-to-html'),
-  { ssr: false }
-);
-const htmlToDraft = dynamic(
-  () => import('html-to-draftjs'),
-  { ssr: false }
-);
+//import Editor from 'react-draft-wysiwyg';
+import { EditorState, convertToRaw, ContentState, convertFromRaw } from "draft-js";
+import { stateToHTML } from "draft-js-export-html";
+import { stateFromHTML } from 'draft-js-import-html';
 
 function uploadImageCallBack(file) {
   return new Promise(
@@ -43,20 +35,30 @@ function uploadImageCallBack(file) {
 class ControlledEditor extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      editorState: EditorState.createEmpty(),
-    };
-    this.props.onChange(
-        draftToHtml(convertToRaw(this.state.editorState.getCurrentContent()))
-    );
+    this.state = { };
+
+    if (typeof window !== 'undefined') {
+        console.log('we are running on the client')
+        this.state = {
+          editorState: EditorState.createEmpty(),
+        };
+        this.props.onChange(
+          stateToHTML(this.state.editorState.getCurrentContent())
+        );
+        console.log('content',this.state.editorState)
+    } else {
+        console.log('we are running on the server');
+    }
+
   }
 
   onEditorStateChange = editorState => {
     const { onChange, value, placeholder } = this.props;
-    const newValue = draftToHtml(convertToRaw(editorState.getCurrentContent()));
-    
+    const contentState = editorState.getCurrentContent(); // ContentState {_map: Map, __ownerID: undefined}
+    //console.log('contentState', contentState)
+    const newValue = stateToHTML(contentState);
     if (value !== newValue) {
-      onChange(newValue);
+      onChange(newValue); // <p>...</p>
     }
     this.setState({
       editorState
@@ -65,14 +67,11 @@ class ControlledEditor extends Component {
 
   componentDidMount() {
     const { placeholder } = this.props;
-    const blocksFromHtml = htmlToDraft(placeholder);
-    const { contentBlocks, entityMap } = blocksFromHtml;
-    console.log(entityMap)
-    console.log(blocksFromHtml)
-    const contentState = ContentState.createFromBlockArray(contentBlocks, entityMap);
-    this.setState({
-      editorState : EditorState.createWithContent(contentState),
-    });
+    //console.log(placeholder)
+    let contentState = stateFromHTML(placeholder);
+     this.setState({
+       editorState : EditorState.createWithContent(contentState),
+     });
   }
 
   render() {

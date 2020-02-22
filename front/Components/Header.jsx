@@ -15,6 +15,7 @@ const Header = () => {
     const [layerPopup, setLayerPopup] = useState(false);
     const [visible, setVisible] = useState(false);
     const [signUp, setSingup] = useState(false);
+    const [menuOn, setMenuOn] = useState('');
 
     const onClickAccount = useCallback(() => {
         setAccountOpen(!accountOpen);
@@ -46,6 +47,12 @@ const Header = () => {
         setSingup(!signUp);
     }, [signUp]);
 
+    const onClickHome = useCallback(() => { setMenuOn(''); }, [menuOn]);
+    const onClickProfile = useCallback(() => { setMenuOn('profile'); }, [menuOn]);
+    const onClickBlog = useCallback(() => { setMenuOn('blog'); }, [menuOn]);
+    const onClickProject = useCallback(() => { setMenuOn('project'); }, [menuOn]);
+    const onClickGithub = useCallback(() => { setMenuOn('github'); }, [menuOn]);
+
     useEffect(() => {
         if(isLoggedIn || isSignedUp) {
             
@@ -63,10 +70,7 @@ const Header = () => {
         <>
             <header>
                 <div className='wrapper'>
-                    <div className='logo'><Link href='/'><a><img src="/images/logo_mollang.png" alt=""/></a></Link></div>
-                    {/*<div className='search-box'>
-                        <input type="text" placeholder='검색' />
-                    </div>*/}
+                    <div className='logo' onClick={onClickHome}><Link href='/'><a><img src="/images/logo_mollang.png" alt=""/></a></Link></div>
                     <div className='account'>
                         {
                             me && me.id ? 
@@ -91,11 +95,12 @@ const Header = () => {
                     </div>
                     <div className='links'>
                         <nav>
-
-                            <div><Link href='/profile' prefetch><a>프로필</a></Link></div>
-                            <div><Link href={{ pathname: '/blog/index'}} as={'/blog'} prefetch><a>블로그</a></Link></div>
-                            <div><Link href={{ pathname: '/project/index'}} as={'/project'} prefetch><a>프로젝트</a></Link></div>
-                            <div><Link href=''><a>깃허브</a></Link></div>
+                            <div className={menuOn === 'profile' ? 'active' : ''} onClick={onClickProfile}><Link href='/profile' prefetch><a>프로필</a></Link></div>
+                            <div className={menuOn === 'blog' ? 'active' : ''} onClick={onClickBlog}><Link href={{ pathname: '/blog/index'}} as={'/blog'} prefetch><a>블로그</a></Link></div>
+                            <div className={menuOn === 'project' ? 'active' : ''} onClick={onClickProject}><Link href={{ pathname: '/project/index'}} as={'/project'} prefetch><a>프로젝트</a></Link></div>
+                            <div className={menuOn === 'github' ? 'active' : ''} onClick={onClickGithub}><Link href=''><a>깃허브</a></Link></div>
+                            {/*<div><a href='/Editor_test_with_draft'>draft test1</a></div>*/}
+                            {/*<div><a href='/Editor_test_with_wysiwyg'>draft test2</a></div>*/}
                             {
                                 me && me.id === 1 ?
                                 <div><Link href={{ pathname: '/admin/index'}} as={'/admin'}><a>블로그 관리자</a></Link></div>

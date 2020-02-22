@@ -39,8 +39,8 @@ function makeUniqueTagList(arrays) {
 }
 
 const Blog = () => {
-    const [editorState, setEditorState] = useState(EditorState.createEmpty());
-    const [editorContentHtml, setEditorContentHtml] = useState('');
+    //const [editorState, setEditorState] = useState(EditorState.createEmpty());
+    //const [editorContentHtml, setEditorContentHtml] = useState('');
     const { mainPosts, hasMorePost } = useSelector(state => state.post);
     const dispatch = useDispatch();
     const countRef = useRef([]);
