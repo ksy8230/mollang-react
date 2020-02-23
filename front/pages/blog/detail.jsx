@@ -89,7 +89,7 @@ const Detail = ({ id }) => {
                 }, {
                     //property: 'og:title', content: `${singlePost.User.nickname}님의 게시글`
                 }, {
-                    property: 'og:image', content: singlePost.Images[0] ? `${singlePost.Images[0].src}` : 'http://mollog.co.kr/images/favicon.ico',
+                    property: 'og:image', content: singlePost.Images && singlePost.Images[0] ? `${singlePost.Images && singlePost.Images[0].src}` : 'http://mollog.co.kr/images/favicon.ico',
                 }, {
                     property : 'og:url', content: `http://mollog.co.kr/blog/detail/${id}`
                 }]}
