@@ -7,6 +7,7 @@ import Helmet from 'react-helmet';
 import { useDispatch, useSelector } from 'react-redux';
 import { LOAD_POST_REQUEST, DELETE_POST_REQUEST } from '../../reducers/post';
 import moment from 'moment';
+import { backURL } from '../../config/config';
 //moment.locale('ko');
 
 function createMarkup(html) {
@@ -88,9 +89,9 @@ const Detail = ({ id }) => {
                 }, {
                     //property: 'og:title', content: `${singlePost.User.nickname}님의 게시글`
                 }, {
-                    property: 'og:image', content: singlePost.Images[0] && `http://localhost:8080/${singlePost.Images[0].src}`
+                    property: 'og:image', content: singlePost.Images[0] ? `${singlePost.Images[0].src}` : 'http://mollog.co.kr/images/favicon.ico',
                 }, {
-                    property : 'og:url', content: `http://localhost:3000/blog/detail/${id}`
+                    property : 'og:url', content: `http://mollog.co.kr/blog/detail/${id}`
                 }]}
             />
             <div className='contents-wrap'>  

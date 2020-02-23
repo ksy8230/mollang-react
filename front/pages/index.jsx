@@ -94,7 +94,7 @@ const Home = () => {
                 <div className='feature'>
                     <h3>프로젝트</h3>
                     <div>
-                        <p><a href="http://localhost:3000/"># 몰로그</a></p>
+                        <p><a href="http://mollog.co.kr/"># 몰로그</a></p>
                         <p><a href="http://drleesf.co.kr.s3-website.ap-northeast-2.amazonaws.com/"># 횟집 사이트</a></p>
                         <p><a href="http://rgproject.co.kr/"># 냉장고 프로젝트</a></p>
                         <p><a href="https://github.com/ksy8230/zerocho-reactgame/tree/master/9.%EC%88%9C%EB%B2%88%EB%B0%98%EC%9D%91%EC%86%8D%EB%8F%84%EC%B2%B4%ED%81%AC"># 리덕스 토이 프로젝트</a></p>

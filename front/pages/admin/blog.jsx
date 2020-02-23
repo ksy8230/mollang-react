@@ -7,6 +7,7 @@ import {UPLOAD_THUMB_IMAGE_REQUEST} from '../../reducers/post';
 import AdminMenu from '../../Components/AdminMenu';
 import { Router } from 'next/router';
 import { LOAD_USER_REQUEST } from '../../reducers/user';
+import { backURL } from '../../config/config';
 
 const Blog = () => {
     const [title, setTitle] = useState('');
@@ -53,12 +54,6 @@ const Blog = () => {
         setTag('');
     }, [postAdded]);
 
-    // useEffect(() => {
-    //     useDispatch({
-    //       type : LOAD_USER_REQUEST
-    //     })
-    // }, [me]);
-
     useEffect(() => {
         if ( me == null || me.id !== 1 ){
             alert('관리자 권한이 없습니다.');
@@ -88,7 +83,7 @@ const Blog = () => {
                 <div className='thumb-preview-box'>
                     <div>
                         <img src={
-                            thumbImagePath && thumbImagePath[0] === undefined ? '/images/thumbnail_default_img.jpg': `http://localhost:8080/${thumbImagePath && thumbImagePath[0]}`
+                            thumbImagePath && thumbImagePath[0] === undefined ? '/images/thumbnail_default_img.jpg': `${thumbImagePath && thumbImagePath[0]}`
                             } alt=""/>
                     </div>
                     <form encType='multipart/form-data'>

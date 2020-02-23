@@ -12,7 +12,7 @@ const ProjectMollog = () => {
                 <div className='title'>
                     <h2>몰로그 홈페이지</h2>
                     <p className='date'>2020.02.08 ~ 2020.02.99</p>
-                    <a href="">http://localhost:3000/</a>
+                    <a href="">http://mollog.co.kr/</a>
                 </div>
                 <div style={{marginBottom : '3rem'}}>
                     <img src="/images/project_detail_mollog.jpg" alt=""/>

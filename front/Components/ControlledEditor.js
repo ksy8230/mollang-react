@@ -8,12 +8,13 @@ const Editor = dynamic(
 import { EditorState, convertToRaw, ContentState, convertFromRaw } from "draft-js";
 import { stateToHTML } from "draft-js-export-html";
 import { stateFromHTML } from 'draft-js-import-html';
+import { backURL } from "../config/config";
 
 function uploadImageCallBack(file) {
   return new Promise(
     (resolve, reject) => {
       const xhr = new XMLHttpRequest(); // eslint-disable-line no-undef
-      xhr.open('POST', 'http://localhost:8080/api/post/images');
+      xhr.open('POST', `${backURL}/api/post/images`);
       const data = new FormData(); // eslint-disable-line no-undef
       data.append('image', file);
       console.log(data)
@@ -22,7 +23,7 @@ function uploadImageCallBack(file) {
       xhr.addEventListener('load', () => {
         const response = JSON.parse(xhr.responseText);
         console.log(response)
-        resolve({ data : {link: `http://localhost:8080/${response}`}});
+        resolve({ data : {link: `${response}`}});
       });
       xhr.addEventListener('error', () => {
         const error = JSON.parse(xhr.responseText);

@@ -5,6 +5,7 @@ import { LOAD_TAG_POSTS_REQUEST } from '../../reducers/post';
 import Router from 'next/router';
 import { summary } from '.';
 import Link from 'next/link';
+import { backURL } from '../../config/config';
 
 const Category = ({ category }) => {
     const dispatch = useDispatch();
@@ -28,7 +29,7 @@ const Category = ({ category }) => {
                             return (
                                 <div className='series'>
                                     <Link href={{ pathname: '/blog/detail', query: {id : v.id}}} as={`/blog/detail/${v.id}`}><a></a></Link>
-                                    <div className='series-thumb'><img src={ v.Images && v.Images[0] ? `http://localhost:8080/${v.Images[0].src}` : '/images/post_default_img.jpg'} alt=""/></div>
+                                    <div className='series-thumb'><img src={ v.Images && v.Images[0] ? `${v.Images[0].src}` : '/images/post_default_img.jpg'} alt=""/></div>
                                     <div className='series-info'>
                                         <p className='summary'>{summery[i]}</p>
                                         <p>{v.created_at && v.created_at.toString().split('T')[0]}</p>
@@ -52,7 +53,7 @@ Category.propTypes = {
 
 Category.getInitialProps = async (context) => {
     const category = context.query.category;
-    console.log('category getInitialProps', category)
+    // console.log('category getInitialProps', category)
     // context.store.dispatch({
     //     type : LOAD_Category_POSTS_REQUEST,
     //     data : category,

@@ -2,6 +2,7 @@ import React, { useState, useCallback, useEffect, memo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Link from 'next/link';
 import { LOGIN_REQUEST, LOGOUT_REQUEST } from '../reducers/user';
+import { backURL } from '../config/config';
 
 const Login = memo(() => {
     const [userId, setUserId] = useState('');
@@ -41,7 +42,7 @@ const Login = memo(() => {
                         <button type='submit'><a>로그인</a></button>
                     </form>
                     {logInErrorReason}
-                    <p><a href='http://localhost:8080/auth/kakao'>카카오로 간편 로그인</a></p>
+                    <p><a href={`${backURL}/auth/kakao`}>카카오로 간편 로그인</a></p>
                     
                 </div>
             }

@@ -2,20 +2,34 @@
 const express = require('express');
 const multer = require('multer');
 const path = require('path');
+const AWS = require('aws-sdk');
+const multerS3 = require('multer-s3');
 const db = require('../models');
-
 const router = express.Router();
 
+AWS.config.update({
+    region : 'ap-northeast-2',
+    accessKeyId : process.env.S3_ACCESS_KEY_ID,
+    secretAccessKey : process.env.S3_SECRET_ACCESS_KEY,
+});
+
 const upload = multer({
-    storage : multer.diskStorage({
-        destination(req, file, done) {
-            done(null, 'uploads');
+    storage : multer.multerS3({
+        // aws s3 서버용
+        s3 : new AWS.S3(),
+        bucket : 'mollnag',
+        key(req, file, cb) {
+            cb(null, `original/${+new Date()}${path.basename(file.originalname)}`);
         },
-        filename(req, file, done) {
-            const ext = path.extname(file.originalname);
-            const basename = path.basename(file.originalname, ext);
-            done(null, basename + new Date().valueOf() + ext); // 파일명이 같아 덮어지는 걸 막기 위해 파일명+날짜
-        },
+        // 로컬 백엔드 서버용
+        // destination(req, file, done) {
+        //     done(null, 'uploads');
+        // },
+        // filename(req, file, done) {
+        //     const ext = path.extname(file.originalname);
+        //     const basename = path.basename(file.originalname, ext);
+        //     done(null, basename + new Date().valueOf() + ext); // 파일명이 같아 덮어지는 걸 막기 위해 파일명+날짜
+        // },
     }),
     limits : { fileSize : 20 * 1024 * 1024 },
 });
@@ -142,15 +156,18 @@ router.delete('/:id/delete', async (req, res, next) => {
 
 // array, fields, single, none 메서드
 router.post('/images', upload.array('image'), (req, res) => {
-    //console.log(req.files)
-    res.json(req.files.map(v => v.filename));
+    // aws s3 서버용
+    res.json(req.files.map(v => v.location));
+    // 로컬 백엔드 서버용
+    // res.json(req.files.map(v => v.filename));
 });
 
 router.post('/thumbimage', upload.array('thumbimage'), (req, res, next) => {
     try {
-        //console.log('req.file',req.file)
-        console.log('req.files',req.files)
-        res.json(req.files.map(v => v.filename));
+        // aws s3 서버용
+        res.json(req.files.map(v => v.location));
+        // 로컬 백엔드 서버용
+        // res.json(req.files.map(v => v.filename));
     } catch(e) {
         console.error(e);
         return next(e);
