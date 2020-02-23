@@ -14,7 +14,7 @@ AWS.config.update({
 });
 
 const upload = multer({
-    storage : multer.multerS3({
+    storage : multerS3({
         // aws s3 서버용
         s3 : new AWS.S3(),
         bucket : 'mollnag',
