@@ -17,7 +17,7 @@ const upload = multer({
     storage : multerS3({
         // aws s3 서버용
         s3 : new AWS.S3(),
-        bucket : 'mollnag',
+        bucket : 'mollog',
         key(req, file, cb) {
             cb(null, `original/${+new Date()}${path.basename(file.originalname)}`);
         },
