@@ -49,7 +49,7 @@ const ProjectDrleesf = () => {
                         <br />
                         반응형<br />
                     </p>
-                    <span className='git'><a href='/tag/이박사물회' ><FontAwesomeIcon icon={faGithub} />관련 깃허브 바로가기</a></span>
+                    <span className='git'><a href='https://github.com/ksy8230/drleesf' target='_blank'><FontAwesomeIcon icon={faGithub} />관련 깃허브 바로가기</a></span>
                 </section>
                 <section className=''>
                     <h3>개발 스킬</h3>

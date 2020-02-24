@@ -1,7 +1,29 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
-import Document, { Main, NextScript } from 'next/document';
+import Document, { Main, NextScript, Head } from 'next/document';
+import {readFileSync} from 'fs';
+import {join} from 'path';
+
+class NextHeadWithInInlineCss extends Head {
+  getInlineCss() {
+    const {files} = this.context._documentProps;
+    console.log(files);
+    if (!files || files.length === 0) return null;
+    return files.filter(file => /\.css$/.test(file)).map(file => (
+      <style key={file} dangerouslySetInnerHTML={{
+              __html: readFileSync(join(process.cwd(), '.next', file), 'utf-8'), // .next 경로부터 읽어오기 위함.
+          }}
+      />
+    ))  
+    // css 파일만 사용
+                    
+  }
+
+  render() {
+    return this.getInlineCss();
+  }
+}
 
 class MyDocument extends Document {
     static getInitialProps(context) {
@@ -14,8 +36,9 @@ class MyDocument extends Document {
         const bodyAttrs = bodyAttributes.toComponent();
         return (
             <html {...htmlAttrs}>
+              <NextHeadWithInInlineCss/>
               <head>
-                {this.props.styleTags}
+                
                 {Object.values(helmet).map(el => el.toComponent())}
               </head>
               <body {...bodyAttrs}>

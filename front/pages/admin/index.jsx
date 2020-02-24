@@ -17,7 +17,8 @@ const Admin = () => {
         <div className='admin'> 
             <AdminMenu />
             <div className='admin-content'>
-                main
+                업데이트 중입니다.
+                
             </div>
         </div>
     );

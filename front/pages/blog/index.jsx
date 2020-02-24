@@ -127,16 +127,19 @@ const Blog = () => {
                     <div className='series-list'>
                         {
                             Array.from(new Set(mainPosts.map( v => v.category ))).map((v,i) => {
-                                return (
-                                    <div key={v.id}>
-                                        <p className='title'>
-                                        <Link href={{ pathname: '/blog/series', query : {category : v}}} as={`/blog/series/${v}`} >
-                                            {v}
-                                        </Link>
-                                        </p>
-                                        <p>{mainPosts.filter(c => c.category === v).map(c => c).length}개의 포스트</p>
-                                    </div>
-                                )
+                                if (v !== '') {
+                                    return (
+                                        <div key={v.id}>
+                                            <p className='title'>
+                                            <Link href={{ pathname: '/blog/series', query : {category : v}}} as={`/blog/series/${v}`} >
+                                                {v}
+                                            </Link>
+                                            </p>
+                                            <p>{mainPosts.filter(c => c.category === v).map(c => c).length}개의 포스트</p>
+                                        </div>
+                                    )
+                                }
+                                
                             })
                         }
                     </div>
@@ -169,9 +172,16 @@ const Blog = () => {
                             Array.from(new Set(
                                 makeUniqueTagList(mainPosts.map((v,i) => { return v.tag.replace("[","").replace("]","").replace(/"/g,"").replace(/#/g,"").split(",") })))
                             ).map((v,i) => {
-                                return (
-                                    <span className='tag' key={v.id}><Link href={{ pathname: '/tag', query : {tag : v}}} as={`/tag/${v}`}><a>#{v}</a></Link></span>
-                                )
+                                if (v !== 'null') {
+                                    return (
+                                        <span className='tag' key={v.id}>
+                                            <Link href={{ pathname: '/tag', query : {tag : v}}} as={`/tag/${v}`}>
+                                                <a>#{v}</a>
+                                            </Link>
+    
+                                        </span>
+                                    )
+                                }
                             })
                         }
                     </div>

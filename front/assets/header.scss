@@ -1,13 +1,118 @@
+@import './mixin.scss';
 /*
     header 관련 css
 */
 
 header {
-    position: relative;
     display: block;
-    //background: $lightgray;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
     border-bottom: 1px solid $lightgray;
-    z-index: 1;
+    background: #fff;
+    z-index: 2;
+    @media screen and (max-width:1024px) {
+        .mobile-button {
+            display: inline-block !important;
+        }
+        .links {
+            display: none !important;
+        }
+        .mobile-links {
+            display: block !important;
+            position: absolute;
+            top: -200px;
+            display: none;
+            width: 100%;
+            left: 0;
+            padding: 5px 15px;
+            background: #fff;
+            z-index: 1;
+            @include css3(transition, all 0.5s);
+            &.active {
+                top:73px;
+                border-top: 1px solid $gray;
+                box-shadow: rgba(0, 0, 0, 0.09) 0px 2px 12px 0px;
+                nav {
+                    div {
+                        &.active {
+                            a {
+                                pointer-events: none;
+                                font-weight: bold;
+                            }
+                        }
+                    }
+                }
+            }
+            nav {
+                div {
+                    a {
+                        padding-bottom: 1rem;
+                        display: block;
+                        line-height: 44px;
+                        &:last-child {
+                            padding:0;
+                        }
+                    }
+                    
+                }
+            }
+        }
+    }
+    &.scroll {
+        position: fixed;
+        top:0;
+        left:0;
+        width: 100%;
+    }
+    .mobile-button {
+        position: relative;
+        float: right;
+        top: 0;
+        right: -12px;
+        cursor: pointer;
+        padding: 12px;
+        display: none;
+        &.active {
+            span {
+                @include css3(transition, all 0.5s);
+
+                &:first-child {
+                    display: inline-block;
+                    position: absolute;
+                    top: 50%;
+                    @include css3(opacity, 1);
+                    @include css3(transform, rotate(45deg));
+                }
+                @include css3(opacity, 0);
+
+                &:last-child {
+                    display: inline-block;
+                    position: absolute;
+                    top: 40%;
+                    @include css3(opacity, 1);
+                    @include css3(transform, rotate(-45deg));
+                }
+            }
+        }
+        span {
+            display: block;
+            margin-top:4px;
+            width: 22px;
+            height: 3px;
+            border-radius: 4px;
+            background: $pink;
+            &:first-child {
+                margin:0;
+            }
+        }
+    }
+    .mobile-links {
+        position: absolute;
+        display: none;
+
+    }
     a {
         display: block;
     }
@@ -17,7 +122,11 @@ header {
         padding: 15px 0;
         
         @media screen and (max-width:1024px) {
+            position: relative;
             width: 100%; 
+            padding: 15px;
+            background: #fff;
+            z-index: 2;
         }
     }
     .logo {

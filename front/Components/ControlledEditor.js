@@ -60,6 +60,7 @@ class ControlledEditor extends Component {
     const newValue = stateToHTML(contentState);
     if (value !== newValue) {
       onChange(newValue); // <p>...</p>
+      console.log('newValue',newValue)
     }
     this.setState({
       editorState

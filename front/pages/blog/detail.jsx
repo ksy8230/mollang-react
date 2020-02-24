@@ -107,7 +107,7 @@ const Detail = ({ id }) => {
                     <div>
                         <h2 className='title'>{singlePost && singlePost.title}</h2>
                         {
-                            singlePost && singlePost.category && <span>시리즈 포스트</span>
+                            singlePost && singlePost.category && <span className='series'><Link href={{ pathname : '/blog/series', query: {category : singlePost.category}}} as={`/blog/series/${singlePost.category}`}><a>{singlePost.category} 시리즈</a></Link></span>
                         }
                         {/* <p className='date'>{singlePost && singlePost.created_at && singlePost.created_at.toString().split('T')[0]}</p> */}
                         <p className='date'>{moment(singlePost.created_at).format('YYYY.MM.DD')}</p>
@@ -117,7 +117,9 @@ const Detail = ({ id }) => {
                                 singlePost && singlePost.tag ?
                                 makeTagList(singlePost.tag).map((v,i) => {
                                     return (
-                                    <span key={i} style={{marginRight:10}}><Link href={{ pathname: '/tag', query : {tag : v}}} as={`/tag/${v}`} ><a>#{v}</a></Link></span>
+                                        v !== 'null' ? 
+                                        <span key={i} style={{marginRight:10}}><Link href={{ pathname: '/tag', query : {tag : v}}} as={`/tag/${v}`} ><a>#{v}</a></Link></span> 
+                                        : null
                                     )
                                 }) : null
                             }

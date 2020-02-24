@@ -36,7 +36,7 @@ const PostCard = memo(({ post, i, summery }) => {
                 {/*<div className='post-content' dangerouslySetInnerHTML={createMarkup(post.content)} />*/}
                 <p className='post-tag'>
                     {
-                        post.tag ?
+                        post.tag !== 'null' ?
                         makeTagList(post.tag).map((v,i) => {
                             return (
                             <span style={{marginRight:10}}><Link href={{ pathname: '/tag', query : {tag : v}}} as={`/tag/${v}`} ><a>#{v}</a></Link></span>

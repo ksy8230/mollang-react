@@ -36,23 +36,24 @@ const upload = multer({
 
 router.post('/', upload.none(), async (req, res, next) => { // POST /api/post 
     try {
-        const tags = JSON.stringify(req.body.tag.match(/#[^\s]+/g));        
+        console.log('req.body.tag',req.body.tag)  
+        //console.log('req.user.id',req.user.id)  
+        const tags = JSON.stringify(req.body.tag.match(/#[^\s]+/g)); 
         const newPost = await db.Post.create({
             title : req.body.title,
             category : req.body.category,
             content : req.body.content,
             tag : tags,
-            //UserId: req.user.id,
         });
-        console.log(newPost)
-        if (tags) {
+
+        if (req.body.tag !== '') {
+            // req.body.tag 값이 '' 이 아니면
             // 태그를 전부 찾아서 #제거하고 있으면 db 찾기 없으면 db 생성
             const result = await Promise.all(JSON.parse(tags).map(v => db.Tag.findOrCreate({ 
                 where : { name : v.slice(1).toLowerCase()},
             })));
-            console.log('태그 result',result)
             await newPost.addTags(result.map(r => r[0]));
-        }
+        } 
         if (req.body.thumbimage) { // multer에서 이미지 주소를 여러개 올리면 thumbimage : [주소1, 주소2...]
             if (Array.isArray(req.body.thumbimage)) {
                 const thumbimages = await Promise.all(req.body.thumbimage.map((image)=> {
@@ -66,7 +67,7 @@ router.post('/', upload.none(), async (req, res, next) => { // POST /api/post
         }
         if (req.body.category) {
             // category가 요청 들어왔을 때 디비에 category가 있으면 찾고 없으면 db 생성
-            const result = await db.Category.findOrCreate({
+            await db.Category.findOrCreate({
                 where : { name : req.body.category }
             })
         }
@@ -78,7 +79,6 @@ router.post('/', upload.none(), async (req, res, next) => { // POST /api/post
                 },
                 {
                     model: db.Category,
-                    //as : 'PostCategory',
                     attributes: ['id'],
                 },
             ]
@@ -110,28 +110,33 @@ router.patch('/:id/edit', async(req, res, next) => { // PATCH /api/post/:id/edit
         const post = await db.Post.findOne({
             where : { id : req.params.id }
         });
-        const tags = JSON.stringify(req.body.tag.match(/#[^\s]+/g));
-        if (tags) {
-            // 태그를 전부 찾아서 #제거하고 있으면 db 찾기 없으면 db 생성
-            const result = await Promise.all(JSON.parse(tags).map(v => db.Tag.findOrCreate({ 
-                where : { name : v.slice(1).toLowerCase()},
-            })));
-            console.log('result',result)
-            await post.addTags(result.map(r => r[0]));
-        }
         if(!post) {
             return res.status(404).send('포스트가 존재하지 않습니다.');
         }
-        console.log('req.body',req.body)
-        const fullEditPost = await post.update(
-            { 
-                content : req.body.content,
-                title : req.body.title,
-                tag : tags,
-            }
-        );
-        console.log('fullEditPost',fullEditPost)
-        return res.json(fullEditPost);
+        if (req.body.tag === '') {
+            const fullEditPost = await post.update(
+                { 
+                    content : req.body.content,
+                    title : req.body.title,
+                    tag : '',
+                }
+            );
+            return res.json(fullEditPost);
+        } else {
+            const tags = JSON.stringify(req.body.tag.match(/#[^\s]+/g));
+            const result = await Promise.all(JSON.parse(tags).map(v => db.Tag.findOrCreate({ 
+                where : { name : v.slice(1).toLowerCase()},
+            })));
+            await post.addTags(result.map(r => r[0]));
+            const fullEditPost = await post.update(
+                { 
+                    content : req.body.content,
+                    title : req.body.title,
+                    tag : tags,
+                }
+            );
+            return res.json(fullEditPost);
+        }
     } catch (e) {
         console.error(e);
         next(e);

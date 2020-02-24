@@ -7,6 +7,14 @@
     .blog-head {
         position: relative;
         margin-bottom: 1rem;
+        @media screen and (max-width:1024px) {
+            .input-box {
+                position: relative !important;
+                input {
+                    width: 100%;
+                }
+            }
+        }
         .input-box {
             padding-right:50px;
             position: absolute;
@@ -111,6 +119,9 @@
                 }
                 .post-summery {
                     margin: 1.5rem 0;
+                    p {
+                        line-height: 1.3rem;
+                    }
                 }
                 .post-content {
                     position: relative;
@@ -165,6 +176,7 @@
                 padding: 1rem 0;
                 p {
                     color: $darkgray;
+                    line-height: 1.4rem;
                 }
             }
             p {
@@ -187,8 +199,19 @@
         color:$black;
     }
     .date {
+        display: inline-block;
+
         font-size: .9rem;
+        line-height: 1.3rem;
         color:$black;
+    }
+    .series {
+        display: inline-block;
+        margin-right: 1rem;
+        box-sizing: border-box;
+        padding: 3px;
+        border-radius: 5px;
+        border:1px solid $gray;
     }
     .admin-buttons {
         margin-bottom: 1rem;
@@ -269,12 +292,64 @@
 
 .draft-editor-contents {
     margin: 2rem 0;
+    
     p {
-        margin:10px 0;
+        margin:5px 0;
         color:$black;
         line-height: 1.6rem;
+        strong {
+            padding-left: 0.25em;
+            padding-right: 0.25em;
+            background: rgb(227, 255, 246);
+        }
     }
     span {
         font-size: initial;
+    }
+    figure {
+        img {
+            width: 100%;
+        }
+    }
+    blockquote, q {
+        margin-top: 2rem;
+        margin-bottom: 2rem;
+        border-top-right-radius: 4px;
+        border-bottom-right-radius: 4px;
+        margin-left: 0px;
+        margin-right: 0px;
+        color: rgb(33, 37, 41);
+        border-left: 4px solid rgb(32, 201, 151);
+        background: rgb(248, 249, 250);
+        padding: 1rem 1rem 1rem 2rem;
+    }
+    code {
+        display: block;
+        margin: 1em 0px;
+        padding: 1rem;
+        background: rgb(248, 249, 250);
+        box-shadow: rgba(0, 0, 0, 0.02) 0px 0px 2px;
+        font-size: 1.125rem;
+        color: rgb(52, 58, 64);
+        line-height: 1.85;
+        letter-spacing: -0.02em;
+        word-break: keep-all;
+        overflow-wrap: break-word;
+    }
+    ul {
+        li {
+            position: relative;
+            padding-left: 10px;
+            line-height: 1.6rem;
+            &:after {
+                content: '';
+                position: absolute;
+                top: 10px;
+                left: 0;
+                width: 3px;
+                height: 3px;
+                background: $black;
+            }
+        }
     }
 }

@@ -12,7 +12,7 @@ import { backURL } from '../../config/config';
 const Blog = () => {
     const [title, setTitle] = useState('');
     const [category, setCategory] = useState('');
-    const [tag, setTag] = useState('');
+    const [tag, setTag] = useState(null);
     const { postAdded, thumbImagePath } = useSelector(state => state.post);
     const { me } = useSelector(state => state.user);
     const refThumbImageInput = useRef();
@@ -68,32 +68,32 @@ const Blog = () => {
             <AdminMenu />
             <div className='admin-content'>
                 <div className='blog-editor'>
-                <div className='input-box'>
-                    <input type="text" value={title} onChange={onChangeTitle} placeholder="제목" required />
-                </div>
-                <div className='input-box'>
-                    <input type="text" value={category} onChange={onChangeCategory} placeholder="새로운 시리즈" />
-                </div>
-                <div className='editor-form-box'>
-                    <EditorForm />
-                </div>
-                <div className='input-box tag'>
-                    <input type="text" value={tag} onChange={onChangeTag} placeholder="#태그" />
-                </div>
-                <div className='thumb-preview-box'>
-                    <div>
-                        <img src={
-                            thumbImagePath && thumbImagePath[0] === undefined ? '/images/thumbnail_default_img.jpg': `${thumbImagePath && thumbImagePath[0]}`
-                            } alt=""/>
+                    <div className='input-box'>
+                        <input type="text" value={title} onChange={onChangeTitle} placeholder="제목" />
                     </div>
-                    <form encType='multipart/form-data'>
-                        <input type="file" multiple hidden ref={refThumbImageInput} onChange={onChangeThumbImage} />
-                    </form>
-                    <button onClick={onClickUploadThumbImage}><a>썸네일 이미지 업로드</a></button>
-                </div>
+                    <div className='input-box'>
+                        <input type="text" value={category} onChange={onChangeCategory} placeholder="새로운 시리즈" />
+                    </div>
+                    <div className='editor-form-box'>
+                        <EditorForm />
+                    </div>
+                    <div className='input-box tag'>
+                        <input type="text" value={tag} onChange={onChangeTag} placeholder="#태그 입력" />
+                    </div>
+                    <div className='thumb-preview-box'>
+                        <div>
+                            <img src={
+                                thumbImagePath && thumbImagePath[0] === undefined ? '/images/thumbnail_default_img.jpg': `${thumbImagePath && thumbImagePath[0]}`
+                                } alt=""/>
+                        </div>
+                        <form encType='multipart/form-data'>
+                            <input type="file" multiple hidden ref={refThumbImageInput} onChange={onChangeThumbImage} />
+                        </form>
+                        <button onClick={onClickUploadThumbImage}><a>썸네일 이미지 업로드</a></button>
+                    </div>
 
-                <RemoteSubmitButton title={title} tag={tag} category={category} />
-            </div>
+                    <RemoteSubmitButton title={title} tag={tag} category={category} />
+                </div>
             </div>
         </div>
     );

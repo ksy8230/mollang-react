@@ -38,13 +38,17 @@
 
 .contents-wrap {
     position: relative;
-    //margin-top: 1.5rem;
+    padding-top:73px;
     width: 1024px;
     margin: 1.5rem auto;
+    z-index: 1;
     @media screen and (max-width:1024px) {
         width: 100%; 
         overflow: hidden;
         padding: 0 15px;
+        h2 {
+            padding: 1rem 0 !important; 
+        }
     }
     h2 {
         padding: 2rem 0;
@@ -58,4 +62,8 @@
 
 svg {
     width: .9rem;
+}
+
+.example {
+    display: inline;
 }

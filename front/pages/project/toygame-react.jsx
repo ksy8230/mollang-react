@@ -43,7 +43,7 @@ const ProjectToygameReact = () => {
                         배포 및 형상관리<br />
                         - Git을 이용해 소스들의 버전을 유지하였습니다.<br />
                     </p>
-                    <span className='issue'><Link href='/tag/냉장고프로젝트' ><a><FontAwesomeIcon icon={faWrench} />개발 이슈</a></Link></span>
+                    <span className='issue'><Link href='/tag/리액트토이게임' ><a><FontAwesomeIcon icon={faWrench} />개발 이슈</a></Link></span>
                 </section>
                 <div className='footer'>
                     <Link href='/project'><a>프로젝트 페이지로 돌아가기</a></Link>

@@ -53,11 +53,14 @@ const Mollang = ({ Component, store, pageProps }) => {
                     rel: 'stylesheet', href: 'https://uicdn.toast.com/tui.date-picker/latest/tui-date-picker.css',
                 }, {
                     rel: 'stylesheet', href: 'https://uicdn.toast.com/tui.time-picker/latest/tui-time-picker.css',
-                },{
+                },
+                /*{
                     rel : 'stylesheet', type : 'text/css', href: '/_next/static/css/styles.chunk.css',
-                }, {
+                }, 
+                {
                     rel : 'stylesheet', type : 'text/css', href: '/css/styles.chunk.css',
-                },]}
+                },*/
+                ]}
                 script={[{
                     src: 'https://uicdn.toast.com/tui.date-picker/latest/tui-date-picker.js'
                 }]}
@@ -75,9 +78,12 @@ const Mollang = ({ Component, store, pageProps }) => {
                 <script src="https://uicdn.toast.com/tui.date-picker/latest/tui-date-picker.js"></script>
                 
             </Head>*/}
-            <AppLayout>
-                <Component {...pageProps} />
-            </AppLayout>
+            
+                <AppLayout >
+                    <Component {...pageProps} />
+                </AppLayout>
+            
+
         </Provider>
         </Container>
     );

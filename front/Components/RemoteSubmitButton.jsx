@@ -18,18 +18,25 @@ const RemoteSubmitButton = ({ title, tag, category }) => {
   const {draft} = useSelector(state => state.form);
 
   const onClickEvent = useCallback(() => {
-    const formData = new FormData();
-    thumbImagePath.forEach((i) => {
-      formData.append('thumbimage', i)
-    });
-    formData.append('title', title);
-    formData.append('category', category);
-    formData.append('tag', tag);
-    formData.append('content', draft.values.editorText);
-    dispatch({
-        type : ADD_POST_REQUEST,
-        data : formData
-    });
+    console.log('title',title)
+    //console.log('tag',tag)
+    if ( title === '' ){
+      alert('제목을 입력하세요');
+    } else {
+      const formData = new FormData();
+      thumbImagePath.forEach((i) => {
+        formData.append('thumbimage', i)
+      });
+      formData.append('title', title);
+      formData.append('category', category);
+      formData.append('tag', tag);
+      formData.append('content', draft.values.editorText);
+      dispatch({
+          type : ADD_POST_REQUEST,
+          data : formData
+      });
+    }
+
   }, [title, category, tag, thumbImagePath ]);
 
   return (
