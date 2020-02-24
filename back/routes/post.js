@@ -42,8 +42,9 @@ router.post('/', upload.none(), async (req, res, next) => { // POST /api/post
             category : req.body.category,
             content : req.body.content,
             tag : tags,
-            UserId: req.user.id,
+            //UserId: req.user.id,
         });
+        console.log(newPost)
         if (tags) {
             // 태그를 전부 찾아서 #제거하고 있으면 db 찾기 없으면 db 생성
             const result = await Promise.all(JSON.parse(tags).map(v => db.Tag.findOrCreate({ 
