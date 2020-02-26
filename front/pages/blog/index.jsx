@@ -29,12 +29,12 @@ export function summary (postsState, summaryState) {
 }
 
 function makeUniqueTagList(arrays) {
-    console.log('make Unique TagList')
+    //console.log('make Unique TagList')
     const tagsArray = [];
     arrays.map((v,i) => {
         tagsArray.push(...v)
     })
-    console.log(tagsArray)
+    //console.log(tagsArray)
     return tagsArray;
 }
 
@@ -193,7 +193,7 @@ const Blog = () => {
 };
 
 Blog.getInitialProps = async (context) => {
-    console.log(Object.keys(context));
+    //console.log(Object.keys(context));
     context.store.dispatch({
         type : LOAD_POSTS_REQUEST,
         lastId : 0,

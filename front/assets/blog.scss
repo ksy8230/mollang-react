@@ -263,6 +263,7 @@
             }
         }
         input {
+            width: 100%;
             border:0;
             font-size: 2rem;
         }
@@ -271,8 +272,15 @@
         margin-bottom: 2rem;
         padding-bottom: 2rem;
         border-bottom: 1px solid $gray;
+        .demo-editor {
+            overflow-y: scroll;
+            max-height: 720px;
+        }
         .DraftEditor-root {
             padding: 1rem;
+            //span[data-text="true"] {
+                //line-height: 200%;
+            //}
         }
     }
     .thumb-preview-box {
@@ -296,7 +304,8 @@
     p {
         margin:5px 0;
         color:$black;
-        line-height: 1.6rem;
+        //line-height: 1.6rem;
+        line-height: 200%;
         strong {
             padding-left: 0.25em;
             padding-right: 0.25em;
@@ -322,6 +331,7 @@
         border-left: 4px solid rgb(32, 201, 151);
         background: rgb(248, 249, 250);
         padding: 1rem 1rem 1rem 2rem;
+        line-height: 200%;
     }
     code {
         display: block;
@@ -329,18 +339,21 @@
         padding: 1rem;
         background: rgb(248, 249, 250);
         box-shadow: rgba(0, 0, 0, 0.02) 0px 0px 2px;
-        font-size: 1.125rem;
+        //font-size: 1.125rem;
         color: rgb(52, 58, 64);
         line-height: 1.85;
         letter-spacing: -0.02em;
         word-break: keep-all;
         overflow-wrap: break-word;
+        font-family: Consolas;
+        font-size: .9rem;
     }
     ul {
         li {
             position: relative;
             padding-left: 10px;
-            line-height: 1.6rem;
+            //line-height: 1.6rem;
+            line-height: 200%;
             &:after {
                 content: '';
                 position: absolute;

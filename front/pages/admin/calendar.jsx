@@ -131,7 +131,7 @@ const ToastCalendar = () => {
 
       calendar.on('beforeUpdateSchedule', (event) => { // 스케줄 수정 
         const { schedule, changes } = event;
-        
+        // console.log('changes',changes)
         dispatch({
           type : EDIT_SCHEDULE_REQUEST,
           data : {
@@ -144,7 +144,6 @@ const ToastCalendar = () => {
           }
         });
         calendar.updateSchedule(schedule.id, schedule.calendarId, changes);
-        console.log('changes',changes)
       });
       
       view_week.addEventListener('click', () => { // 주 단위로 보기

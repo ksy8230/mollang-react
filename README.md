@@ -173,3 +173,10 @@ http://forward.nhnent.com/hands-on-labs/toastui.calendar-timetable/02%20setup.ht
 ##### tui.calendar 이슈 모음 (에러 : 해결 링크)
 - tui.calendar ssr 이슈
     - @toast-ui/react-calendar가 window 객체를 보는 모듈이라 리액트 로드시 에러가 발생하여 typeof window !== 'undefined'일 때 tui-calendar 모듈로 calendar 직접 호출함.
+
+#### 배포 후 발견한 에러 및 수정사항들
+[x] 일정관리 edit 버튼 클릭시 Cannot read property 'guideElement' 에러 
+    - 잘못된 콘솔로 인한 에러로 발생 (콘솔 지우니 해결)
+[x] 1024px 이하로 줄일시 상단 패딩값 수정하기 & 이메일 수정하기
+[x] 편집기 max-height 지정
+[ ] 테스트시 사용한 console.log들 삭제하기
