@@ -6,6 +6,8 @@ import Link from 'next/link';
 const Project = () => {
     const [openPastBox, setOpenPastBox] = useState(false);
     const [openFutureBox, setOpenFutureBox] = useState(false);
+    const [openTask3, setOpenTask3] = useState(false);
+    const [openTask4, setOpenTask4] = useState(false);
 
     const onClickOpenPastBox = useCallback(() => {
         setOpenPastBox(!openPastBox);
@@ -14,8 +16,14 @@ const Project = () => {
 
     const onClickOpenFutureBox = useCallback(() => {
         setOpenFutureBox(!openFutureBox);
-        console.log(openFutureBox)
     }, [openFutureBox]);
+
+    const onClickOpenTask3 = useCallback(() => {
+        setOpenTask3(!openTask3);
+    }, [openTask3]);
+    const onClickOpenTask4 = useCallback(() => {
+        setOpenTask4(!openTask4);
+    }, [openTask4]);
 
     return (
         <div className='contents-wrap'>
@@ -25,6 +33,56 @@ const Project = () => {
                 <div className='box'>
                     <h3># 회사 프로젝트</h3>
                     <p>구성원으로서 진행을 했던 업무 및 프로젝트 입니다.</p>
+                    <div className={openTask4 ? 'feature active' : 'feature'}>
+                        <p className='title' onClick={onClickOpenTask4}><span>엑셀 파일로 배너 만들기</span> <FontAwesomeIcon icon={faChevronDown} /></p>
+                        <div className='detail'>
+                            <h4>어떤 페이지인가요?</h4>
+                            <p>
+                                제휴몰 사이트 및 광고에 사용되는 다수의 배너들을 엑셀 데이터 값으로 만들어낸 페이지입니다.<br />
+                                <a className='link' href='http://santelglobal.com/form/adidas/1807_a_Gmarket_02/index.html' target='_blank'>배너 리스트 뽑은 링크</a>
+                            </p><br />
+                            <h4>어떻게 만들어졌나요?</h4>
+                            <p>Express.js로 구현된 웹 페이지에 엑셀 파일을 업로드하면, 해당 파일을 읽어들여 json 형식으로 변환 후 그 값들을 html, jQuery로 화면단에 구현하였습니다.</p><br />
+                            
+                            <h4>구체적인 작업 방식은 어떻게 되나요?</h4>
+                            <p>1. express로 구현된 페이지에 엑셀 파일을 업로드합니다.</p>
+                            <p><img src='/images/project_excel01.jpg' /></p>
+                            <p>2. 파일 선택 후 업로드하면 json 변환 결과가 화면에 표시됩니다.</p>
+                            <p><img src='/images/project_excel02.jpg' /></p>
+                            <p>3. 해당 값으로 파일.json 파일을 만든 후 ajax로 html을 브라우저에 그려지도록 구현합니다.</p>
+                            <br/>
+                            <h4>본인의 기여도는 어디까지인가요?</h4>
+                            <p>라이브러리를 이용해 json으로 변환된 값을 ajax로 읽어들여 html로 만들어내는 작업을 하였습니다. (html, jQuery)<br />
+                            <a href='https://moollang.tistory.com/14' target='_blank'>상세코드 볼 수 있는 곳</a>
+                            </p><br/>
+                            
+                            <h4>작업 배경</h4>
+                            <p>디자이너들이 배너를 만드는데 사용되는 가격 및 할인율이 적힌 엑셀 파일이 클라이언트의 요청에 의해 수시로 변경이 되었고,<br />
+                            동일한 수작업의 반복을 줄이기 위해 만들게 되었습니다.<br />그 결과 엑셀 파일이 여러번 수정이 되어도 빠른 시간에 적은 노동으로 엑셀 묶음의 배너를 만들 수 있게 되었습니다. 
+                            </p><br/> 
+                        </div>
+                    </div>
+                    <div className={openTask3 ? 'feature active' : 'feature'}>
+                        <p className='title' onClick={onClickOpenTask3}><span>개별 배너 커스터마이징 페이지</span> <FontAwesomeIcon icon={faChevronDown} /></p>
+                        <div className='detail'>
+                            <h4>어떤 페이지인가요?</h4>
+                            <p>
+                                배너의 부분적인 값 수정을 위한 용도로 만들어졌습니다.<br />
+                                <a className='link' href='http://santelglobal.com/form/adidas/cutomize_adidas_v2.html' target='_blank'>배너 커스터마이징 타입1</a>
+                                <a className='link' href='http://santelglobal.com/form/adidas/cutomize.html' target='_blank'>배너 커스터마이징 타입2</a>
+                            </p><br />
+                            <h4>어떻게 만들어졌나요?</h4>
+                            <p>html과 jQuery로 만들어졌습니다.</p><br />
+                            <h4>본인의 기여도는 어디까지인가요?</h4>
+                            <p>전체 해당합니다.
+                            </p><br/>
+                            <h4>작업 배경</h4>
+                            <p>엑셀의 전체 수정이 아닌 배너 한 두 개의 수정, 혹은 오타로 인해 배너 리스트 추출하는 작업이 잦아졌고,<br />
+                            디자이너들이 미안해하며 요청하는 모습이 마음에 쓰여 개별 수정 페이지를 만들어 공유하게 되었습니다.
+                            </p><br/> 
+                        </div>
+                    </div>
+
                     <div className={openPastBox ? 'feature active' : 'feature'}>
                         <p className='title' onClick={onClickOpenPastBox}><span>아디다스 / 리복 캠페인 페이지</span> <FontAwesomeIcon icon={faChevronDown} /></p>
                         <div className='detail'>
@@ -37,10 +95,13 @@ const Project = () => {
                                 <a className='link' href='https://shop.reebok.co.kr/brand/campaign/pnView.action?pn=BT21_Reebok' target='_blank'>BT21 캠페인 </a> 등...
                             </p><br/>
                             <h4>구체적인 작업 방식은 어떻게 되나요?</h4>
-                            <p>
-                                1. html, scss로 전달 받은 디자인을 보며 코딩 작업 후, gulp로 scss를 컴파일링하여 해당 캠페인의 빌드 폴더 안에 css가 삽입된 html이 생성됩니다.<br />
-                                2. 그 html 파일을 수작업으로 캠페인이름.html 파일로 변경 후 배포용(pn)폴더에 추가하여 AWS WorkSpace를 통해 데브로 1차 배포합니다. <br />
-                                2-1. '캠페인이름' 파라미터 값을 ajax로 받아 해당 html이 아디다스 내부 페이지에 삽입이 되는 식이며 'https://dev.adidas.co.kr/PF020620.action?pn=캠페인이름'의 url이 생성됩니다. <br />
+                            <p>1. html, scss로 전달 받은 디자인을 보며 코딩 작업 후, gulp로 scss를 컴파일링하여 해당 캠페인의 빌드 폴더 안에 css가 삽입된 html이 생성됩니다.</p><br />
+                            <p><img src='/images/project_folder.jpg' style={{width : "auto"}} /></p><br />
+
+                            <p>2. 그 html 파일을 수작업으로 캠페인이름.html 파일로 변경 후 배포용(pn)폴더에 추가하여 AWS WorkSpace(가상 데스크톱)를 통해 데브로 1차 배포합니다. <br /></p>
+                            <p><img src='/images/project_workspace.jpg' style={{width : "auto"}} /></p><br />
+                                
+                            <p> 2-1. '캠페인이름' 파라미터 값을 받아 해당 html이 아디다스 내부 페이지에 삽입이 되는 식이며 'https://dev.adidas.co.kr/PF020620.action?pn=캠페인이름'의 url이 생성됩니다. <br />
                                 3. 담당 디자이너에게 데브 url 공유 후 컨펌이 되면 내부 관리자인 PM 실장님에게 최종 컨펌을 받습니다.<br />
                                 4. 피드백과 최종 수정 후 라이브로 2차 배포하여 'https://shop.adidas.co.kr/PF020620.action?pn=캠페인이름'이 최종으로 생성됩니다.<br />
                             </p><br/>
@@ -62,7 +123,7 @@ const Project = () => {
                         <div className='detail'>
                             <h4>어떤 페이지인가요?</h4>
                             <p>
-                                시스템 및 내부 요청에 따른 페이지들 코딩을 진행하였습니다.<br/>
+                                시스템에 관련된 html 코딩 페이지입니다.<br/>
                                 <a className='link' href='https://shop.adidas.co.kr/html/adidas/register_kakao.html' target='_blank'>회원가입</a>
                                 <a className='link' href='https://shop.adidas.co.kr/html/adidas/mypage_08_01mypage_edit_2.html' target='_blank'>마이페이지</a>
                                 <a className='link' href='https://shop.adidas.co.kr/html/adidas/product_list_sale.html' target='_blank'>상품 리스트</a> 
@@ -87,11 +148,13 @@ const Project = () => {
                             </p><br/> 
                         </div>
                     </div>
+                    
+
                 </div>
 
                 <div className='box'>
                     <h3># 개인 프로젝트</h3>
-                    <p>다양한 기술을 학습하기 위해 만들어진 프로젝트입니다.</p>
+                    <p>다양한 기술을 학습하기 위해 만들어진 프로젝트입니다. 클릭하시면 상세페이지로 넘어갑니다.</p>
                     <div className='project-list'>
                         <div className='project'>
                             <Link href='/project/mollog'><a></a></Link>

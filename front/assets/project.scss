@@ -110,6 +110,10 @@
     }
     p {
         line-height: 1.6rem;
+        img {
+            width:90%;
+            box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 8px;
+        }
     }
 }
 

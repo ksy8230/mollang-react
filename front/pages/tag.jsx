@@ -4,10 +4,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { LOAD_TAG_POSTS_REQUEST } from '../reducers/post';
 import PostCard from '../Components/PostCard';
 import StackGrid from "react-stack-grid";
-import { summary } from './blog/index';
+import { summary } from '../Components/FunctionalComponent';
 import SearchForm from '../Components/SearchForm';
 import Router from 'next/router';
 import Link from 'next/link';
+import { onClickPost } from './blog';
 
 const Tag = ({ tag }) => {
     const dispatch = useDispatch();
@@ -21,7 +22,7 @@ const Tag = ({ tag }) => {
             if (hasMoreTagPost) {
                 const lastId = mainPosts[mainPosts.length - 1].id || 0;
                 if (!countRef.current.includes(lastId)) {
-                    console.log('countRef.current', countRef.current)
+                    //console.log('countRef.current', countRef.current)
                     dispatch({
                         type: LOAD_TAG_POSTS_REQUEST,
                         lastId,
@@ -86,6 +87,7 @@ const Tag = ({ tag }) => {
                                     i={i}
                                     key={i}
                                     summery={summery}
+                                    onClickPost={onClickPost}
                                 />
                             )
                         })

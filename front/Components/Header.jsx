@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect } from 'react';
+import React, { useState, useCallback, useEffect, memo } from 'react';
 import Link from 'next/link';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleDown, faTimes, faUser } from "@fortawesome/free-solid-svg-icons";
@@ -8,7 +8,7 @@ import Login from './Login';
 import SingUp from './SingUp';
 import Router from 'next/router';
 
-const Header = () => {
+const Header = memo(() => {
     const {me, isLoggedIn, isSignedUp} = useSelector(state => state.user);
     const dispatch = useDispatch();
     const [accountOpen, setAccountOpen] = useState(false);
@@ -177,6 +177,6 @@ const Header = () => {
             }
         </>
     );
-};
+});
 
 export default Header;

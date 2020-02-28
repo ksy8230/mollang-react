@@ -17,7 +17,7 @@ const Pop = styled.div`
     top: -130%;
     left: 50%;
     transform: translate(-50%,-50%);
-    width: 150px;
+    width: 180px;
     padding: 1rem;
     background:rgba(255,255,255,0.8);
     box-shadow: rgba(0,0,0,0.1) 0px 0px 8px;
@@ -34,7 +34,6 @@ const Footer = () => {
     const [mailPop, setMailPop] = useState(false);
     const [talkPop, setTalkPop] = useState(false);
     const [animate, setAnimate] = useState(false);
-    //const [localVisible, setLocalVisible] = useState(visible);
 
     const onClickMail = useCallback(() => {
         setMailPop(!mailPop);
@@ -48,18 +47,12 @@ const Footer = () => {
         setTimeout(() => setTalkPop(false), 5000);
     }, [mailPop, talkPop]);
 
-    useEffect(() => {
-        //const contactElement = document.querySelector('.contact');
-        //let popElement = contactElement.children('div');
-        //console.log(contactElement)
-
-    }, []);
     return (
         <footer>
             <div className='logo'><img src="/images/logo_mollang.png" alt=""/></div>
             <div className='contact'>
                 <span onClick={onClickMail}><img src="/images/icon_email.png" alt=""/></span>
-                {mailPop ? <Pop><p>ymt45@naver.com</p></Pop> : null}
+                {mailPop ? <Pop><p><a href='mailto:mollog8230@gmail.com'>mollog8230@gmail.com</a></p></Pop> : null}
                 <span onClick={onClickTalk}><img src="/images/icon_talk.png" alt=""/></span>
                 {talkPop ? <Pop><p>asdf8230</p></Pop> : null}
                 <span><a href='https://github.com/ksy8230' target='_blank'><img src="/images/ico_github.png" alt=""/></a></span>

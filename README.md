@@ -174,9 +174,21 @@ http://forward.nhnent.com/hands-on-labs/toastui.calendar-timetable/02%20setup.ht
 - tui.calendar ssr 이슈
     - @toast-ui/react-calendar가 window 객체를 보는 모듈이라 리액트 로드시 에러가 발생하여 typeof window !== 'undefined'일 때 tui-calendar 모듈로 calendar 직접 호출함.
 
-#### 배포 후 발견한 에러 및 수정사항들
-[x] 일정관리 edit 버튼 클릭시 Cannot read property 'guideElement' 에러 
+#### 배포 후 발견한 에러 및 추가 수정사항들 (에러 : 기능적인 에러 / 수정 : ui 수정 / 추가: ui 및 기능 추가)
+[x] (에러) 일정관리 edit 버튼 클릭시 Cannot read property 'guideElement' 에러 
     - 잘못된 콘솔로 인한 에러로 발생 (콘솔 지우니 해결)
-[x] 1024px 이하로 줄일시 상단 패딩값 수정하기 & 이메일 수정하기
-[x] 편집기 max-height 지정
+[x] (수정) 1024px 이하로 줄일시 상단 패딩값 수정하기 & 이메일 수정하기
+[x] (수정) 편집기 max-height 지정
+[x] 함수형 컴포넌트들 따로 정리하기
+    - state 관련 아닌 첫 화면부터 로딩되기만하면 되는 함수는 따로 useEffect 함수 안에 담아두는 게 깔끔하겠다.
 [ ] 테스트시 사용한 console.log들 삭제하기
+[x] (추가) memo를 이용한 최적화 작업 추가
+[x] (수정) 상세페이지 링커 클릭시 위치되는 상단값 조정 -> 링커 클래스 유무 상태값에 따라 헤더 조정
+    - 불필요한 useCallback 삭제 
+[x] (추가) 상세페이지 클릭시 트랜지션효과 추가
+    - https://nextjs.org/docs/old (Imperatively)
+    - routeChangeStart : https://stackoverflow.com/questions/55624695/loading-screen-on-next-js-page-transition
+    - NProgress
+[x] (추가) 댓글 기능 추가 / 댓글 쓰니만 수정 삭제하기 / `moment`로 시간기재
+[x] (추가) 시리즈 페이지 ssr 추가하기
+[x] (에러) 블로그 시리즈, 태그가 10개의 포스트에 한해서만 생성

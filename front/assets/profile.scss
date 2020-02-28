@@ -58,7 +58,6 @@
             }
         }
         .feature {
-            //margin-bottom: 1rem;
             max-width: 100%;
             &.active {
                 p.title {
@@ -91,6 +90,9 @@
                         font: normal normal normal 1rem FontAwesome;
                         transform: rotate(70deg);
                     }
+                }
+                img {
+                    width:100%;
                 }
             }
             .detail {

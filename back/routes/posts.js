@@ -14,9 +14,25 @@ router.get('/', async (req, res, next) => { // GET /api/posts
         }
         const posts = await db.Post.findAll({
             where,
-            include : [{
-                model: db.Image,
-            }],
+            include : [
+                {
+                    model : db.User,
+                    attributes: ['id', 'nickname'],
+                },
+                {
+                    model : db.Comment,
+                    attributes: ['id', 'content'],
+                    include : [
+                        {
+                            model: db.User,
+                            attributes: ['id', 'nickname'],
+                        },
+                    ]
+                },
+                {
+                    model : db.Image,
+                }
+            ],
             order: [['created_at', 'DESC']],
             limit: parseInt(req.query.limit, 10),
         });

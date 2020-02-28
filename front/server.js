@@ -39,7 +39,7 @@ app.prepare().then(() => {
     });
 
     server.get('/blog/series/:category', (req, res) => {
-        return app.render(req, res, '/blog/series', { id: req.params.category });
+        return app.render(req, res, '/blog/series', { category: req.params.category });
     });
 
     server.get('/admin/blog/update/:id', (req, res) => {

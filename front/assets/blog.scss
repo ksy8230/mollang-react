@@ -1,6 +1,8 @@
 /*
     blog 관련 css
     blog search 관련 css
+    draft-editor 관련 css
+    comment 관련 css
 */
 
 .blog {
@@ -87,6 +89,16 @@
                 border-radius: 5px;
                 border: 1px solid $gray;
                 box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+                @include css3(transition, all 0.8s);
+                &.active {
+                    opacity: 1 !important;
+                    transform: scale(1.025) !important;
+                }
+                &.no {
+                    opacity: 0;
+                    transform: scale(0.5);
+
+                }
                 .post-description {
                     display: block;
                 }
@@ -245,6 +257,7 @@
 }
 
 .blog-footer {
+    width: 768px;
     padding: 2rem 0 0 0;
     margin-top: 2rem;
     border-top: 1px solid $gray;
@@ -363,6 +376,99 @@
                 height: 3px;
                 background: $black;
             }
+        }
+    }
+}
+
+.comment {
+    width: 768px;
+    margin-top: 3rem;
+    .comment-length {
+        margin-bottom: 1rem;
+    }
+    .comment-form {
+        text-align: right;;
+        textarea {
+            resize: none;
+            margin-bottom: 1.5rem;
+            width: 100%;
+            min-height: 6.125rem;
+            font-size: 1rem;
+            color: $black;
+            line-height: 1.75;
+            padding: 1rem 1rem 1.5rem;
+            outline: none;
+            border-width: 1px;
+            border-style: solid;
+            border-color: $gray;
+            border-image: initial;
+            border-radius: 4px;
+            font-family: 'Noto Serif KR', Arial, Helvetica, sans-serif;
+        }
+        button {
+            display: inline-block;
+            margin-left:5px;
+            background: $pink;
+            &.cancel {
+                background: $gray;
+            }
+        }
+    }
+    .comments-list {
+        li {
+            padding: 1.3rem 0;
+            border-bottom: 1px solid $gray;
+            &:last-child {
+                border:0;
+            }
+            .profile {
+                position: relative;
+                display: flex;
+                -webkit-box-align: center;
+                align-items: center;
+                margin-bottom: 1rem;
+                .account-profile-img {
+                    position: relative;
+                    display: inline-block;
+                    height: 2.5rem;
+                    width: 2.5rem;
+                    margin-right: 10px;
+                    border-radius: 50px;
+                    overflow: hidden;
+                    vertical-align: middle;
+                    img {
+                        position: absolute;
+                        width: 100%;
+                        top: 50%;
+                        left: 50%;
+                        transform: translate(-50%, -50%); 
+                    }
+                }
+                .profile-info {
+                    p {
+                        font-weight: bold;
+                    }
+                    span {
+                        color: $darkgray;
+                        font-size: .9rem;
+                    }
+                }
+                .action {
+                    position: absolute;
+                    right: 0;
+                    span {
+                        display: inline-block;
+                        margin-left: 5px;
+                        cursor: pointer;
+                        color:$darkgray;
+                        font-size: .9rem;
+                    }
+                }
+            }
+            .comments_content {
+                line-height: 1.75;
+            }
+
         }
     }
 }

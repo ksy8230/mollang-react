@@ -14,6 +14,7 @@ const userAPIRouter = require('./routes/user');
 const postAPIRouter = require('./routes/post');
 const postsAPIRouter = require('./routes/posts');
 const tagAPIRouter = require('./routes/tag');
+const seriesAPIRouter = require('./routes/series');
 const authAPIRouter = require('./routes/auth');
 const calendarsAPIRouter = require('./routes/calendars');
 const calendarAPIRouter = require('./routes/calendar');
@@ -66,6 +67,7 @@ app.use('/api/post', postAPIRouter);
 app.use('/auth', authAPIRouter);
 app.use('/api/posts', postsAPIRouter);
 app.use('/api/tag', tagAPIRouter);
+app.use('/api/series', seriesAPIRouter);
 app.use('/api/calendars', calendarsAPIRouter);
 app.use('/api/calendar', calendarAPIRouter);
 

@@ -1,53 +1,34 @@
 import React, { useEffect, useState, useCallback, useRef } from 'react';
-import { EditorState, convertFromRaw } from 'draft-js';
-import { stateToHTML } from 'draft-js-export-html';
 import { useSelector, useDispatch } from 'react-redux';
 import { LOAD_POSTS_REQUEST } from '../../reducers/post';
 import PostCard from '../../Components/PostCard';
 import StackGrid from "react-stack-grid";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import SearchForm from '../../Components/SearchForm';
-import Router from 'next/router';
+import Router, { useRouter } from 'next/router';
 import Link from 'next/link';
+import { summary, makeUniqueTagList } from '../../Components/FunctionalComponent';
+//import NProgress from 'nprogress';
 
-export function summary (postsState, summaryState) {
-    const contentArray = postsState.map((v,i) => {
-        return v.content;
-    });
-    const summeryArray = contentArray.map((v,i) => {
-        return v.replace(/(<([^>]+)>)/ig,"").replace("&nbsp;","");
-    });
-    const subStringSummeryArray = summeryArray.map((v,i) => {
-        if(v.length>= 100) {
-            return v.substr(0,100)+"...";
-        } else {
-            return v;
-        }
-    });
-    summaryState(subStringSummeryArray);
-}
-
-function makeUniqueTagList(arrays) {
-    //console.log('make Unique TagList')
-    const tagsArray = [];
-    arrays.map((v,i) => {
-        tagsArray.push(...v)
+export const onClickPost = (e) => {
+    let post = e.currentTarget.parentNode.parentNode.parentNode;
+    let posts = e.currentTarget.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode;
+    const lis = posts.querySelectorAll('li');
+    const lisarray = Array.prototype.slice.call(lis);
+    lisarray.map(v => {
+        v.classList.add('no')
     })
-    //console.log(tagsArray)
-    return tagsArray;
-}
+    post.classList.add('active')
+};
 
 const Blog = () => {
-    //const [editorState, setEditorState] = useState(EditorState.createEmpty());
-    //const [editorContentHtml, setEditorContentHtml] = useState('');
-    const { mainPosts, hasMorePost } = useSelector(state => state.post);
+    const { mainPosts, hasMorePost, isLoadPosts } = useSelector(state => state.post);
     const dispatch = useDispatch();
     const countRef = useRef([]);
     const [summery, setSummery] = useState([]);
     const [searchValue, setSearchValue] = useState('');
     const [categoryList, setCategoryList] = useState('post');
-
+    const [stackGrid, setStackGrid] = useState();
+    const router = useRouter();
     const onScroll = useCallback(() => {
         // 현재 scroll 값, 윈도우 현재 창 높이값, 전체 화면 높이값
         if (window.scrollY + document.documentElement.clientHeight > document.documentElement.scrollHeight - 300) {
@@ -71,8 +52,7 @@ const Blog = () => {
     }, [hasMorePost, mainPosts.length, countRef]);
 
     useEffect(() => {
-        // 포스트들 요약글 만들기
-        summary(mainPosts, setSummery);      
+        summary(mainPosts, setSummery);   
     }, [mainPosts]);
 
     useEffect(() => {
@@ -103,8 +83,9 @@ const Blog = () => {
     const onClickTagList = useCallback(() => {
         setCategoryList('tag');
     }, [categoryList]);
+
     return (
-        <div className='contents-wrap'>
+        <div className={isLoadPosts ? 'contents-wrap loading' : 'contents-wrap'}>           
             <div className='blog'>
                 <div className='blog-head'>
                     <div className='blog-title'>
@@ -138,8 +119,7 @@ const Blog = () => {
                                             <p>{mainPosts.filter(c => c.category === v).map(c => c).length}개의 포스트</p>
                                         </div>
                                     )
-                                }
-                                
+                                }  
                             })
                         }
                     </div>
@@ -148,6 +128,7 @@ const Blog = () => {
                         <ul>
                             <StackGrid
                                 columnWidth={337.5}
+                                gridRef={grid => setStackGrid(grid)}
                                 // duration={0}
                                 monitorImagesLoaded ={true}
                             >
@@ -159,6 +140,7 @@ const Blog = () => {
                                             i={i}
                                             key={v.id}
                                             summery={summery}
+                                            onClickPost={onClickPost}
                                         />
                                     )
                                 })
@@ -168,17 +150,14 @@ const Blog = () => {
                     </div>
                     : categoryList === 'tag' ?
                     <div className='tag-list'>
-                        {   
-                            Array.from(new Set(
-                                makeUniqueTagList(mainPosts.map((v,i) => { return v.tag.replace("[","").replace("]","").replace(/"/g,"").replace(/#/g,"").split(",") })))
-                            ).map((v,i) => {
-                                if (v !== 'null') {
+                        {
+                            makeUniqueTagList(mainPosts).map((v,i) => {
+                                if (v !== 'null' && v !=='') {
                                     return (
                                         <span className='tag' key={v.id}>
                                             <Link href={{ pathname: '/tag', query : {tag : v}}} as={`/tag/${v}`}>
                                                 <a>#{v}</a>
                                             </Link>
-    
                                         </span>
                                     )
                                 }

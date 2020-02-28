@@ -1,14 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import ReactDOM from 'react-dom';
 import Router from 'next/router';
 import PropTypes from 'prop-types';
 import Link from 'next/link';
 import Helmet from 'react-helmet';
 import { useDispatch, useSelector } from 'react-redux';
-import { LOAD_POST_REQUEST, DELETE_POST_REQUEST } from '../../reducers/post';
+import { LOAD_POST_REQUEST, DELETE_POST_REQUEST, ADD_COMMENT_REQUEST, LOAD_COMMENTS_REQUEST, EDIT_COMMENT_REQUEST, DELETE_COMMENT_REQUEST } from '../../reducers/post';
 import moment from 'moment';
 import { backURL } from '../../config/config';
-//moment.locale('ko');
+moment.locale('ko');
 
 function createMarkup(html) {
     return {__html: html};
@@ -23,17 +23,27 @@ function makeTagList(value) { // singlePost 문자열된 태그들 추출
 
 const Detail = ({ id }) => {
     const dispatch = useDispatch();
-    const { singlePost } = useSelector(state => state.post);
-    const { me } = useSelector(state => state.user);
+    const { isLoadPost, commentEdited } = useSelector(state => state.post);
+    //const { me } = useSelector(state => state.user);
+    const me = useSelector(state => state.user.me);
+    //const meId = useSelector(state => state.user.me.id);
+    const singlePost = useSelector(state => state.post.singlePost);
+    const Comments = useSelector(state => state.post.singlePost.Comments);
+    //const commentUserId = useSelector(state => state.post.singlePost.Comments.User.id);
     const [sideLinker, setSideLinker] = useState([]);
     const [scrollTop, setScrollTop] = useState(0);
+    const [sidenavOn, setSideNavOn] = useState(false);
+    const [comment, setComment] = useState('');
+    const [editMode, setEditMode] = useState(false);
+    const [editValue, setEditValue] = useState('');
+    const [editId, setEditId] = useState('');
 
     const makeSideLinker = () => { // h태그들 추출해 aside 링커로 만들기 & h태그들 링커id값 부여
         let hTag = Array.from(document.querySelectorAll('h1,h2,h3,h4'));
         let hTagTitle = [];
         for (var i = 0; i < hTag.length; i++) {
-            hTag[i].id = hTag[i].innerText.replace(/ /g,"_");
-            hTagTitle.push(hTag[i].innerText.replace(/ /g,"_"));
+            hTag[i].id = hTag[i].innerText.replace(/ /g," ");
+            hTagTitle.push(hTag[i].innerText.replace(/ /g," "));
         }
         return hTagTitle;
     };
@@ -42,6 +52,10 @@ const Detail = ({ id }) => {
         e.preventDefault();
         let titleTagId = e.target.getAttribute('href').replace("#","");
         document.getElementById(titleTagId).scrollIntoView({behavior: 'smooth'});
+        setTimeout(() => {
+            const header = document.querySelector('header');
+            header.classList.add('fade');
+        }, 500);
     };
 
     const onClickDeletePost = () => { // 포스트 삭제
@@ -56,22 +70,51 @@ const Detail = ({ id }) => {
         const currentScrollTop = ('scroll', e.srcElement.scrollingElement.scrollTop);
         setScrollTop(currentScrollTop);
         const top = document.querySelector('.draft-editor-contents').getBoundingClientRect().top;
-        const sideNav = document.querySelector('.sidenav');
         if (currentScrollTop >= top - 50 ) {
-            sideNav.classList.add('active');
+            setSideNavOn(true);
         } else {
-            sideNav.classList.remove('active');
+            setSideNavOn(false);
         }
     };
+    
+    useEffect(() => { // 링커 클래스 유무에 따른 헤더
+        const header = document.querySelector('header');
+        if (sidenavOn) {
+            header.classList.add('fade');
+        } else {
+            header.classList.remove('fade');
+        }
+        return () => {
+            header.classList.remove('fade');
+        }
+    }, [sidenavOn]);
+
+    const onChangeComment = useCallback((e) => {
+        setComment(e.target.value);
+    },[comment]);
+
+    const onSubmitComment = useCallback((e) => { // 댓글 업로드
+        e.preventDefault();
+        if ( !me ) {
+            return alert('로그인이 필요합니다.');
+        }
+        dispatch({
+            type : ADD_COMMENT_REQUEST,
+            data : {
+                postId : id,
+                content: comment
+            }
+        })
+    }, [me && me.id, comment]);
 
     useEffect(() => {
-        // dispatch({
-        //     type : LOAD_POST_REQUEST,
-        //     data : id,
-        // });
         setTimeout(() => {
             setSideLinker(makeSideLinker());
         }, 300);
+        dispatch({ // 댓글 로드
+            type : LOAD_COMMENTS_REQUEST,
+            data : id,
+        });
     }, [id]);
 
     useEffect(() => {
@@ -79,10 +122,54 @@ const Detail = ({ id }) => {
         return () => window.removeEventListener("scroll", onScroll);
     }, []);
 
+    const onClickEditComment = useCallback((i) => {
+        setEditId(i);
+        let commentIndex = Comments.findIndex(v => v.id === i);
+        setEditValue(Comments[commentIndex].content);
+        setEditMode(true);
+    }, [editId, editValue, isLoadPost]);
+
+    const onClickCancelEditMode = () => {
+        setEditId('');
+        setEditValue('');
+        setEditMode(false);
+    };
+
+    const onChangeEditValue = useCallback((e) => {
+        setEditValue(e.target.value);
+    }, [editValue]);
+
+    const onSubmitEditComment = useCallback((e) => {
+        e.preventDefault();
+        dispatch({
+            type : EDIT_COMMENT_REQUEST,
+            data : {
+                postId : id,
+                id : editId,
+                content : editValue
+            }
+        });
+    }, [editId, editValue, editMode]);
+
+    useEffect(() => {
+        if (commentEdited) {
+            setEditMode(false);
+        }
+    }, [commentEdited]);
+
+    const onClickDeleteComment = useCallback((i) => {
+        dispatch({
+            type: DELETE_COMMENT_REQUEST,
+            data : {
+                postId : id,
+                id : i,
+            }
+        })
+    }, [editId, editValue]);
+
     return (
         <>
             <Helmet 
-                //title={`${singlePost.User.nickname}님의 게시글`}
                 description={singlePost && singlePost.content || ''}
                 meta={[{
                     name: 'description', content: singlePost && singlePost.content,
@@ -94,7 +181,7 @@ const Detail = ({ id }) => {
                     property : 'og:url', content: `http://mollog.co.kr/blog/detail/${id}`
                 }]}
             />
-            <div className='contents-wrap'>  
+            <div className={isLoadPost ? 'contents-wrap loading' : 'contents-wrap'}>  
                 <div className='blog-detail'> 
                     {
                         me && me.id === 1 ?
@@ -125,7 +212,7 @@ const Detail = ({ id }) => {
                             }
                         </p>
                     </div>
-                    <div className='sidenav'>
+                    <div className={sidenavOn ? 'sidenav active' : 'sidenav'}>
                         <ul>
                             {
                                 sideLinker.map((v,i) => {
@@ -141,6 +228,67 @@ const Detail = ({ id }) => {
                 </div>
                 <div className='blog-footer'>
                     <Link href='/blog'><a>목록으로 돌아가기</a></Link>
+                </div>
+                <div className='comment'>
+                    <div className='comment-length'>
+                        <p><span>{singlePost.Comments && Comments.length}</span>개의 댓글</p>
+                    </div>
+                    <div className='comment-form'>
+                        <form onSubmit={onSubmitComment}>
+                            <div>
+                                <textarea type="text" placeholder='로그인 후 이용해 주세요.' value={comment} onChange={onChangeComment} />
+                            </div>
+                            <button htmltype="submit"><a>댓글 작성</a></button>
+                        </form>
+                    </div>
+                    <div className='comments-list'>
+                        <ul>
+                            {
+                                singlePost.Comments && Comments.map((v, i) => {
+                                    return(
+                                        <li key={i}>
+                                            <div>
+                                                <div className='profile'>
+                                                    <a href="">
+                                                        <div class="account-profile-img"><img src="/images/profile_default_img.png" alt="" /></div>
+                                                    </a>
+                                                    <div className='profile-info'>
+                                                        <p>{v.User.nickname}</p>
+                                                        <span>{moment(moment(v.createdAt).format("YYYY-MM-DD HH:mm:ss")).fromNow()}</span>
+                                                    </div>
+                                                    {
+                                                        me !== null && me.id === v.UserId ? // 내가 쓴 댓글 액션 유무
+                                                        <>
+                                                            {
+                                                                v.id === editId && editMode ? null // 해당하는 댓글에 한해서 && 수정모드에 따라 댓글 액션 유무
+                                                                :
+                                                                <div className='action'>
+                                                                    <span onClick={() => onClickEditComment(v.id)}>수정 </span>
+                                                                    <span onClick={() => onClickDeleteComment(v.id)}>삭제</span>
+                                                                </div> 
+                                                            }
+                                                        </>
+                                                        : null
+                                                    }
+                                                </div>
+                                                {
+                                                    v.id === editId && editMode ? 
+                                                    <div className='comment-form'>
+                                                        <form onSubmit={onSubmitEditComment}>
+                                                            <textarea type="text" value={editValue} onChange={onChangeEditValue} />
+                                                            <button htmltype="submit"><a>댓글 수정</a></button>
+                                                            <button className='cancel' onClick={onClickCancelEditMode}><a>취소</a></button>
+                                                        </form>
+                                                    </div>
+                                                    : <div className='comments_content'>{v.content}</div>
+                                                }
+                                            </div>
+                                        </li>
+                                    )
+                                })
+                            }
+                        </ul>
+                    </div>
                 </div>
             </div>
         </>

@@ -50,6 +50,15 @@
             padding: 1rem 0 !important; 
         }
     }
+    @include css3(opacity,1);
+    opacity:1;
+    transition: all .3s;
+    transition-delay: .6s;
+    &.loading {
+        opacity: 0;
+        @include css3(opacity,0);
+        //transition-delay: .6s;
+    }
     h2 {
         padding: 2rem 0;
         font-size: 1.4rem;

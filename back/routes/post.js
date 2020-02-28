@@ -44,6 +44,7 @@ router.post('/', upload.none(), async (req, res, next) => { // POST /api/post
             category : req.body.category,
             content : req.body.content,
             tag : tags,
+            //UserId: req.user.id,
         });
 
         if (req.body.tag !== '') {
@@ -75,7 +76,13 @@ router.post('/', upload.none(), async (req, res, next) => { // POST /api/post
             where : { id : newPost.id },
             include : [
                 {
+                    model: db.User,
+                },
+                {
                     model: db.Image,
+                },
+                {
+                    model : db.Comment,
                 },
                 {
                     model: db.Category,
@@ -94,9 +101,24 @@ router.get('/:id', async (req, res, next) => { // GET /api/post/:id
     try {
         const post = await db.Post.findOne({
             where : { id : req.params.id },
-            include : [{
-                model: db.Image,
-            }],
+            include: [
+                {
+                    model: db.User,
+                    attributes: ['id', 'nickname'],
+                },
+                {
+                    model : db.Comment,
+                    include : [
+                        {
+                            model: db.User,
+                            attributes: ['id', 'nickname'],
+                        },
+                    ]
+                },
+                {
+                    model : db.Image,
+                }
+            ],
         });
         res.json(post);
     } catch (e) {
@@ -174,6 +196,93 @@ router.post('/thumbimage', upload.array('thumbimage'), (req, res, next) => {
         res.json(req.files.map(v => v.location));
         // 로컬 백엔드 서버용
         // res.json(req.files.map(v => v.filename));
+    } catch(e) {
+        console.error(e);
+        return next(e);
+    }
+});
+
+router.post('/detail/:id/comment', async (req, res, next) => { // POST /api/post/:id/comment
+    try {
+        const post = await db.Post.findOne({ where : { id : req.params.id }});
+        if (!post) {
+            return res.status(404).send('포스트가 존재하지 않습니다.');
+        }
+        const newComment = await db.Comment.create({
+            PostId : post.id,
+            UserId : req.user.id,
+            content : req.body.content,
+        });
+        await post.addComment(newComment.id);
+        const comment = await db.Comment.findOne({
+            where : {
+                id : newComment.id,
+            },
+            include : [{
+                model : db.User,
+                attributes : ['id', 'nickname'],
+            }],
+        })
+        return res.json(comment);
+    } catch (e) {
+        console.error(e);
+        return next(e);
+    }
+});
+
+router.get('/detail/:id/comments', async(req,res,next) => {
+    try {
+        const post = await db.Post.findOne({ where : { id : req.params.id }});
+        if (!post) {
+            return res.status(404).send('포스트가 존재하지 않습니다.');
+        }
+        const comments = await db.Comment.findAll({
+            where : {
+                PostId : req.params.id,
+            },
+            order : [['createdAt', 'DESC']], 
+            include : [
+                {
+                    model : db.User,
+                    attributes : ['id', 'nickname'],
+                },
+            ],
+        });
+        res.json(comments);
+    } catch(e) {
+        console.error(e);
+        return next(e);
+    }
+});
+
+router.patch('/detail/:id/comments/:commentId/edit', async(req,res,next) => {
+    try {
+        const post = await db.Post.findOne({ where : { id : req.params.id }});
+        if (!post) {
+            return res.status(404).send('포스트가 존재하지 않습니다.');
+        }
+        const comment = await db.Comment.findOne({ where : { id : req.params.commentId }});
+        console.log('comment reqbody', req.body)
+        const editComment = await comment.update({
+            content : req.body.content,
+        });
+        return res.json(editComment);
+    } catch(e) {
+        console.error(e);
+        return next(e);
+    }
+});
+
+router.delete('/detail/:id/comments/:commentId/delete', async(req,res,next) => {
+    try {
+        const post = await db.Post.findOne({ where : { id : req.params.id }});
+        if (!post) {
+            return res.status(404).send('포스트가 존재하지 않습니다.');
+        }
+        const deleteComment = await db.Comment.findOne({ where : { id : req.params.commentId }});
+        await post.removeComment(deleteComment.id);
+        await db.Comment.destroy({ where : { id : req.params.commentId } });
+        res.send(req.params.commentId);
     } catch(e) {
         console.error(e);
         return next(e);
