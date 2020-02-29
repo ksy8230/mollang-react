@@ -54,6 +54,7 @@ const Header = memo(() => {
     const onClickBlog = useCallback(() => { setMenuOn('blog'); setMobileMenu(!mobileMenu); }, [menuOn, mobileMenu]);
     const onClickProject = useCallback(() => { setMenuOn('project'); setMobileMenu(!mobileMenu); }, [menuOn, mobileMenu]);
     const onClickGithub = useCallback(() => { setMenuOn('github'); }, [menuOn]);
+    const onClickAdmin = useCallback(() => { setMenuOn('admin'); }, [menuOn]);
 
     const onClickMobileMenu = useCallback(() => { setMobileMenu(!mobileMenu); }, [mobileMenu]);
 
@@ -126,7 +127,7 @@ const Header = memo(() => {
                             {/*<div><a href='/Editor_test_with_wysiwyg'>draft test2</a></div>*/}
                             {
                                 me && me.id === 1 ?
-                                <div><Link href={{ pathname: '/admin/index'}} as={'/admin'}><a>블로그 관리자</a></Link></div>
+                                <div className={menuOn === 'admin' ? 'active' : ''} onClick={onClickAdmin}><Link href={{ pathname: '/admin/index'}} as={'/admin'}><a>블로그 관리자</a></Link></div>
                                 : null
                             }
                         </nav>
@@ -142,7 +143,7 @@ const Header = memo(() => {
                         {/*<div><a href='/Editor_test_with_wysiwyg'>draft test2</a></div>*/}
                         {
                             me && me.id === 1 ?
-                            <div><Link href={{ pathname: '/admin/index'}} as={'/admin'}><a>블로그 관리자</a></Link></div>
+                            <div className={menuOn === 'admin' ? 'active' : ''} onClick={onClickAdmin}><Link href={{ pathname: '/admin/index'}} as={'/admin'}><a>블로그 관리자</a></Link></div>
                             : null
                         }
                     </nav>

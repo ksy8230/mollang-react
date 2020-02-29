@@ -33,6 +33,7 @@ const Blog = () => {
         // 현재 scroll 값, 윈도우 현재 창 높이값, 전체 화면 높이값
         if (window.scrollY + document.documentElement.clientHeight > document.documentElement.scrollHeight - 300) {
             if (hasMorePost) {
+                console.log(hasMorePost)
                 const lastId = mainPosts[mainPosts.length - 1].id;                
                 if (!countRef.current.includes(lastId)) {
                     // lastId가 countRef에 속해있지 않으면 다음 포스트들 로드
@@ -40,6 +41,7 @@ const Blog = () => {
                     dispatch({
                         type: LOAD_POSTS_REQUEST,
                         lastId,
+                        limit : 10,
                     });
                     countRef.current.push(lastId);
                     // 한번 요청을 보낸 lastId들을 countRef 배열에 담아
@@ -176,6 +178,7 @@ Blog.getInitialProps = async (context) => {
     context.store.dispatch({
         type : LOAD_POSTS_REQUEST,
         lastId : 0,
+        limit : 10,
     });
 };
 

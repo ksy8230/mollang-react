@@ -23,6 +23,7 @@ router.get('/:tag', async (req, res, next) => { // GET /api/tag/:tag
             }],
             order: [['created_at', 'DESC']],
             limit: parseInt(req.query.limit, 10),
+            //limit: parseInt(req.query.limit, 10) === 0 ? null : parseInt(req.query.limit, 10),
         });
         return res.json(posts);
     } catch (e) {

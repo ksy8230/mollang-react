@@ -49,8 +49,9 @@ const ProjectMollog = () => {
                         <img src="/images/project_mollog_project.jpg" alt=""/><br /><br />
 
                         관리자 화면<br />
-                        - admin ID로만 접근 가능한 페이지로 편집기를 이용해 포스트 작성이 가능합니다.<br />
-                        - 관리자로 로그인 시 포스트 상세 페이지에서 포스트 수정 삭제가 가능합니다.<br /><br />
+                        - admin ID로만 접근 가능한 페이지로 블로그 컨텐츠와 관련된 정보와 도메인 및 서버 비용을 보여줍니다.<br /><br />
+                        <img src="/images/project_mollog_admin_main.jpg" alt=""/><br /><br />
+                        - 관리자로 로그인 시 포스트 상세 페이지에서 포스트 수정 삭제가 가능하고, 관리자 페이지에서 새로운 포스트 작성이 가능합니다.<br /><br />
                         <img src="/images/project_mollog_post.jpg" alt=""/><br /><br />
                         - 일정관리탭에서 일정 추가 수정 삭제가 가능합니다.<br /><br />
                         <img src="/images/project_mollog_calendar.jpg" alt=""/><br /><br />

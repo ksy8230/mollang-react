@@ -25,17 +25,18 @@ function* addPost(action) {
 function* watchAddPost() {
     yield takeLatest(ADD_POST_REQUEST, addPost);
 }
-function loadPostsAPI(lastId = 0, limit = 10) {
+function loadPostsAPI(lastId = action.lastId, limit = action.limit) {
     return axios.get(`/posts?lastId=${lastId}&limit=${limit}`); // server:GET /api/posts
 }
 function* loadPosts(action) {
     try {
-        const result = yield call(loadPostsAPI, action.lastId);
+        const result = yield call(loadPostsAPI, action.lastId, action.limit);
         yield put({
             type : LOAD_POSTS_SUCCESS,
             data : result.data,
         })
     } catch(e) {
+        console.error(e);
         yield put({
             type : LOAD_POSTS_FAILURE,
             error : e.response && e.response.data,
@@ -45,12 +46,12 @@ function* loadPosts(action) {
 function* watchloadPosts() {
     yield throttle(2000, LOAD_POSTS_REQUEST, loadPosts);
 }
-function loadTagPostsAPI(tag, lastId = 0, limit = 10) {
+function loadTagPostsAPI(tag, lastId = action.lastId, limit = action.limit) {
     return axios.get(`/tag/${encodeURIComponent(tag)}?lastId=${lastId}&limit=${limit}`); // server:GET /api/tag/:tag
 }
 function* loadTagPosts(action) {
     try {
-        const result = yield call(loadTagPostsAPI, action.data, action.lastId);
+        const result = yield call(loadTagPostsAPI, action.data, action.lastId, action.limit);
         yield put({
             type : LOAD_TAG_POSTS_SUCCESS,
             data : result.data,

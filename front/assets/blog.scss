@@ -313,12 +313,16 @@
 
 .draft-editor-contents {
     margin: 2rem 0;
-    
+    h2 {
+        padding: 2rem 0 1rem !important;
+        font-weight: bold !important;
+    }
     p {
         margin:5px 0;
         color:$black;
         //line-height: 1.6rem;
         line-height: 200%;
+        word-break: break-all;
         strong {
             padding-left: 0.25em;
             padding-right: 0.25em;

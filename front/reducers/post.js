@@ -130,6 +130,12 @@ const reducer = (state = initialState, action) => {
                 thumbImagePath : [],
             }
         }
+        case LOAD_POSTS_FAILURE : {
+            return {
+                ...state,
+                loadPostsErrorReason : action.error,
+            }
+        }
         case LOAD_TAG_POSTS_REQUEST : {
             return {
                 ...state,
@@ -149,17 +155,12 @@ const reducer = (state = initialState, action) => {
         case LOAD_SERIES_POSTS_REQUEST : {
             return {
                 ...state,
-                //mainPosts : action.lastId === 0 ? [] : state.mainPosts,
-                //hasMoreTagPost : action.lastId ? state.hasMoreTagPost : true,
             }
         }
         case LOAD_SERIES_POSTS_SUCCESS : {
             return {
                 ...state,
                 mainPosts : action.data,
-                //mainPosts : action.lastId === 0 ? action.data : state.mainPosts.concat(action.data),
-                //hasMoreTagPost : action.data.length === 10,
-                //thumbImagePath : [],
             }
         }
         //

@@ -25,8 +25,9 @@ const Tag = ({ tag }) => {
                     //console.log('countRef.current', countRef.current)
                     dispatch({
                         type: LOAD_TAG_POSTS_REQUEST,
-                        lastId,
                         data : tag,
+                        lastId,
+                        limit : 10,
                     });
                     countRef.current.push(lastId);
                 } 
@@ -114,6 +115,7 @@ Tag.getInitialProps = async (context) => {
         type : LOAD_TAG_POSTS_REQUEST,
         data : tag,
         lastId : 0,
+        limit : 10,
     })
     return { tag }
 };

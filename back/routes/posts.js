@@ -34,7 +34,7 @@ router.get('/', async (req, res, next) => { // GET /api/posts
                 }
             ],
             order: [['created_at', 'DESC']],
-            limit: parseInt(req.query.limit, 10),
+            limit: parseInt(req.query.limit, 10) === 0 ? null : parseInt(req.query.limit, 10),
         });
         console.log('posts', posts)
         if (!posts) {
