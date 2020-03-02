@@ -56,6 +56,7 @@ const Footer = () => {
                 <span onClick={onClickTalk}><img src="/images/icon_talk.png" alt=""/></span>
                 {talkPop ? <Pop><p>asdf8230</p></Pop> : null}
                 <span><a href='https://github.com/ksy8230' target='_blank'><img src="/images/ico_github.png" alt=""/></a></span>
+                <span><a href='https://velog.io/@mollang/To-Do-List' target='_blank'>TIL</a></span>
             </div>
             <p>Copyright ⓒ 2020 Mollang All Rights Reserved.</p>
         </footer>

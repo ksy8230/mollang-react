@@ -6,7 +6,6 @@
 
 0. 메인화면
 - [v] 검색 기능
-- [] 코드 에디터로 간략 소개 (https://62che.com/)
 
 1. 로그인 전 & 후 & 회원가입
 - [v] 로그인 화면
@@ -35,16 +34,16 @@
 - [v] 관리자만 포스트 수정
 - [v] 관리자만 포스트 삭제
 - [v] velog처럼 h1, h2... 태그별로 우측에 링커 걸기
-- [] 댓글 달기 (본인만 삭제, 수정)
-- [] 댓글 달기 삭제 알럿
+- [v] 댓글 달기 (본인만 삭제, 수정)
+- [v] 댓글 달기 삭제 알럿
 
 6. 배포 관련
 - [v] `react-helmet`으로 헤드태그 추가, _document.js 에서 `react-helmet` SSR
-- next/dynamic 이용해 특정 컴포넌트 SSR 안하고, 클라이언트에서만 렌더링하기 (편집기, 달력 같이 윈도우에서만 실행되는 라이브러리)
+- [v] next/dynamic 이용해 특정 컴포넌트 SSR 안하고, 클라이언트에서만 렌더링하기 (편집기, 달력 같이 윈도우에서만 실행되는 라이브러리)
 https://kokohapps.tistory.com/entry/Nextjs-nextdynamic-%EC%9D%B4%EC%9A%A9%ED%95%B4%EC%84%9C-%ED%8A%B9%EC%A0%95-%EC%BB%B4%ED%8F%AC%EB%84%8C%ED%8A%B8-SSR-%EC%95%88%ED%95%98%EA%B3%A0-%ED%81%B4%EB%9D%BC%EC%9D%B4%EC%96%B8%ED%8A%B8%EC%97%90%EC%84%9C%EB%A7%8C-%EB%A0%8C%EB%8D%94%EB%A7%81%ED%95%98%EA%B8%B0
 
-- BundleAnalyzer에서 moment플러그인 한국어만 적용되도록 tree shaking, 플러그인들 gzipped로 압축
-- 불필요한 렌더링 `memo`로 수정
+- [v] BundleAnalyzer에서 moment플러그인 한국어만 적용되도록 tree shaking, 플러그인들 gzipped로 압축
+- [v] 불필요한 렌더링 `memo`로 수정
 
  To Do List (or 진행 사항들)
 #### front & back
@@ -87,7 +86,7 @@ https://kokohapps.tistory.com/entry/Nextjs-nextdynamic-%EC%9D%B4%EC%9A%A9%ED%95%
     - [v] 카카오톡 간편 로그인
     - [] 프로필 섬네일
     - [v] 카테고리로 포스트 구분하기
-    - [] 관리자단 tui-calendar 일정관리 기능 https://ui.toast.com/tui-calendar/
+    - [v] 관리자단 tui-calendar 일정관리 기능 https://ui.toast.com/tui-calendar/
         - [v] 기본 기능 추가하기 (다음 달력 보기, 이전 달력 보기, week 기준으로 보기, month 기준으로 보기)
         - [v] DB 연동하여 CRUD 기능 추가하기
 
