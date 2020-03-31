@@ -35,7 +35,7 @@
     "moment": "^2.24.0",
     "moment-locales-webpack-plugin": "^1.1.2",
     "morgan": "^1.9.1",
-    "next": "^9.2.1",
+    "next": "^9.3.2",
     "next-redux-saga": "^4.1.2",
     "next-redux-wrapper": "^4.0.1",
     "node-sass": "^4.13.1",
