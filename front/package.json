@@ -20,7 +20,7 @@
     "@toast-ui/react-calendar": "^1.0.5",
     "@zeit/next-css": "^1.0.1",
     "@zeit/next-sass": "^1.0.1",
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "babel-polyfill": "^6.26.0",
     "chart.js": "^2.9.3",
     "compression-webpack-plugin": "^3.1.0",
